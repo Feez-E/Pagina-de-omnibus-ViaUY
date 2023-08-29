@@ -14,7 +14,7 @@
     <main>
         <div class = content>
             <div class = busDivition>
-                <img class = busImage src = 'img/BusImg.png'>
+                <img class = busImage src = 'src/img/BusImg.png'>
             </div>
             <div class = reservationDivition>
                 <a href = '#' class='reservationButton button'> Reservar </a>

@@ -19,7 +19,7 @@ export default function NavBar() {
                 <header>
 
                     <nav className={panelActive ? 'active' : ''}>
-                        <h1><a href='index.php'><img src='img/Logo.png' className='logo' /></a></h1>
+                        <h1><a href='index.php'><img src='src/img/Logo.png' className='logo' /></a></h1>
                         <a className='userName button' onClick={() => setPanelActive(!panelActive)}>
                             <p>iniciar Sesion</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
