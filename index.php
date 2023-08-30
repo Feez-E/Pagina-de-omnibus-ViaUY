@@ -25,7 +25,7 @@
     </main>
    
     <?php
-    include 'php/userInterface/footer.php';
+    include 'src/php/userInterface/footer.php';
     ?>
 </body>
 
