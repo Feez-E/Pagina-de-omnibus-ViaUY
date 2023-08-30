@@ -11,6 +11,8 @@
 <body>
     <div id = navBar></div>
     <script src="src/public/bundle.js"></script>
+    <script src="src/js/labelPlaceholder.js"></script>
+    <script src="src/js/LoginFormSubmit.js"></script>
     <main>
         <div class = content>
             <div class = busDivition>
@@ -26,4 +28,5 @@
     include 'php/userInterface/footer.php';
     ?>
 </body>
+
 </html>

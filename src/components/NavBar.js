@@ -3,7 +3,6 @@ import LoginAndRegister from './LoginAndRegister'
 import { useState } from "react";
 
 
-
 export default function NavBar() {
     const [menuActive, setMenuActive] = useState(false);
     const [panelActive, setPanelActive] = useState(false);
@@ -33,7 +32,7 @@ export default function NavBar() {
                     </nav>
 
                     <div className={`menu ${menuActive ? 'active' : ''}`}>
-                        <div className='menuToggle' onClick={() => setMenuActive(!menuActive)}></div>
+                        <div className='menuToggle' onClick={() => setMenuActive(!menuActive)}/>
                         <ul className='menuOpt'>
                             <li><a href='#' className='opt'> horarios de salida</a></li>
                             <li><a href='#' className='opt'> mis reservas</a></li>
