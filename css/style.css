@@ -891,6 +891,11 @@
       }
     }
   /*----*/
-  
+    
+  @media (min-height: 840px) {
+    #loginContent{
+      align-items: center;
+    }
+  }
 /*----*/
     
