@@ -1,11 +1,11 @@
 <?php
 
     define('HOST_SERVER', 'localhost');
-    define('DB_USUARIO', 'root');
+    define('DB_USER', 'root');
     define('DB_PASSWORD', '1111');
-    define('DB_DATABASE', 'loginSencillo');
+    define('DB_DATABASE', 'viauy');
     
-    $conn = new mysqli(HOST_SERVER, DB_USUARIO, DB_PASSWORD, DB_DATABASE);
+    $conn = new mysqli(HOST_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE);
     
 
     if ($conn->connect_errno){

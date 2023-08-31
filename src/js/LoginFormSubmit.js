@@ -2,8 +2,10 @@ let loginForm = document.getElementById("loginForm");
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  let username = document.getElementById("usernameL");
-  let password = document.getElementById("passwordL");
+  const username = document.getElementById("usernameL");
+  const password = document.getElementById("passwordL");
+  const usernameValue = username.value;
+  const passwordValue = password.value
 
   switch (true) {
     case username.value == "":
@@ -13,13 +15,36 @@ loginForm.addEventListener("submit", (e) => {
       alert("password");
       break;
     default:
-      alert("successfully submitted");
-      console.log(
-        `This form has a username of ${username.value} and password of ${password.value}`
-      );
+      
+// Realizar la llamada AJAX a check_credentials.php
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "./src/php/dataAccess/check_credentials.php", true);
+xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+xhr.onreadystatechange = function() {
+  console.log(xhr.responseText)
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        var response = JSON.parse(xhr.responseText);
+        console.log(response.isValid ? "Credenciales válidas" : "Credenciales inválidas");
+        if(response.isValid){
+          // Guardar información de sesión en localStorage
+          localStorage.setItem("username", usernameValue);
+          localStorage.setItem("password", passwordValue);
 
-      username.value = "";
-      password.value = "";
+          document.getElementById('userNameText').innerHTML = `${usernameValue}`;
+          document.getElementById('userNameText').parentElement.classList.toggle('logged');
+          document.getElementById('userNameText').parentElement.parentElement.classList.toggle('active');
+        }
+    }
+};
+xhr.send("usernameL=" + encodeURIComponent(username.value) + "&passwordL=" + encodeURIComponent(password.value));
+console.log(
+    `This form has a username of ${username.value} and password of ${password.value}`
+);
+
+
+// Restablecer los campos después de la llamada AJAX
+document.getElementById("usernameL").value = "";
+document.getElementById("passwordL").value = "";
   }
 });
 
@@ -63,7 +88,7 @@ registerForm.addEventListener("submit", (e) => {
       alert("passwordConfirm");
       break;
     default:
-      alert("successfully submitted");
+
       console.log(
         `This form has a username of ${username.value} and password of ${passwordR.value}`
       );

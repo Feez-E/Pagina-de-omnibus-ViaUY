@@ -20,7 +20,7 @@ export default function NavBar() {
                     <nav className={panelActive ? 'active' : ''}>
                         <h1><a href='index.php'><img src='src/img/Logo.png' className='logo' /></a></h1>
                         <a className='userName button' onClick={() => setPanelActive(!panelActive)}>
-                            <p>iniciar Sesion</p>
+                            <p id='userNameText'>iniciar Sesion</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                                 strokeLinejoin="round" className="feather feather-user">
@@ -41,7 +41,12 @@ export default function NavBar() {
                         </ul>
                         <ul id='userOpt' className='menuOpt'>
                             <li> <a href='#' className='opt'> Ajustes de cuenta</a></li>
-                            <li> <a href='#' className='opt'> Cerrar Sesion</a></li>
+                            <li> <a href='#' className='opt' onClick={()=>{
+                                localStorage.removeItem("username");
+                                localStorage.removeItem("password");
+                                document.getElementById('userNameText').innerHTML = `Inciar Sesión`;
+                                document.getElementById('userNameText').parentElement.classList.toggle('logged');
+                            }}> Cerrar Sesion</a></li>
                         </ul>
                     </div>
                 </header>

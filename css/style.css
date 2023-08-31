@@ -282,6 +282,11 @@
       
     }
 
+    .userName.button.logged{
+      pointer-events: none;
+      background-color: transparent;
+    }
+
     .userName.button svg{
       transform:scale(0.75);
     }

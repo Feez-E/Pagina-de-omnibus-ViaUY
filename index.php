@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Century+Gothic&display=swap" rel="stylesheet">
     <link rel="icon" href="ico/icon.ico">
     <title>ViaUY</title>
+    <script src = src/js/keepSessionStarted.js></script>
 </head>
 <body>
     <div id = navBar></div>
