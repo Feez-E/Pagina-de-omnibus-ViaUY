@@ -7,27 +7,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Century+Gothic&display=swap" rel="stylesheet">
     <link rel="icon" href="ico/icon.ico">
     <title>ViaUY</title>
-    <script src = src/js/keepSessionStarted.js></script>
+    <script src = js/keepSessionStarted.js></script>
 </head>
 <body>
-    <div id = navBar></div>
-    <script src="src/public/bundle.js"></script>
-    <script src="src/js/labelPlaceholder.js"></script>
-    <script src="src/js/LoginFormSubmit.js"></script>
     <main>
+        <?php
+            include 'php/userInterface/navBar.php';
+        ?>
         <div class = content>
             <div class = busDivition>
-                <img class = busImage src = 'src/img/BusImg.png'>
+                <img class = busImage src = 'img/BusImg.png'>
             </div>
             <div class = reservationDivition>
                 <a href = '#' class='reservationButton button'> Reservar </a>
             </div>
         </div>
-    </main>
+</main>
    
     <?php
-    include 'src/php/userInterface/footer.php';
+    include 'php/userInterface/footer.php';
     ?>
 </body>
-
 </html>
