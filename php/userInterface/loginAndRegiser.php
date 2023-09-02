@@ -4,14 +4,14 @@
         <div id = loginContent>
                 <div class= 'loginSide shown active' >
                     <p class = loginTitle> Iniciar Sesión </p>
-                    <form id = loginForm action="" method="post">
+                    <form id = loginForm action="./php/dataAccess/check_credentials.php" method="post">
                         <label for = "usernameL">
                             <span> Nombre de usuario </span>
-                            <input type="text" id="usernameL" autocomplete="off"/>
+                            <input type="text" id="usernameL" name="usernameL" autocomplete="off"/>
                         </label> <br>
                         <label for = "passwordL">
                             <span> Contraseña </span>
-                            <input type="password" id="passwordL"  autocomplete="off"/>
+                            <input type="password" id="passwordL" name="passwordL" autocomplete="off"/>
                             <svg class="eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
                              stroke-linecap="round" stroke-linejoin="round">
@@ -80,5 +80,5 @@
         
     </div>
     <script src = js/labelPlaceholder.js> </script>
-    <script src="js/loginFormSubmit.js"></script>
+   <!--  <script src="js/loginFormSubmit.js"></script> -->
 </div>

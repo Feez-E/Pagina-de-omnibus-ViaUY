@@ -1,23 +1,32 @@
 <?php
-include('./connection.php');
+include('connection.php');
+include('../businessLogic/usuario.php');
+if (isset($_POST['usernameL']) && isset($_POST['passwordL'])) {
+    $username = $_POST['usernameL'];
+    $password = $_POST['passwordL'];
+    $stmt = $conn->prepare("SELECT * FROM Usuario WHERE apodo = ? AND contrasena = ?");
+    $stmt->bind_param("ss", $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-$username = $_POST['usernameL'];
-$password = $_POST['passwordL'];
-
-$mysqli_query = mysqli_query($conn,"SELECT apodo, contrasena FROM Usuario;");
-$isValid = false;
-
-while ($user = mysqli_fetch_assoc($mysqli_query)) {
-    if ($user['apodo'] === $username && $user['contrasena'] === $password) {
+    if ($result->num_rows === 1) {
         session_start();
-        $_SESSION['username'] = $username;
-        $_SESSION['password'] = $password;
-        $isValid = true;
-        break;
+        $user = $result->fetch_assoc();
+        $_SESSION['userData'] = new Usuario(
+            $user['id'],
+            $user['apodo'],
+            $user['nombre'],
+            $user['apellido'],
+            $user['correo'],
+            $user['contrasena'],
+            $user['telefono'],
+            new DateTime($user['fechaNac']),
+            $user['nombre_Rol']
+        );
     }
+    $stmt->close();
 }
 
-header("Content-Type: application/json");
-$response = array("isValid" => $isValid);
-echo json_encode($response);
+header("Location: ../../index.php"); 
+
 ?>
