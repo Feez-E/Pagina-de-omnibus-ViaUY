@@ -37,7 +37,7 @@
             ?>
         </ul>
         <ul id='userOpt' class='menuOpt'>
-            <li> <a href='#' class=opt> Ajustes de cuenta</a></li>
+            <li> <a href='./php/userInteface/accountSettings.php' class=opt> Ajustes de cuenta</a></li>
             <li> <a href='./php/dataAccess/logout.php' id="logout" class="opt"> Cerrar Sesion</a></li>
         </ul>
     </div>
