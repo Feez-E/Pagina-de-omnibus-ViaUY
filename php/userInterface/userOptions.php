@@ -1,8 +1,16 @@
 <?php
+include_once("./php/dataAccess/connection.php");
+include_once("./php/businessLogic/usuario.php");
+include_once("./php/dataAccess/permisoLink.php");
 
-    /* $rol = $_SESSION["userData"]->getNombreRol(); */
+    if(isset($_SESSION["userData"])){
+        $rol = $_SESSION["userData"]->getNombreRol();
+        $permiso = new PermisoLink($conn);
+        $permisos = $permiso->getRolByUsernameRol($rol);
+
+        foreach ($permisos as $nombre => $url) {
+            echo "<li> <a class = 'opt' href = ./php/userInteface/". $url .">" . $nombre . "</a></li>";
+        }
+    }
+
 ?>
-
-<li class= opt><a>1</a></li>
-<li class= opt><a>2</a></li>
-<li class= opt><a>3</a></li>

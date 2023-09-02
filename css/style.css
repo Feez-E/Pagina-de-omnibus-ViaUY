@@ -319,6 +319,7 @@
         text-transform: capitalize; 
         transition: 2s;
       }
+      
       .userName{
         font-size: 0.75em;
         padding: calc(1em - 5px) calc(1.2em - 5px);
@@ -334,7 +335,7 @@
         display: flex;
         text-decoration: none;
         color: var(--primary-color);
-        transition: 0.5s;
+        transition: transform 0.25s;
       }
     
     .opt:hover {

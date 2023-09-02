@@ -1,5 +1,5 @@
 <?php
-include('connection.php');
+include_once('connection.php');
 include_once('../businessLogic/Usuario.php');
 
 class UserLink
