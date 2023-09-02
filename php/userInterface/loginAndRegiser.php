@@ -4,7 +4,7 @@
         <div id = loginContent>
                 <div class= 'loginSide shown active' >
                     <p class = loginTitle> Iniciar Sesión </p>
-                    <form id = loginForm action="./php/dataAccess/check_credentials.php" method="post">
+                    <form id = loginForm action="php\userInterface\auth.php" method="post">
                         <label for = "usernameL">
                             <span> Nombre de usuario </span>
                             <input type="text" id="usernameL" name="usernameL" autocomplete="off"/>
