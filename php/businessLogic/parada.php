@@ -6,7 +6,8 @@
         private bool $vigencia;
 
          // Constructor
-        public function __construct(int $id,
+        public function __construct(
+            int $id,
             string $direccion,
             string $coordenadas,
             bool $vigencia
