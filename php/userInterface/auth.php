@@ -1,6 +1,7 @@
 <?php
-include_once('../businessLogic/usuario.php');
-include('../dataAccess/userLink.php');
+include_once ($_SERVER['DOCUMENT_ROOT'].'/Proyecto Final/dirs.php');
+include_once(BUSINESS_PATH.'usuario.php');
+include(DATA_PATH.'userLink.php');
 
 if (isset($_POST['usernameL']) && isset($_POST['passwordL'])) {
     $username = $_POST['usernameL'];

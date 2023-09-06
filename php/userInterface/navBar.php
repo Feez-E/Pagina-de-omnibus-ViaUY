@@ -1,10 +1,14 @@
 <header>
+    <?php
+        include_once ($_SERVER['DOCUMENT_ROOT'].'/Proyecto Final/dirs.php');
+    ?>
 
     <nav>
-        <h1><a href='index.php'><img src='img/Logo.png' class=logo></a></h1>
+        <h1><a href= "/Proyecto Final/index.php" ><img src='/Proyecto Final//img/Logo.png' class=logo></a></h1>
         
             <?php
-            include("./php/businessLogic/usuario.php");
+          
+            include_once(BUSINESS_PATH."usuario.php");
             session_start();
             if (isset($_SESSION["userData"])) {
                 echo ("<a class='userName button logged'>");
@@ -25,7 +29,7 @@
             </svg>
         </a>
         <?php
-        include_once('loginAndRegiser.php');
+        include_once(INTERFACE_PATH .'loginAndRegiser.php');
         ?>
     </nav>
 
@@ -33,13 +37,13 @@
         <div class='menuToggle <?php if (isset($_SESSION["userData"])) {echo "active";}?>' ></div>
         <ul class='menuOpt'>
             <?php
-                include_once('userOptions.php');
+                include_once(INTERFACE_PATH.'userOptions.php');
             ?>
         </ul>
         <ul id='userOpt' class='menuOpt'>
-            <li> <a href='./php/userInteface/accountSettings.php' class=opt> Ajustes de cuenta</a></li>
-            <li> <a href='./php/dataAccess/logout.php' id="logout" class="opt"> Cerrar Sesion</a></li>
+            <li> <a href='/Proyecto Final/php/userInterface/accountSettings.php' class=opt> Ajustes de cuenta</a></li>
+            <li> <a href='/Proyecto Final/php/dataAccess/logout.php' id="logout" class="opt"> Cerrar Sesion</a></li>
         </ul>
     </div>
 </header>
-<script src="js/selector.js"> </script>
+<script src="/Proyecto Final/js/selector.js"> </script>

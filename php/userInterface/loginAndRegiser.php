@@ -79,6 +79,5 @@
             </div>
         
     </div>
-    <script src = js/labelPlaceholder.js> </script>
-   <!--  <script src="js/loginFormSubmit.js"></script> -->
+    <script src = "/Proyecto Final/js/labelPlaceholder.js"> </script>
 </div>
