@@ -13,7 +13,8 @@
         <?php
             include 'navBar.php';
         ?>
-        <div class = content>
+        <div class = "container content">
+            <h2 class = "title">Lineas y horarios</h2>
         <?php
             include 'showLineas.php';
         ?>
@@ -24,4 +25,5 @@
     include 'footer.php';
     ?>
 </body>
+<script src="../../js/lineToggleSelector.js"></script>
 </html>
