@@ -1,5 +1,5 @@
 <?php
-    class Linea_diaHabi{
+    class Linea_diaHabil{
         private int $codigo_Linea;
         private String $dia;
 

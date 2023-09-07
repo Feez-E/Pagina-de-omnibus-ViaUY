@@ -23,8 +23,22 @@ INNER JOIN Usuario ON Parada.id = Usuario.id
 INNER JOIN Reserva ON Usuario.id = Reserva.id_Usuario
 WHERE Usuario.id = "1";
 
-
+SELECT *
+FROM Linea;
 SELECT *
 FROM Linea
 INNER JOIN Transita ON Linea.codigo = Transita.codigo_L_Recorre;
 
+SELECT Linea.codigo, Linea.nombre, Linea.origen, Linea.destino, Linea.vigencia, Transita.orden_Recorre
+FROM Linea
+INNER JOIN Transita ON Linea.codigo = Transita.codigo_L_Recorre
+GROUP BY Linea.codigo, Linea.nombre, Linea.origen, Linea.destino, Linea.vigencia, Transita.orden_Recorre
+ORDER BY Transita.orden_Recorre;
+
+SELECT *
+FROM Linea;
+
+
+SELECT *
+FROM Transita
+ORDER BY  codigo_L_Recorre, horaSalida_Salida ASC, orden_Recorre ASC;

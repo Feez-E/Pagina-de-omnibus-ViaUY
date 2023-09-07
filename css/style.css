@@ -283,6 +283,7 @@
       pointer-events: none;
       background-color: transparent;
       text-transform: none;
+      color: var(--primary-color);
     }
 
     .userName.button svg{

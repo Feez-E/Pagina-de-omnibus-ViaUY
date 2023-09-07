@@ -14,7 +14,8 @@ class TransitaLink
     {
 
         $stmt = $this->conn->prepare(
-            "SELECT * FROM Transita ORDER BY codigo_L_Recorre, orden_Recorre ASC;"
+            "SELECT * FROM Transita
+            ORDER BY  codigo_L_Recorre, horaSalida_Salida ASC, orden_Recorre ASC;"
         );
         $stmt->execute();
         $result = $stmt->get_result();
