@@ -25,6 +25,8 @@
     --left-text-color: rgb(147, 173, 207);
     --right-text-color: rgb(218, 203, 173);
     --ss-filter: saturate(0.9) brightness(35) hue-rotate(43deg);
+    --backgroundImage: url(../img/EfectoFondo_Light.png);
+    --white-transparentColor:rgba(13, 18, 24, 0.099);
   }
     
   @media (prefers-color-scheme: dark) {
@@ -55,7 +57,10 @@
       --left-text-color: rgb(140, 169, 210);
       --right-text-color: rgb(218, 203, 173);
       --ss-filter: saturate(0.9) brightness(40) hue-rotate(43deg);
+      --backgroundImage: url(../img/EfectoFondo_Dark.png);
+      --white-transparentColor:rgba(13, 18, 24, 0.211);
     }
+   
   }
   
   /*-- Animations --*/
@@ -87,6 +92,7 @@
     }
     
     *::-webkit-scrollbar-track {
+    
       background-color: var(--bar-background-color);
     }
   /*----*/
@@ -101,7 +107,9 @@
     }
     
     body {
-      background: var(--whitesmoke-color);
+    
+      background-image: var(--backgroundImage);
+      background-attachment: fixed;
       overflow-x: hidden;
     }
   
@@ -149,6 +157,9 @@
       padding-right: 0.5rem;
     }
     
+    .shadow{
+      filter: drop-shadow(0.2rem 0.2rem .15rem rgba(34, 39, 46, 0.559));
+    }
       
       
   
@@ -517,30 +528,42 @@
   /*----*/
   
   /*-- Index --*/
-    
+    .indexContent{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+ 
     .busDivition {
-      padding-top: max(10vh, 5%);
+      content:"";
+      padding: 0 0 50px 30px;
       width: 100%;
       overflow: hidden;
     }
     
+
     .busImage {
-      width: max(150vh, 100%);
+      width: max( 100%);
+      max-width: 1500px;
     }
-    
+
     .reservationDivition {
-      width: 100%;
+      min-width: fit-content;
       height: max(8vmin, 80px);
-      background-color: var(--white-color);
+      background-color: var(--white-transparentColor);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 5px 15px var(--shadow-color), 0 -5px 15px var(--shadow-color);
+      justify-self: center;
+      border-radius: 15px;
+      
     }
     
     .reservationButton {
+      min-width: fit-content;
       text-decoration: none;
-      display: inline-block;
       color: var(--button-text-color);
       background: var(--secondary-color);
       border: 1px solid transparent;
@@ -548,9 +571,9 @@
       font-size: 2em;
       font-weight: 500;
       border-radius: 50px;
-      text-transform: uppercase;
       transition: all 0.55s ease;
       font-size: calc(1.2em + 0.2vh);
+      margin: 0 15px 0 15px;
     }
     
     .reservationButton:hover {
@@ -734,11 +757,13 @@
 
   .lineAndTravels{
     background-color: var(--white-color);
+
     width: 100%;
     margin: 1rem;
     padding: 1rem;
     color: var(--primary-color);
-    border-radius: 5px;
+    border-radius: 15px;
+    overflow-x: auto;
   }
 
   .line{
@@ -753,14 +778,27 @@
 
 
   .travels {
-    
     max-height: 0px;
     overflow-y: hidden;
     display: flex;
     justify-content: space-evenly;
-    transition: .25s; /* Agregamos la propiedad 'height' aquí */
+    transition: .25s;
   }
-  
+
+  .travels .travel:first-child{
+    min-width: 150px;
+  }
+
+  .travel *:not(:first-child){
+    margin: 0 5px 0 5px;
+  }
+
+  .travel{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
   .lineAndTravels.active .travels {
     padding-top: 1rem;
     max-height: 1000px;
@@ -805,16 +843,16 @@
 
   .lineAndTravels.active #lineToggle::before{
     transform: 
-    translateX(-12px)
+    translateX(-2px)
     translateY(18px)
-    rotate(-40deg);
+    rotate(40deg);
   }
 
   .lineAndTravels.active #lineToggle::after{
     transform: 
-     translateX(-2px)
+     translateX(-12px)
      translateY(18px)
-     rotate(40deg); 
+     rotate(-40deg);
   }
 
 
@@ -958,7 +996,7 @@
         #loginPanel{
           height: 80%;
           width: 80%;
-          border-radius: 25px;
+          border-radius: 15px;
         }
       /*----*/
 

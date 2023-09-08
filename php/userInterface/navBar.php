@@ -4,22 +4,22 @@
     ?>
 
     <nav>
-        <h1><a href= "/Proyecto Final/index.php" ><img src='/Proyecto Final//img/Logo.png' class=logo></a></h1>
+        <h1 ><a href= "/Proyecto Final/index.php" ><img src='/Proyecto Final//img/Logo.png' class="logo"></a></h1>
         
             <?php
           
             include_once(BUSINESS_PATH."usuario.php");
             session_start();
             if (isset($_SESSION["userData"])) {
-                echo ("<a class='userName button logged'>");
-                echo ("<p id='userNameText'>");
+                echo ("<a class='userName button logged shadow'>");
+                echo ("<span id='userNameText'>");
                 echo ($_SESSION["userData"]->getApodo());
             } else {
-                echo ("<a class='userName button'>");
-                echo ("<p id='userNameText'>");
+                echo ("<a class='userName button shadow'>");
+                echo ("<span id='userNameText'>");
                 echo ('Iniciar Sesión');
             }
-            echo ("</p>");
+            echo ("</span>");
             ?>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

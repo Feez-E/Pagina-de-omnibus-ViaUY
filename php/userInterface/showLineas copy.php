@@ -23,14 +23,15 @@ foreach ($lineasArr as $linea) {
 
     if (array_key_exists($indice, $transitasArr)) {
 
+        $primeraVez = true; 
         $indicePrevio = $indice;
         if ($linea->getVigencia()) {
             echo "<div class = lineAndTravels><div class = line>";
             echo "<div class = lineLeft><h3  class = subtitle>" . $linea->getNombre() . " - " . $linea->getOrigen() . " " . $linea->getDestino() . "</h3> ";
             $linea_diasHabilesArr = $linea_diaHabilLink->getLinea_diaHabilByCodigo_Linea($linea->getCodigo());
             echo"<p>";
-            foreach ($linea_diasHabilesArr as $linea_diasHabil) {
-                echo $linea_diasHabil->getDia() . " ";
+            foreach ($linea_diasHabilesArr as $linea_diaHabil) {
+                echo $linea_diaHabil->getDia() . " ";
             }
             echo "</p></div><div id = lineToggle></div>";
             echo "</div>";
