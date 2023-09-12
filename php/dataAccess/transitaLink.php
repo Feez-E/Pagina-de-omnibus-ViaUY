@@ -1,5 +1,5 @@
 <?php
-include_once('../businessLogic/transita.php');
+include_once(BUSINESS_PATH.'transita.php');
 
 class TransitaLink
 {

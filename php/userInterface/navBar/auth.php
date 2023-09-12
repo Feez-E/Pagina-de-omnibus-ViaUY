@@ -18,5 +18,5 @@ if (isset($_POST['usernameL']) && isset($_POST['passwordL'])) {
     }
 }
 
-header("Location: ../../index.php"); 
+header("Location: ../../../index.php"); 
 ?>

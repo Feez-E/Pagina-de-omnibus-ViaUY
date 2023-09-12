@@ -1,6 +1,6 @@
 <?php
 include_once('connection.php');
-include_once('../businessLogic/Usuario.php');
+include_once(BUSINESS_PATH . 'Usuario.php');
 
 class UserLink
 {
@@ -29,7 +29,7 @@ class UserLink
                     $user['nombre'],
                     $user['apellido'],
                     $user['correo'],
-                    $user['contrasena'], // No necesitas cambiar esto
+                    $user['contrasena'],
                     $user['telefono'],
                     new DateTime($user['fechaNac']),
                     $user['nombre_Rol']
@@ -69,5 +69,65 @@ class UserLink
 
 
     }
+
+    public function modifyUser(Usuario $user)
+    {
+        $stmt = $this->conn->prepare(
+            "UPDATE usuario SET
+            nombre = ?,
+            apellido = ?,
+            correo = ?,
+            telefono = ?,
+            fechaNac = ?
+            WHERE id = ?"
+        );
+        $stmt->bind_param(
+            "sssssi",
+            $user->getNombre(),
+            $user->getApellido(),
+            $user->getCorreo(),
+            $user->getTelefono(),
+            $user->getFechaNac()->format('Y-m-d'),
+            $user->getId()
+        );
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+    public function changeUserPassword($userId, $oldPassword, $newPassword, $confirmPassword)
+    {
+        if ($newPassword === $confirmPassword) {
+            $stmt = $this->conn->prepare(
+                "SELECT contrasena FROM usuario 
+                WHERE id = ?"
+            );
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows === 1) {
+                $user = $result->fetch_assoc();
+                $hashedPassword = $user['contrasena'];
+                if (password_verify($oldPassword, $hashedPassword)) {
+                    $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+                    $stmt = $this->conn->prepare(
+                        "UPDATE usuario SET
+                        contrasena = ?
+                        WHERE id = ?"
+                    );
+                    $stmt->bind_param("si", $newHashedPassword, $userId);
+                    if ($stmt->execute()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
-?>

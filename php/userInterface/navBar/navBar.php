@@ -29,7 +29,7 @@
             </svg>
         </a>
         <?php
-        include_once(INTERFACE_PATH .'loginAndRegiser.php');
+        include_once(INTERFACE_PATH .'navBar/loginAndRegiser.php');
         ?>
     </nav>
 
@@ -37,11 +37,11 @@
         <div class='menuToggle <?php if (isset($_SESSION["userData"])) {echo "active";}?>' ></div>
         <ul class='menuOpt'>
             <?php
-                include_once(INTERFACE_PATH.'userOptions.php');
+                include_once(INTERFACE_PATH.'navBar/userOptions.php');
             ?>
         </ul>
         <ul id='userOpt' class='menuOpt'>
-            <li> <a href='/Proyecto Final/php/userInterface/accountSettings.php' class=opt> Ajustes de cuenta</a></li>
+            <li> <a href='/Proyecto Final/php/userInterface/accountSettings/accountSettings.php' class=opt> Ajustes de cuenta</a></li>
             <li> <a href='/Proyecto Final/php/dataAccess/logout.php' id="logout" class="opt"> Cerrar Sesion</a></li>
         </ul>
     </div>

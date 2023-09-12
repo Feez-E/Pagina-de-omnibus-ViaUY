@@ -1,5 +1,5 @@
 <?php
-include_once('../businessLogic/tramo.php'); // Include the Tramo class file
+include_once(BUSINESS_PATH.'tramo.php'); // Include the Tramo class file
 
 class TramoLink
 {

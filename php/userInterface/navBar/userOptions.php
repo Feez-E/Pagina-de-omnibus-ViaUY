@@ -10,7 +10,7 @@ include_once(DATA_PATH."/permisoLink.php");
         $permisos = $permiso->getRolByUsernameRol($rol);
 
         foreach ($permisos as $nombre => $url) {
-            echo "<li> <a class = 'opt' href = \"/Proyecto Final/php/userInterface/". $url .".php\">" . $nombre . "</a></li>";
+            echo "<li> <a class = 'opt' href = \"/Proyecto Final/php/userInterface/". $url . "/". $url .".php\">" . $nombre . "</a></li>";
         }
     }
 

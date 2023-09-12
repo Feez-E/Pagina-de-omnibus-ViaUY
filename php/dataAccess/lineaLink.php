@@ -11,7 +11,7 @@ class LineaLink
 
     public function getLineas()
     {
-        include_once('../businessLogic/linea.php');
+        include_once(BUSINESS_PATH.'linea.php');
 
         $stmt = $this->conn->prepare(
             "SELECT * FROM Linea;"

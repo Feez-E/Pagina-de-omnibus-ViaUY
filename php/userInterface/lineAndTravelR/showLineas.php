@@ -1,10 +1,10 @@
 <?php
-include_once('../dataAccess/connection.php');
-include_once('../dataAccess/lineaLink.php');
-include_once('../dataAccess/transitaLink.php');
-include_once('../dataAccess/paradaLink.php');
-include_once('../dataAccess/tramoLink.php');
-include_once('../dataAccess/linea_diaHabilLink.php');
+include_once('../../dataAccess/connection.php');
+include_once('../../dataAccess/lineaLink.php');
+include_once('../../dataAccess/transitaLink.php');
+include_once('../../dataAccess/paradaLink.php');
+include_once('../../dataAccess/tramoLink.php');
+include_once('../../dataAccess/linea_diaHabilLink.php');
 
 $lineaLink = new LineaLink($conn);
 $lineasArr = $lineaLink->getLineas();
@@ -25,7 +25,7 @@ foreach ($lineasArr as $linea) {
 
         $indicePrevio = $indice;
         if ($linea->getVigencia()) {
-            echo "<div class = lineAndTravels><div class = line>";
+            echo "<div class = 'lineAndTravels shadow'><div class = line>";
             echo "<div class = lineLeft><h3  class = subtitle>" . $linea->getNombre() . " - " . $linea->getOrigen() . " " . $linea->getDestino() . "</h3> ";
             $linea_diasHabilesArr = $linea_diaHabilLink->getLinea_diaHabilByCodigo_Linea($linea->getCodigo());
             echo"<p>";

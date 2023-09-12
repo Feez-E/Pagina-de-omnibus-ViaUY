@@ -4,7 +4,7 @@
         <div id = loginContent>
                 <div class= 'loginSide shown active' >
                     <p class = loginTitle> Iniciar Sesión </p>
-                    <form id = loginForm action="php\userInterface\auth.php" method="post">
+                    <form id = loginForm action="/Proyecto Final/php/userInterface/navBar/auth.php" method="post">
                         <label for = "usernameL">
                             <span> Nombre de usuario </span>
                             <input type="text" id="usernameL" name="usernameL" autocomplete="off"/>
@@ -30,7 +30,7 @@
             <div id = loginSeparator></div>
             <div class = 'registerSide shown'>
                 <p class = loginTitle> Registrarse </p>
-                <form id = registerForm action="php\userInterface\register.php" method="post">
+                <form id = registerForm action="/Proyecto Final/php/userInterface/navbar/register.php" method="post">
                     <label for = usernameR>
                         <span> Nombre de usuario </span>
                         <input type="text" id="usernameR" name="usernameR" autocomplete="off"/>
@@ -63,7 +63,6 @@
                          stroke-linecap="round" stroke-linejoin="round">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                             <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="4" y1="4" x2="20" y2="20"></line>
                         </svg>
                     </label>
                     <label for = passwordConfirm>

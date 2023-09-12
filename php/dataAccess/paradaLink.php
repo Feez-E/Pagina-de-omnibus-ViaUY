@@ -1,5 +1,5 @@
 <?php
-include_once('../businessLogic/parada.php');
+include_once(BUSINESS_PATH.'parada.php');
 class ParadaLink
 {
     private $conn;

@@ -1,5 +1,5 @@
 <?php
-include_once('../businessLogic/linea_diaHabil.php');
+include_once(BUSINESS_PATH.'linea_diaHabil.php');
 
 class Linea_diaHabilLink
 {

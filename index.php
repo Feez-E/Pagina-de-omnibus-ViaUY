@@ -9,19 +9,17 @@
     <title>ViaUY</title>
 </head>
 <body>
-    <main>
-        <?php
-            include 'php/userInterface/navBar.php';
-        ?>
-        <div class = indexContent>
+    <?php
+        include 'php/userInterface/navBar/navBar.php';
+    ?>
+    <main class = indexContent>
             <div class = busDivition>
                 <img class = busImage src = 'img/BusImg.png'>
             </div>
             <div class ="container reservationDivition">
                 <a href = '#' class='reservationButton button'> Reservar </a>
-                <a href = 'php/userInterface/lineAndTravelR.php' class='reservationButton button'> Ver Horarios </a>
+                <a href = 'php/userInterface/lineAndTravelR/lineAndTravelR.php' class='reservationButton button'> Ver Horarios </a>
             </div>
-        </div>
 </main>
    
     <?php
