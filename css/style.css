@@ -332,6 +332,7 @@
         right: 0px;
         background-color: var(--white-color);
         transition: 0.5s;;
+        box-shadow: 0 17px 15px var(--shadow-color);
       }
   
       .menuOpt {
@@ -539,16 +540,16 @@
     }
  
     .busDivition {
-      content:"";
+      display: flex;
       padding: 0 0 50px 30px;
-      width: 100%;
       overflow: hidden;
+      
     }
     
-
     .busImage {
-      width: 100%;
-      max-width: 1500px;
+      width: 200%;
+      transform:scaleX(-1);
+     
     }
 
     .reservationDivition {
@@ -759,7 +760,6 @@
 
   .lineAndTravels{
     background-color: var(--white-color);
-
     width: 100%;
     margin: 1rem;
     padding: 1rem;
@@ -1036,6 +1036,11 @@
   
   /* xs */
     @media (min-width: 475px) {
+      .busImage {
+        width: 100%;
+        transform:none;
+      }
+
       .container {
         max-width: 475px;
       }

@@ -13,7 +13,7 @@
         include 'php/userInterface/navBar/navBar.php';
     ?>
     <main class = indexContent>
-            <div class = busDivition>
+            <div class = "container busDivition">
                 <img class = busImage src = 'img/BusImg.png'>
             </div>
             <div class ="container reservationDivition">
