@@ -30,7 +30,7 @@
             <div id = loginSeparator></div>
             <div class = 'registerSide shown'>
                 <p class = loginTitle> Registrarse </p>
-                <form id = registerForm action="/Proyecto Final/php/userInterface/navbar/register.php" method="post">
+                <form id = registerForm action="/Proyecto Final/php/userInterface/navBar/register.php" method="post">
                     <label for = usernameR>
                         <span> Nombre de usuario </span>
                         <input type="text" id="usernameR" name="usernameR" autocomplete="off"/>

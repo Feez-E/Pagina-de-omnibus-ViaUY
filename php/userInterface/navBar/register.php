@@ -1,6 +1,9 @@
 <?php
-include('../businessLogic/usuario.php');
-include('../dataAccess/userLink.php');
+include_once ($_SERVER['DOCUMENT_ROOT'].'/Proyecto Final/dirs.php');
+
+include('../../businessLogic/usuario.php');
+include('../../dataAccess/userLink.php');
+
 
 if (isset($_POST['usernameR']) &&
  isset($_POST['name']) &&
@@ -9,7 +12,15 @@ if (isset($_POST['usernameR']) &&
  isset($_POST['email']) &&
  isset($_POST['phoneNumber']) &&
  isset($_POST['passwordR']) &&
- isset($_POST['passwordConfirm'])) {
+ isset($_POST['passwordConfirm']) &&
+ !empty($_POST['usernameR']) &&
+ !empty($_POST['name']) &&
+ !empty($_POST['lastname']) &&
+ !empty($_POST['birthdate']) &&
+ !empty($_POST['email']) &&
+ !empty($_POST['phoneNumber']) &&
+ !empty($_POST['passwordR']) &&
+ !empty($_POST['passwordConfirm'])) {
 
     // Crear una instancia de UserLink con la conexión a la base de datos 
     $register = new UserLink($conn);
@@ -27,5 +38,5 @@ if (isset($_POST['usernameR']) &&
 
 }
 
-header("Location: ../../index.php");
+header("Location: ../../../index.php");
 ?>
