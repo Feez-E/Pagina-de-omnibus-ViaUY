@@ -1,7 +1,8 @@
 :root {
     /* Light mode */
-    --primary-color: rgb(66, 126, 206);
+    --primary-color: rgb(0, 113, 188);
     --secondary-color: rgb(54, 113, 190);
+    --tertiary-color: rgb(29, 54, 92);
     --button-text-color: white;
     --shadow-color: rgb(119, 156, 204);
     --white-color: white;
@@ -28,6 +29,12 @@
     --backgroundImage: url(../img/EfectoFondo_Light.png);
     --white-transparentColor:rgba(13, 18, 24, 0.099);
     --shadow-filter:drop-shadow(0.2rem 0.2rem 0.25rem rgba(20, 42, 74, 0.25));
+    --font-xs: 1.2rem;
+    --font-sm: 1.6rem;
+    --font-md:2rem;
+    --font-lg:2.4rem;
+    --font-1-5:1.5em;
+    --font-double:2em;
   }
     
   @media (prefers-color-scheme: dark) {
@@ -35,6 +42,7 @@
       /* Dark mode */
       --primary-color: rgb(185, 185, 185);
       --secondary-color: rgb(15, 73, 112);
+      --tertiary-color: rgb(185, 185, 185);
       --button-text-color: rgb(185, 185, 185);
       --shadow-color: rgb(24, 27, 35);
       --white-color: rgb(32, 34, 40);
@@ -67,7 +75,27 @@
   
   /*-- Animations --*/
   
+  @keyframes slideIn {
+    0% {
+      transform: 
+        translateX(-50%) 
+        translateY(-200%)
+        scale(0.5);
+    }
+    100% {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
   
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+    }
+  }
   
   
   /*----*/
@@ -107,6 +135,10 @@
       padding: 0;
       font-family: 'Century Gothic';
     }
+
+    html{
+      font-size: 62.5%;
+    }
     
     body {
     
@@ -128,7 +160,7 @@
       padding: 10px;
       color: var(--button-text-color);
       background: var(--secondary-color);
-      font-size: 0.75em;
+      font-size: var(--font-sm);
       font-weight: 500;
       border: 1px solid transparent;
       cursor: pointer;
@@ -157,13 +189,28 @@
       margin-right: auto;
       padding-left: 0.5rem;
       padding-right: 0.5rem;
+      font-size: var(--font-sm);
     }
     
     .shadow{
       filter: var(--shadow-filter);
     }
       
+    .confirmationMessage{
+      position: fixed;
+      inset: 50px 50% auto 50%;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: calc(100% - 20px);
+      border-radius: 15px;
+      padding: 20px;
+      background-color: var(--white-color);
+      color:var(--tertiary-color);
+      transform: translateX(-50%);
+      animation: slideIn 0.25s ease-in-out forwards, fadeOut 0.5s 2s ease-in-out forwards;
       
+    }
   
   /*----*/
   
@@ -185,11 +232,12 @@
         padding:min(7px, 1vh) 10px;
         margin-top: 25px;
         border-radius: 30px;
-        font-size: 1em;
+        font-size: var(--font-sm);
         width: 50vw;
         position: relative;
         cursor:text;
         transition: 0.2s;
+        min-width: 170px;
       }
   
       label input{
@@ -208,6 +256,7 @@
         top: min(7px, 1vh);
         left: 10px;
         transition: 0.2s;
+        white-space: nowrap; 
       }
   
     /*----*/
@@ -223,6 +272,7 @@
     /* top */
   
       label span.top {
+        color:var(--tertiary-color);
         left: 2px;
         top: -30px;
       }
@@ -237,7 +287,7 @@
         cursor: pointer;
       }
       label svg.eye line{
-        stroke: var(--primary-color);
+        stroke: var(--tertiary-color);
         transition: 0.25s;
       }
   
@@ -336,7 +386,7 @@
       }
   
       .menuOpt {
-        font-size: 1.2em;
+        font-size: var(--font-md);
         line-height: 3em;
         padding-left: 2.5vw;
         list-style: none;
@@ -433,9 +483,9 @@
     footer {
       display: flex;
       background-color: var(--white-color);
-      height: auto;
+      height: fit-content;
       width: 100%;
-      font-size: 0.75em;
+      font-size: var(--font-xs);
       margin-top: 40px;
     }
     .footerTitle {
@@ -493,7 +543,7 @@
     }
     
     .SStext {
-      font-size: 1.5em;
+      font-size: var(--font-1-5);
       font-weight: 600;
       margin-bottom: 2vh;
       display: flex;
@@ -504,7 +554,6 @@
 
     .SSlogo {
       margin-bottom: 10px;
-      font-size: 1em;
       height: 40px;
       width: 40px;
       fill: var(--right-text-color);
@@ -571,11 +620,9 @@
       background: var(--secondary-color);
       border: 1px solid transparent;
       line-height: 1;
-      font-size: 2em;
       font-weight: 500;
       border-radius: 50px;
-      transition: all 0.55s ease;
-      font-size: calc(1.2em + 0.2vh);
+      transition:0.5s;
       margin: 0 15px 0 15px;
     }
     
@@ -590,7 +637,7 @@
   
   /*-- Login --*/
   
-    #pageCover{
+    .pageCover{
       inset: 0px;
       position: fixed;
       width: 100%;
@@ -603,7 +650,7 @@
     }
     
   
-    #pageCover.active{
+    .pageCover.active{
       visibility: visible;
       background-color: rgba(0, 0, 0, 0.379);
       transition: 1s;
@@ -615,9 +662,10 @@
       transform:translateX(-500px);
       content-visibility: hidden;
       border-radius: 0px;
+      font-size: var(--font-sm);
     }
 
-    #pageCover.active #loginPanel{
+    #loginPageCover.active #loginPanel{
       background-color: var(--whitesmoke-color);
       transform:translateX(0px);
       content-visibility: visible; 
@@ -672,13 +720,8 @@
     }
 
     .loginTitle{
-      font-size: 1.25em;
+      font-size: var(--font-1-5);
       font-weight: bold;
-    }
-
-    #registerForm input[type=submit],
-    #loginForm input[type=submit]{
-      font-size: 1em;
     }
 
     #loginContent {
@@ -721,7 +764,7 @@
     label[for=passwordConfirm] span,
     label[for=email] span,
     label[for=birthdate] span{
-      font-size: 0.70em;
+      font-size: var(--font-xs);
       top: 10px;
     }
 
@@ -746,23 +789,18 @@
 /*----*/
 
 /*-- lineAndTravelR --*/
-  .container.content{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 
   h2.title{
     color: var(--secondary-color);
-    margin-top: 2rem;
+    margin-top: 32px;
     
   }
 
   .lineAndTravels{
     background-color: var(--white-color);
     width: 100%;
-    margin: 1rem;
-    padding: 1rem;
+    margin: 1.6rem;
+    padding: 1.6rem;
     color: var(--primary-color);
     border-radius: 15px;
     overflow-x: auto;
@@ -864,7 +902,7 @@
 /*-- accountSettings --*/
 
   .container#user{
-    margin:2rem 0 1rem 0 ;
+    margin:3.2rem 0 1.6rem 0 ;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -873,17 +911,13 @@
   }
 
   .container#user svg{
-    height: 5rem;
-    width: 5rem;
-  }
-
-  .container#user p{
-    font-size: 1.5rem;
+    height: 9rem;
+    width: 9rem;
   }
 
 
   .container#form{
-    margin:1rem 0 1rem 0 ;
+    margin: 1rem 0 1rem 0 ;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -899,7 +933,7 @@
     width: 100%;
     border: 1px solid transparent;
     background-color: var(--white-color);
-    margin-bottom: 1rem;
+    margin-bottom: 1.6rem;
     border-radius: 15px;
     flex-direction: column;
     cursor:default;
@@ -911,7 +945,7 @@
   }
 
   .container#form label span{
-  
+    color:var(--tertiary-color);
     padding: 5px 0 5px 0;
     position: static;
   
@@ -952,9 +986,7 @@
     transition: .5s;
   }
 
-  .container#form .passwordSection > .button{
-    font-size: 1rem;
-  }
+ 
   .container#form .passwordSection > .button:hover{
   transform: none;
   }
@@ -964,7 +996,6 @@
     background-color: transparent;
     color: var(--primary-color);
     border-color: transparent;
-    font-size: 1rem;
   }
 
   .passwordSection.active #passwordCancel{
@@ -1020,13 +1051,24 @@
     width: 100%;
   }
 
+  .container#form .passwordSection .confirmationMessage{
+    margin-top: 20px;
+  }
+
+  .container#form .passwordSection.active .confirmationMessage{
+    display: none;
+  }
+
   #accSettingsForm input[type=submit]{
     display:none;
-    font-size: 1em;
   }
 
   #accSettingsForm input[type=submit].shown{
     display:block;
+  }
+
+  #accSettingsForm input[type=submit].shown + .confirmationMessage {
+    display:none;
   }
 
 
@@ -1050,7 +1092,7 @@
       } 
 
       .userName.button{
-        font-size: 0.9em;
+        font-size: var(--font-xs);
         width: auto;
         height: auto;
         text-transform: uppercase;
@@ -1058,16 +1100,7 @@
       }
 
       .userName.button.logged{
-        font-size: 1.2em;
-      }
-
-      .loginTitle{
-        font-size: 2em;
-        font-weight: bold;
-      }
-
-      .registerSide .loginTitle{
-        font-size: 1.5em;
+        font-size: var(--font-sm);
       }
   
       label[for=usernameL] span,
@@ -1075,7 +1108,7 @@
       label[for=passwordConfirm] span,
       label[for=email] span,
       label[for=birthdate] span{
-        font-size: 1em;
+        font-size: var(--font-sm);
         top: 5px;
       }
   
@@ -1152,6 +1185,7 @@
           line-height: 25px;
           position: absolute;
           bottom: 30px;
+          font-size: var(--font-sm);
         }
       /*----*/
     

@@ -40,34 +40,37 @@ class UserLink
         }
     }
 
-    public function registerUser(Usuario $user)
+    public function registerUser(Usuario $user, $passwordConfirm)
     {
-        $apodo = $user->getApodo();
-        $stmt = $this->conn->prepare("SELECT * FROM Usuario WHERE apodo = ?");
-        $stmt->bind_param("s", $apodo);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        if ($user->getContrasena() === $passwordConfirm) {
 
-        if ($result->num_rows < 1) {
-            $nombre = $user->getNombre();
-            $apellido = $user->getApellido();
-            $correo = $user->getCorreo();
-            $contrasena = password_hash($user->getContrasena(), PASSWORD_DEFAULT);
-            $telefono = $user->getTelefono();
-            $fechaNac = $user->getFechaNac()->format('Y-m-d H:i:s');
-            $nombre_Rol = $user->getNombreRol();
-
-            $stmt = $this->conn->prepare(
-                "INSERT INTO Usuario (apodo, nombre, apellido, correo, contrasena, telefono, fechaNac, nombre_Rol) 
-                VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)"
-            );
-
-            $stmt->bind_param("ssssssss", $apodo, $nombre, $apellido, $correo, $contrasena, $telefono, $fechaNac, $nombre_Rol);
+            $apodo = $user->getApodo();
+            $stmt = $this->conn->prepare("SELECT * FROM Usuario WHERE apodo = ?");
+            $stmt->bind_param("s", $apodo);
             $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows < 1) {
+                $nombre = $user->getNombre();
+                $apellido = $user->getApellido();
+                $correo = $user->getCorreo();
+                $contrasena = password_hash($user->getContrasena(), PASSWORD_DEFAULT);
+                $telefono = $user->getTelefono();
+                $fechaNac = $user->getFechaNac()->format('Y-m-d H:i:s');
+                $nombre_Rol = $user->getNombreRol();
+
+                $stmt = $this->conn->prepare(
+                    "INSERT INTO Usuario (apodo, nombre, apellido, correo, contrasena, telefono, fechaNac, nombre_Rol) 
+                VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)"
+                );
+
+                $stmt->bind_param("ssssssss", $apodo, $nombre, $apellido, $correo, $contrasena, $telefono, $fechaNac, $nombre_Rol);
+                if($stmt->execute()){
+                    return true;
+                }
+            }
         }
-
-
-
+        return false;
     }
 
     public function modifyUser(Usuario $user)

@@ -6,7 +6,7 @@ menuToggle.onclick = function(){
 
 let userName = document.querySelector('.userName');
 let loginToggle = document.querySelector('#loginToggle');
-let pageCover = document.querySelector('#pageCover');
+let pageCover = document.querySelector('#loginPageCover');
 let loginPanel = document.querySelector('#loginPanel');
 userName.onclick = function(){
     pageCover.classList.toggle('active')

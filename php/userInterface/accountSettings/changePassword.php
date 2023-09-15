@@ -24,12 +24,17 @@ if (
         $_POST['newPassword'],
         $_POST['confirmPassword']
     );
-    if($executed){
-        // Mensaje de confirmacion
+    if ($executed) {
+        // Mensaje de confirmación
+        $_SESSION['message'] = "Contraseña cambiada con éxito";
+        header("Location: accountSettings.php"); 
+        exit;
+    } else {
+        $_SESSION['message'] = "Error al cambiar la contraseña";
     }
    
     
 }
-
-header("Location: accountSettings.php");
+$_SESSION['message'] = "Error al cambiar la contraseña";
+header("Location: accountSettings.php"); 
 ?>

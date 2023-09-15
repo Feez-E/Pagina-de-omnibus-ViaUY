@@ -14,7 +14,18 @@
     <?php
     include '../navBar/navBar.php';
     ?>
-    <main>
+    <main class = container>
+    <?php
+if (isset($_SESSION['message'])) { ?>
+    <div class="confirmationMessage container shadow">
+        <p>
+            <?php echo $_SESSION['message'] ?>
+        </p>
+    </div>
+    <?php
+    unset($_SESSION['message']); // Eliminar el mensaje de confirmación para que no se muestre nuevamente
+}
+?>
         <h2 class="title">Ajustes de cuenta</h2>
         <div class="container" id="user">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="21.2" viewBox="0 0 24 21.2" fill="none"
@@ -24,7 +35,6 @@
                 <circle cx="12" cy="7" r="4"></circle>
                 <line x1="4" y1="21.2" x2="20" y2="21.2"></line>
             </svg>
-            <p class=username>
                 <?php
                 try {
                     if (isset($_SESSION["userData"])) {
@@ -38,7 +48,6 @@
                     echo "Nombre de usuario incorrecto";
                 }
                 ?>
-            </p>
         </div>
         <div class="container shadow" id="form">
             <?php
@@ -46,23 +55,25 @@
                 if (isset($_SESSION["userData"])) {
                     ?>
                     <div class="passwordSection">
-                        <a class="button shadow">Cambiar contraseña</a> <div id = "passwordCancel"></div>
+                        <a class="button shadow">Cambiar contraseña</a>
+                        <div id="passwordCancel"></div>
                         <form id=passwordForm action="./changePassword.php" method="post">
-                            <label for="oldPassword" class = "editable">
-                                <span > Contraseña </span>
-                                <input type="text" id="oldPassword" name="oldPassword" autocomplete="off"/>
+                            <label for="oldPassword" class="editable">
+                                <span> Contraseña </span>
+                                <input type="text" id="oldPassword" name="oldPassword" autocomplete="off" />
                             </label>
-                            <label for="newPassword" class = "editable">
-                                <span > Nueva contraseña </span>
-                                <input type="text" id="newPassword" name="newPassword" autocomplete="off"/>
+                            <label for="newPassword" class="editable">
+                                <span> Nueva contraseña </span>
+                                <input type="text" id="newPassword" name="newPassword" autocomplete="off" />
                             </label>
-                            <label for="confirmPassword" class = "editable">
-                                <span > Confirmar contraseña </span>
-                                <input type="text" id="confirmPassword" name="confirmPassword" autocomplete="off"/>
+                            <label for="confirmPassword" class="editable">
+                                <span> Confirmar contraseña </span>
+                                <input type="text" id="confirmPassword" name="confirmPassword" autocomplete="off" />
                             </label>
                             <input type="submit" value="Confirmar" class="button">
                         </form>
                     </div>
+                    <div class="modifyReturn"></div>
                     <form id=accSettingsForm action="./modifyAccount.php" method="post">
                         <label for="nameAccSettings">
                             <span> Nombre </span>

@@ -39,10 +39,11 @@ if (
         $_SESSION['userData']->setCorreo($_POST['emailAccSettings']);
         $_SESSION['userData']->setTelefono($_POST['phoneNumberAccSettings']);
         $_SESSION['userData']->setFechaNac( new DateTime($_POST['birthdateAccSettings']));
+        $_SESSION['message'] = "Datos cambiados con exito";
+        header("Location: accountSettings.php");
+        exit;
     }
-   
-    
 }
-
+$_SESSION['message'] = "Error al cambiar los datos";
 header("Location: accountSettings.php");
 ?>

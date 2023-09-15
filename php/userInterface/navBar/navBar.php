@@ -4,7 +4,7 @@
     ?>
 
     <nav>
-        <h1 ><a href= "/Proyecto Final/index.php" ><img src='/Proyecto Final//img/Logo.png' class="logo"></a></h1>
+        <h1 ><a href= "/Proyecto Final/index.php" ><img src='/Proyecto Final/img/Logo.png' class="logo"></a></h1>
         
             <?php
           
