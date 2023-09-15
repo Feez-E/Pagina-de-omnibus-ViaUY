@@ -208,7 +208,7 @@
       background-color: var(--white-color);
       color:var(--tertiary-color);
       transform: translateX(-50%);
-      animation: slideIn 0.25s ease-in-out forwards, fadeOut 0.5s 2s ease-in-out forwards;
+      animation: slideIn 0.25s forwards, fadeOut 0.5s 2s forwards;
       
     }
   
@@ -274,7 +274,7 @@
       label span.top {
         color:var(--tertiary-color);
         left: 2px;
-        top: -30px;
+        top: -25px;
       }
       
     /*----*/
@@ -803,7 +803,6 @@
     padding: 1.6rem;
     color: var(--primary-color);
     border-radius: 15px;
-    overflow-x: auto;
   }
 
   .line{
@@ -823,20 +822,19 @@
     display: flex;
     justify-content: space-evenly;
     transition: .25s;
+    gap:10px;
+    overflow-x: auto;
   }
 
   .travels .travel:first-child{
-    min-width: 150px;
-  }
-
-  .travel *:not(:first-child){
-    margin: 0 5px 0 5px;
+    white-space: nowrap; 
   }
 
   .travel{
     display: flex;
     flex-direction: column;
     text-align: center;
+    min-width: fit-content;
   }
 
   .lineAndTravels.active .travels {
@@ -1109,7 +1107,7 @@
       label[for=email] span,
       label[for=birthdate] span{
         font-size: var(--font-sm);
-        top: 5px;
+        top: min(7px, 1vh);
       }
   
       label[for=usernameL] span.top,
@@ -1118,7 +1116,7 @@
       label[for=email] span.top,
       label[for=birthdate] span.top {
         left: 2px;
-        top: -30px;
+        top: -25px;
       }
 
     }
