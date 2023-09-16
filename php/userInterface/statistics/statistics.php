@@ -6,17 +6,14 @@
     <link rel="stylesheet" type="text/css" href="../../../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Century+Gothic&display=swap" rel="stylesheet">
     <link rel="icon" href="../../../ico/icon.ico">
-    <title>ViaUY - Lineas y horarios</title>
+    <title>ViaUY - Estadisticas</title>
 </head>
 <body>
     <?php
         include '../navBar/navBar.php';
     ?>
     <main class = "container">
-            <h2 class = "title">Lineas y horarios</h2>
-        <?php
-            include 'showLineas.php';
-        ?>
+            <h2 class = "title">Estadisticas</h2>
     </main>
    
     <?php
