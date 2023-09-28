@@ -1072,6 +1072,40 @@
 
 
 /*----*/
+
+
+/*-- lineAndTravelR --*/
+#stopAndSectionMap { 
+  margin-top: 1.6rem;
+  font-size: var(--font-xs);
+  height: 75vh;
+  width: 100%;
+  border-radius: 15px;
+  min-width: 300px;
+  font-size: var(--font-xs);
+  cursor: pointer;
+ }
+
+ #stopAndSectionMap:active{
+  cursor:grabbing
+ }
+
+ .leaflet-popup-content {
+  text-align: center;
+ }
+
+.leaflet-popup-content .buttons{
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.leaflet-popup-content .button{
+  background-color: var(--secondary-color);
+  color: white;
+  line-height: 10px;
+}
+
 /*-- MovileFirst Design --*/
   
   /* xs */

@@ -1,5 +1,6 @@
 <?php
-include_once(BUSINESS_PATH.'parada.php');
+include_once ($_SERVER['DOCUMENT_ROOT'].'/Proyecto Final/dirs.php');
+include_once(BUSINESS_PATH . 'parada.php');
 class ParadaLink
 {
     private $conn;
@@ -52,6 +53,22 @@ class ParadaLink
         return $paradas;
     }
 
+    public function insertParada($direccion, $coordenadas)
+    {
+        $vigencia = 1;
+
+        $stmt = $this->conn->prepare(
+            "INSERT INTO Parada (direccion, coordenadas, vigencia) 
+                VALUES ( ?, ?, ?)"
+        );
+
+        $stmt->bind_param("ssi", $direccion, $coordenadas, $vigencia);
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+
+    }
 }
 
 ?>
