@@ -1090,6 +1090,7 @@
   cursor:grabbing
  }
 
+
  .leaflet-popup-content {
   text-align: center;
  }
@@ -1103,8 +1104,15 @@
 .leaflet-popup-content .button{
   background-color: var(--secondary-color);
   color: white;
-  line-height: 10px;
+  width: 40px;
+  height: 40px;
+  padding:0px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 
 /*-- MovileFirst Design --*/
   

@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://unpkg.com/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>ViaUY - Administrar tramos y paradas</title>
+    <title>ViaUY - Administrar paradas</title>
 </head>
 
 <body>
@@ -24,7 +24,7 @@
     include '../navBar/navBar.php';
     ?>
     <main class="container">
-        <h2 class="title">Administrar tramos y paradas</h2>
+        <h2 class="title">Administrar paradas</h2>
         <div id="stopAndSectionMap" class=shadow></div>
         <?php
         include_once("../../dataAccess/paradaLink.php");
@@ -39,7 +39,7 @@
     include '../footer.php';
     ?>
 </body>
-<script src="../../../js/map.js"></script>
+<script type="module" src="../../../js/stopsMap.js"></script>
 <script src="../../../js/lineToggleSelector.js"></script>
 
 </html>
