@@ -5,11 +5,25 @@ const popup = L.popup();
 function newMap(div) {
     const map = L.map(div).setView([-34.568537501229486, -56.01135368875827], 9);
 
+
+    const bounds = L.latLngBounds(
+        L.latLng(200.0, -170.0),  // Esquina noroeste de Europa
+        L.latLng(-200.0, 190.0)   // Esquina sureste de Europa
+    );
+    
     // Agrega una capa de mosaico de OpenStreetMap al mapa
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
+        minZoom: 3,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
+
+   
+
+    map.setMaxBounds(bounds);
+    map.on('drag', () => {
+            map.panInsideBounds(bounds, { animate: false });
+        });
+
     return map;
 }
 
@@ -23,7 +37,7 @@ function stopsMapOnClick(e, map, customIcon, id) {
     // Configura el contenido de la ventana emergente
     popup
         .setLatLng(latlng)
-        .setContent("<p>" + latlng.toString() + "</p><div class='buttons'><img class='button' id='addStopButton' src='/Proyecto Final/img/MapaBotonAgragar.png'></div>")
+        .setContent("<p>" + latlng.toString() + "</p><div class='buttons'><div class='button' id='addStopButton'><img src='/Proyecto Final/img/UnidadIcono.png'><div class='busIcons plus'></div></div></div>")
         .openOn(map)
 
     // Construye la URL para la búsqueda inversa de Nominatim
@@ -86,7 +100,7 @@ function paradasLoopThrough(map, customIcon, customIconFalse) {
         if (!isNaN(latitud) && !isNaN(longitud)) {
             const marker = L.marker([latitud, longitud], { icon: vigencia ? customIcon : customIconFalse }).addTo(map);
 
-            marker.bindPopup(`<b>${id}</b><p>${direccion}</p><p>${latitud}, ${longitud}</p><div class ='buttons'><a class ='button' id='deleteButton'>e</a><a class ='button' id='deregisterButton'>b</a></div>`);
+            marker.bindPopup(`<b>${id}</b><p>${direccion}</p><p>${latitud}, ${longitud}</p><div class ='buttons'><a class ='button' id='deleteButton'><img src='/Proyecto Final/img/UnidadIcono.png'><div class='busIcons minus'></div></a><a class ='button' id='deregisterButton'><img src='/Proyecto Final/img/UnidadIcono.png'><div class='busIcons slash'></div></a></div>`);
         }
     }
     return { id };

@@ -1081,7 +1081,6 @@
   height: 75vh;
   width: 100%;
   border-radius: 15px;
-  min-width: 300px;
   font-size: var(--font-xs);
   cursor: pointer;
  }
@@ -1106,13 +1105,85 @@
   color: white;
   width: 40px;
   height: 40px;
-  padding:0px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.leaflet-popup-content .button img{
+ width: 100%;
+ height: 100%;
+}
+
+.leaflet-popup-content .button .busIcons{
+  position: relative;
+  width: 30px;
+  height: 30px;
+  filter:drop-shadow(0 0 0.25rem var(--secondary-color))
+}
+
+.leaflet-popup-content .button .busIcons.plus::before{
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  background-color: white;
+  transform: 
+   translateX(-6px)
+   translateY(14px)
+   rotate(-90deg); 
+  border-radius: 3px;
+  transition: 0.25s;
+  filter:drop-shadow(0 0 0.25rem var(--secondary-color))
+}
+
+.leaflet-popup-content .button .busIcons.plus::after,
+.leaflet-popup-content .button .busIcons.minus::after{
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 2px;
+  background-color: white;
+  transform: 
+   translateX(-6px)
+   translateY(14px);
+  border-radius: 3px;
+  transition: 0.25s;
+  filter:drop-shadow(0 0 0.25rem var(--secondary-color))
+}
+
+.leaflet-popup-content .button .busIcons.slash::before{
+  content: '';
+  position: absolute;
+  width: 11px;
+  height: 2px;
+  background-color: white;
+  transform: 
+   translateX(-6px)
+   translateY(14px)
+   rotate(45deg); 
+  border-radius: 3px;
+  transition: 0.25s;
+  filter:drop-shadow(0 0 0.25rem var(--secondary-color))
+}
+
+.leaflet-popup-content .button .busIcons.slash::after{
+  content: '';
+  position: absolute;
+  
+  width: 10px;
+  height: 10px;
+  border: white 2px solid;
+  border-radius: 50% !important;
+  transform: 
+   translateX(-8px)
+   translateY(8px);
+  border-radius: 3px;
+  transition: 0.25s;
+  filter:drop-shadow(0 0 0.25rem var(--secondary-color));
+ 
+}
 
 /*-- MovileFirst Design --*/
   
