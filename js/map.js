@@ -10,19 +10,19 @@ function newMap(div) {
         L.latLng(200.0, -170.0),  // Esquina noroeste de Europa
         L.latLng(-200.0, 190.0)   // Esquina sureste de Europa
     );
-    
+
     // Agrega una capa de mosaico de OpenStreetMap al mapa
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         minZoom: 3,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
 
-   
+
 
     map.setMaxBounds(bounds);
     map.on('drag', () => {
-            map.panInsideBounds(bounds, { animate: false });
-        });
+        map.panInsideBounds(bounds, { animate: false });
+    });
 
     return map;
 }
@@ -82,11 +82,11 @@ function stopsMapOnClick(e, map, customIcon, id) {
 
     // Obtiene el botón de la ventana emergente y le asigna una función de clic
     const button = document.getElementById("addStopButton");
-        button.onclick = () => {
-            buttonOnClick(map, isValid, latlng, direccion, customIcon, id);
-        };
-    
-   
+    button.onclick = () => {
+        buttonOnClick(map, isValid, latlng, direccion, customIcon, id);
+    };
+
+
 }
 
 function paradasLoopThrough(map, customIcon, customIconFalse) {
@@ -144,17 +144,44 @@ function buttonOnClick(map, isValid, latlng, direccion, customIcon, id) {
             success: (response) => {
                 if (response === "success") {
                     console.log("Parada insertada con éxito.");
-
-                    // Crea un nuevo marcador en el mapa
+                    // Crea un nuevo marcador
                     const marker = L.marker([latlng.lat, latlng.lng], {
                         icon: customIcon,
                     }).addTo(map);
 
-                    // Actualiza el ID y agrega una ventana emergente al marcador
-                    id += 1;
-                    marker.bindPopup("<b>" + id + "</b><p>" + direccion + "</p><p>" + latlng.lat + ", " + latlng.lng + "</p>");
+            
 
-                    // Cierra la ventana emergente actual
+                    const popupContent = L.DomUtil.create("div");
+                    popupContent.innerHTML = `
+                        <b>${id}</b>
+                        <p>${direccion}</p>
+                        <p>${latlng.lat}, ${latlng.lng}</p>
+                        <div class = "buttons">
+                        <a class="button deleteButton">
+                            <img src='/Proyecto Final/img/UnidadIcono.png'>
+                            <div class='busIcons minus'></div>
+                        </a>
+                        <a class="button deregisterButton">
+                            <img src='/Proyecto Final/img/UnidadIcono.png'>
+                            <div class='busIcons slash'></div>
+                        </a>
+                        </div>
+                    `;
+
+                    // Bind the popup content to the marker
+                    marker.bindPopup(popupContent);
+
+                    // Attach a click event listener to the "deleteButton" element
+                    const deleteButton = popupContent.querySelector(".deleteButton");
+                    deleteButton.addEventListener("click", () => {
+                        alert("Button Clicked");
+                    });
+                    const deregisterButton = popupContent.querySelector(".deregisterButton");
+                    deregisterButton.addEventListener("click", () => {
+                        alert("Button Clicked");
+                    });
+
+                    // Close the current popup
                     map.closePopup(popup);
                 } else {
                     console.log("Error al insertar la parada.");
