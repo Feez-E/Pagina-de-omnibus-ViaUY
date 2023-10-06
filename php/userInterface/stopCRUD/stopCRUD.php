@@ -25,7 +25,7 @@
     ?>
     <main class="container">
         <h2 class="title">Administrar paradas</h2>
-        <div id="stopAndSectionMap" class=shadow></div>
+        <div id="stopsMap" class=shadow></div>
         <?php
         include_once("../../dataAccess/paradaLink.php");
         $paradaLink = new ParadaLink($conn);

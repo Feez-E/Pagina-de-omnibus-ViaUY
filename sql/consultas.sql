@@ -1,5 +1,6 @@
 USE ViaUY;
 
+SELECT * FROM Permiso;
 SELECT * FROM Usuario;
 SELECT * FROM Linea;
 SELECT * FROM Transita;

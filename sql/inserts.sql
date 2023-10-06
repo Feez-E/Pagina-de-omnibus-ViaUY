@@ -2,33 +2,33 @@ USE ViaUY;
 
 INSERT INTO Permiso(nombre, descripcion, url) VALUES 
 ("Reservar", "Capaz de hacer reservas de asientos en los distintos viajes disponibles", "busLookUp"),
-("Ver Horarios", "Capaz de ver las lineas y las unidades que las recorren en su horario correspondiente", "lineAndTravelR"),
-("Mis Reservas", "Capaz de ver todas las reservas que ha hecho, junto con la capacidad de pagarlas o cancelarlas", "userReservations"),
-("Administrar Viajes y Lineas", "Capaz de administrar las lineas, junto con sus viajes asignados", "travelAndLineRD"),
-("Administrar Tramos y Paradas", "Capaz de administrar las paradas ademas de los tramos que las conectan", "stopAndSectionRD"),
-("Administrar Reservas", "Capaz de administrar todas las reservas", "reserveManagement"),
-("Administrar Usuarios", "Capaz ", "userManagement"),
+("Ver horarios", "Capaz de ver las lineas y las unidades que las recorren en su horario correspondiente", "lineAndTravelR"),
+("Mis reservas", "Capaz de ver todas las reservas que ha hecho, junto con la capacidad de pagarlas o cancelarlas", "userReservations"),
+("Administrar viajes y líneas", "Capaz de administrar las lineas, junto con sus viajes asignados", "travelAndLineRD"),
+("Administrar paradas", "Capaz de administrar las paradas", "stopCRUD"),
+("Administrar reservas", "Capaz de administrar todas las reservas", "reserveManagement"),
+("Administrar usuarios", "Capaz de administrar usuarios", "userManagement"),
 ("Estadísticas", "Capaz de entrar en el apartado de estadísticas de la página", "statistics");
 
 INSERT INTO Rol(nombre, descripcion) VALUES 
 ("Cliente", "Rol predeterminado, sólo gestiona sus reservas y opciones de usuario"),
-("AdministradorMaestro", "Rol administrativo, tiene todos los permisos y poderes sobre la página"),
+("Administrador Maestro", "Rol administrativo, tiene todos los permisos y poderes sobre la página"),
 ("Vetado", "Rol especial, no tiene permisos por lo que es incapaz de utilizar las opciones de la página");
 
 INSERT INTO Tiene(nombre_Rol, nombre_Permiso) VALUES 
-("AdministradorMaestro", "Reservar"),
-("AdministradorMaestro", "Ver Horarios"),
-("AdministradorMaestro", "Mis Reservas"),
-("AdministradorMaestro", "Administrar Viajes y Lineas"),
-("AdministradorMaestro", "Administrar Tramos y Paradas"),
-("AdministradorMaestro", "Administrar Reservas"),
-("AdministradorMaestro", "Estadísticas"),
+("Administrador Maestro", "Reservar"),
+("Administrador Maestro", "Ver horarios"),
+("Administrador Maestro", "Mis reservas"),
+("Administrador Maestro", "Administrar viajes y lineas"),
+("Administrador Maestro", "Administrar paradas"),
+("Administrador Maestro", "Administrar reservas"),
+("Administrador Maestro", "Estadísticas"),
 ("Cliente", "Reservar"),
-("Cliente", "Ver Horarios"),
-("Cliente", "Mis Reservas");
+("Cliente", "Ver horarios"),
+("Cliente", "Mis reservas");
 
 INSERT INTO Usuario (apodo, nombre, apellido, correo, contrasena, telefono, fechaNac, nombre_Rol) VALUES
-("Admin", "Snow", "Souls", "snowsouls.trabajo@gmail.com", "$2y$10$u8gCpKkgGUVdO2hzH7A5kexWKxEwcrMr2OFL3a7ZcnjIoFYWtERGi", "22952365", "2001-04-01", "AdministradorMaestro"), -- Contraseña: maestro
+("Admin", "Snow", "Souls", "snowsouls.trabajo@gmail.com", "$2y$10$u8gCpKkgGUVdO2hzH7A5kexWKxEwcrMr2OFL3a7ZcnjIoFYWtERGi", "22952365", "2001-04-01", "Administrador Maestro"), -- Contraseña: maestro
 ("Cliente", "Cliente", "Genérico", "cuentagenericauruguay@gmail.com", "$2y$10$jWdg4WMfkNK0A4OeDV90J.FmU9f8lPdJX3fS8DVHHiXkjULXCTVxm", "092423876", "1989-08-24", "Cliente"), -- Contraseña: cliente
 ("Vetado", "Ban", "Expulsado", "personabaneada_mail_vetado@gmail.com", "$2y$10$fLQ/KfYxPTZ09nmGuRopCuEbiDUgGrgjNHt/e1stBoNWEE4U6TKZC", "098765432", "2002-11-11", "Vetado"); -- Contraseña: baneado
 
