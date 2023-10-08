@@ -142,12 +142,12 @@ url VARCHAR(50)
 );
 
 CREATE TABLE Rol (
-nombre VARCHAR(20) PRIMARY KEY NOT NULL,
+nombre VARCHAR(25) PRIMARY KEY NOT NULL,
 descripcion VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Tiene (
-nombre_Rol VARCHAR(20),
+nombre_Rol VARCHAR(25),
 FOREIGN KEY(nombre_Rol) REFERENCES Rol (nombre),
 nombre_Permiso VARCHAR(40),
 FOREIGN KEY(nombre_Permiso) REFERENCES Permiso (nombre),
@@ -164,7 +164,7 @@ correo VARCHAR(64) NOT NULL,
 contrasena VARCHAR(60) NOT NULL,
 telefono VARCHAR(10) NOT NULL,
 fechaNac DATE NOT NULL,
-nombre_Rol VARCHAR(20),
+nombre_Rol VARCHAR(25),
 FOREIGN KEY(nombre_Rol) REFERENCES Rol(nombre)
 );
 

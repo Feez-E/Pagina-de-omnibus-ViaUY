@@ -27,7 +27,7 @@ function newMap(div) {
     return map;
 }
 
-function stopsMapOnClick(e, map, customIcon, id) {
+function stopsMapOnClick(e, map, customIcon, customIconFalse) {
     // Inicializa una variable para verificar la validez de la ubicación
     let isValid = false;
     const latlng = e.latlng;
@@ -83,13 +83,14 @@ function stopsMapOnClick(e, map, customIcon, id) {
     // Obtiene el botón de la ventana emergente y le asigna una función de clic
     const button = document.getElementById("addStopButton");
     button.onclick = () => {
-        buttonOnClick(map, isValid, latlng, direccion, customIcon, id);
+        buttonOnClick(map, isValid, latlng, direccion, customIcon, customIconFalse);
     };
 
 
 }
 
-function paradasLoopThrough(map, customIcon, customIconFalse) {
+function paradasLoopThrough(map, customIcon, customIconFalse, buttons) {
+
     for (const parada of paradasArray) {
         var id = parada.id;
         const direccion = parada.direccion;
@@ -98,12 +99,33 @@ function paradasLoopThrough(map, customIcon, customIconFalse) {
         const [latitud, longitud] = parada.coordenadas.split(",").map(parseFloat);
 
         if (!isNaN(latitud) && !isNaN(longitud)) {
+
+            var buttonsDiv = null;
+            if (buttons) {
+                buttonsDiv = createStopsButtons();
+            }
+
             const marker = L.marker([latitud, longitud], { icon: vigencia ? customIcon : customIconFalse }).addTo(map);
 
-            marker.bindPopup(`<b>${id}</b><p>${direccion}</p><p>${latitud}, ${longitud}</p><div class ='buttons'><a class ='button' id='deleteButton'><img src='/Proyecto Final/img/UnidadIcono.png'><div class='busIcons minus'></div></a><a class ='button' id='deregisterButton'><img src='/Proyecto Final/img/UnidadIcono.png'><div class='busIcons slash'></div></a></div>`);
+            const popupContent = L.DomUtil.create("div");
+            popupContent.innerHTML = `
+                <b>${id}</b>
+                <p>${direccion}</p>
+                <p>${latitud}, ${longitud}</p>
+            `;
+
+            if (buttons) {
+                popupContent.appendChild(buttonsDiv);
+            }
+
+            // Bind the popup content to the marker
+            marker.bindPopup(popupContent);
+
+            if (buttons) {
+                stopsButtonsOnClick(popupContent, marker, map, customIcon, customIconFalse, vigencia);
+            }
         }
     }
-    return { id };
 }
 
 function paradasCustomIcons() {
@@ -123,7 +145,7 @@ function paradasCustomIcons() {
 
 
 // Función que se ejecuta al hacer clic en el botón de la ventana emergente
-function buttonOnClick(map, isValid, latlng, direccion, customIcon, id) {
+function buttonOnClick(map, isValid, latlng, direccion, customIcon, customIconFalse) {
     console.log("Latitud: " + latlng.lat + " Longitud: " + latlng.lng);
 
     // Prepara los datos para enviar al servidor
@@ -142,44 +164,30 @@ function buttonOnClick(map, isValid, latlng, direccion, customIcon, id) {
             type: "POST",
             data: dataToSend,
             success: (response) => {
-                if (response === "success") {
+                if (response.status === "success") {
                     console.log("Parada insertada con éxito.");
                     // Crea un nuevo marcador
+                    const id = response.maxId;
                     const marker = L.marker([latlng.lat, latlng.lng], {
                         icon: customIcon,
                     }).addTo(map);
 
-            
+                    const buttonsDiv = createStopsButtons();
 
                     const popupContent = L.DomUtil.create("div");
                     popupContent.innerHTML = `
                         <b>${id}</b>
                         <p>${direccion}</p>
                         <p>${latlng.lat}, ${latlng.lng}</p>
-                        <div class = "buttons">
-                        <a class="button deleteButton">
-                            <img src='/Proyecto Final/img/UnidadIcono.png'>
-                            <div class='busIcons minus'></div>
-                        </a>
-                        <a class="button deregisterButton">
-                            <img src='/Proyecto Final/img/UnidadIcono.png'>
-                            <div class='busIcons slash'></div>
-                        </a>
-                        </div>
                     `;
+
+                    popupContent.appendChild(buttonsDiv);
 
                     // Bind the popup content to the marker
                     marker.bindPopup(popupContent);
 
                     // Attach a click event listener to the "deleteButton" element
-                    const deleteButton = popupContent.querySelector(".deleteButton");
-                    deleteButton.addEventListener("click", () => {
-                        alert("Button Clicked");
-                    });
-                    const deregisterButton = popupContent.querySelector(".deregisterButton");
-                    deregisterButton.addEventListener("click", () => {
-                        alert("Button Clicked");
-                    });
+                    stopsButtonsOnClick(popupContent, marker, map, customIcon, customIconFalse, true);
 
                     // Close the current popup
                     map.closePopup(popup);
@@ -194,8 +202,99 @@ function buttonOnClick(map, isValid, latlng, direccion, customIcon, id) {
         });
     } else {
         alert("Lugar inválido");
-        // Agregar un mensaje personalizado para el usuario o eliminar el botón
     }
 }
 
+function createStopsButtons() {
+    // Create the container for popup buttons
+    const popupStopsButtonContainer = document.createElement("div");
+    popupStopsButtonContainer.className = "buttons";
+    popupStopsButtonContainer.id = "latest";
+    popupStopsButtonContainer.innerHTML = `
+    <a class="button deleteButton">
+        <img src='/Proyecto Final/img/UnidadIcono.png'>
+        <div class='busIcons minus'></div>
+    </a>
+    <a class="button deregisterButton">
+        <img src='/Proyecto Final/img/UnidadIcono.png'>
+        <div class='busIcons slash'></div>
+    </a>
+    `;
+
+    return (popupStopsButtonContainer);
+}
+
+
+function stopsButtonsOnClick(popupContent, marker, map, customIcon, customIconFalse, vigencia) {
+    const deleteButton = popupContent.querySelector(".deleteButton");
+    deleteButton.addEventListener("click", () => {
+        const id = popupContent.firstElementChild.innerHTML;
+
+        const dataToSend = {
+            id: id,
+        };
+
+        $.ajax({
+            url: "stopDelete.php",
+            type: "POST",
+            data: dataToSend,
+            success: (response) => {
+                if (response === "success") {
+
+                    console.log("Parada eliminada con éxito.");
+
+                    map.removeLayer(marker);
+                } else {
+                    alert("Esta parada no se puede eliminar.");
+                    console.log(response);
+                }
+            },
+            error: () => {
+                console.log("Error en la solicitud AJAX.");
+            },
+        });
+    });
+    const deregisterButton = popupContent.querySelector(".deregisterButton");
+    if(!vigencia) {
+        deregisterButton.classList.remove("deregisterButton");
+        deregisterButton.classList.add("addStopButton");
+        deregisterButton.lastElementChild.classList.remove("slash");
+        deregisterButton.lastElementChild.classList.add("plus");
+    }
+
+    deregisterButton.addEventListener("click", function deregister() {
+        const id = popupContent.firstElementChild.innerHTML;
+        deregisterButton.classList.toggle("deregisterButton");
+        deregisterButton.classList.toggle("addStopButton");
+        deregisterButton.lastElementChild.classList.toggle("slash");
+        deregisterButton.lastElementChild.classList.toggle("plus");
+
+        const dataToSend = {
+            id: id,
+            vigencia: vigencia
+        };
+
+        console.log(dataToSend.vigencia);
+        $.ajax({
+            url: "stopValidationToggle.php",
+            type: "POST",
+            data: dataToSend,
+            success: (response) => {
+                if (response === "success") {
+
+                    console.log("Parada actualizada con éxito.");
+
+                    marker.setIcon(vigencia ? customIconFalse : customIcon);
+                    vigencia = !vigencia;
+                } else {
+                    alert("Esta parada no se puede eliminar.");
+                    console.log(response);
+                }
+            },
+            error: () => {
+                console.log("Error en la solicitud AJAX.");
+            },
+        });
+    });
+}
 export { stopsMapOnClick, paradasLoopThrough, paradasCustomIcons, newMap };

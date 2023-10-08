@@ -5,9 +5,9 @@ var map = newMap("stopsMap");
 // Crea íconos personalizados para los marcadores
 var { customIcon, customIconFalse } = paradasCustomIcons();
 // Itera a través de un array de paradas y crea marcadores en el mapa para cada una
-var {id} = paradasLoopThrough(map, customIcon, customIconFalse);
+paradasLoopThrough(map, customIcon, customIconFalse, true);
 
 // Agrega un evento de clic al mapa
 map.on("click", (e) => {
-    stopsMapOnClick(e, map, customIcon, id);
+    stopsMapOnClick(e, map, customIcon, customIconFalse);
 });

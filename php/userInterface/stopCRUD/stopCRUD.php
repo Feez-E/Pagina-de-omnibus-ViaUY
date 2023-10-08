@@ -22,9 +22,16 @@
     <?php
     include_once($_SERVER['DOCUMENT_ROOT'] . '/Proyecto Final/dirs.php');
     include '../navBar/navBar.php';
+    $rolPermitido = "Administrador Maestro";
     ?>
     <main class="container">
         <h2 class="title">Administrar paradas</h2>
+        <?php
+        if(!isset($_SESSION["userData"]) || $_SESSION["userData"]->getNombreRol() !== $rolPermitido){
+            echo "<p class = 'errorMessage'> Inicie sesión como administrador para ver esta pagina </p>";
+            exit;
+        }
+        ?>
         <div id="stopsMap" class=shadow></div>
         <?php
         include_once("../../dataAccess/paradaLink.php");

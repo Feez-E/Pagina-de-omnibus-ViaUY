@@ -1,5 +1,5 @@
 <?php
-include_once ($_SERVER['DOCUMENT_ROOT'].'/Proyecto Final/dirs.php');
+include_once($_SERVER['DOCUMENT_ROOT'] . '/Proyecto Final/dirs.php');
 include_once(BUSINESS_PATH . 'parada.php');
 class ParadaLink
 {
@@ -68,6 +68,59 @@ class ParadaLink
         }
         return false;
 
+    }
+
+    public function deleteParada(int $id)
+    {
+
+        $stmt = $this->conn->prepare(
+            "DELETE FROM Parada WHERE id=?"
+        );
+        $stmt->bind_param("i", $id);
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function validationToggleParada(int $id)
+    {
+        // Obtener el valor actual de "vigencia"
+        $stmt = $this->conn->prepare("SELECT vigencia FROM parada WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            $vigenciaActual = $row['vigencia'];
+
+            // Invertir el valor de "vigencia"
+            $nuevaVigencia = !$vigenciaActual;
+
+            // Actualizar "vigencia" en la base de datos
+            $stmt = $this->conn->prepare("UPDATE parada SET vigencia=? WHERE id=?");
+            $stmt->bind_param("ii", $nuevaVigencia, $id);
+
+            if ($stmt->execute()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    public function getParadaIdByLatest()
+    {
+        $stmt = $this->conn->prepare("SELECT MAX(id) AS max_id FROM parada");
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            $maxId = $row['max_id'];
+            return $maxId;
+        }
+        return null;
     }
 }
 

@@ -11,7 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $coordenadas = $_POST['coordenadas'];
 
     if ($paradaLink->insertParada($direccion, $coordenadas)) {
-        echo 'success';
+       // Obten el valor de $maxId
+       $maxId = $paradaLink->getParadaIdByLatest();
+
+       // Crear un arreglo asociativo para la respuesta JSON
+       $response = array('status' => 'success', 'maxId' => $maxId);
+
+       // Enviar la respuesta JSON
+       header('Content-Type: application/json');
+       echo json_encode($response);
     } else {
         echo 'error';
     }
