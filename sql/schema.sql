@@ -151,7 +151,6 @@ nombre_Rol VARCHAR(25),
 FOREIGN KEY(nombre_Rol) REFERENCES Rol (nombre),
 nombre_Permiso VARCHAR(40),
 FOREIGN KEY(nombre_Permiso) REFERENCES Permiso (nombre),
-FOREIGN KEY(nombre_Permiso) REFERENCES Permiso (nombre),
 PRIMARY KEY(nombre_Rol, nombre_Permiso)
 );
 
