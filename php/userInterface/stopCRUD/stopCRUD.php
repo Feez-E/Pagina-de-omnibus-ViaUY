@@ -32,7 +32,7 @@
             exit;
         }
         ?>
-        <div id="stopsMap" class=shadow></div>
+        <div id="stopsMap" class="shadow"></div>
         <?php
         include_once("../../dataAccess/paradaLink.php");
         $paradaLink = new ParadaLink($conn);

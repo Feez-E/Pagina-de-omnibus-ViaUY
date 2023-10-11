@@ -17,7 +17,7 @@
     <main class = container>
     <?php
 if (isset($_SESSION['message'])) { ?>
-    <div class="confirmationMessage container shadow">
+    <div class="confirmationMessage container shadow slideIn">
         <p>
             <?php echo $_SESSION['message'] ?>
         </p>

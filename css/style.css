@@ -184,6 +184,7 @@
       min-height: 100vh;
       width: 100%;
       align-items: center;
+      font-size: var(--font-sm);
     }
 
     .container {
@@ -194,13 +195,16 @@
       padding-right: 0.5rem;
       font-size: var(--font-sm);
     }
+
     
     .shadow{
       filter: var(--shadow-filter);
     }
       
     .confirmationMessage{
+      display: none; 
       position: fixed;
+      z-index: 999999;
       inset: 50px 50% auto 50%;
       align-items: center;
       justify-content: center;
@@ -213,6 +217,11 @@
       transform: translateX(-50%);
       animation: slideIn 0.25s forwards, fadeOut 0.5s 2s forwards;
       
+    }
+
+    .slideIn{
+      display:block;
+      animation: slideIn 0.25s forwards, fadeOut 0.5s 2s forwards;
     }
   
   /*----*/
@@ -390,10 +399,13 @@
   
       .menuOpt {
         font-size: var(--font-md);
-        line-height: 3em;
-        padding-left: 2.5vw;
+      
         list-style: none;
         transition: 2s;
+      }
+
+      .menuOpt li{
+        margin-bottom: 20px;
       }
       
       .userName{
@@ -402,9 +414,12 @@
       }
     
       #userOpt {
-        line-height: 2em;
         position: absolute;
         bottom: 20px;
+      }
+
+      #userOpt li {
+        margin-bottom: 5px;
       }
     
       .opt {
@@ -413,6 +428,7 @@
         color: var(--primary-color);
         transition: transform 0.25s;
       }
+    
     
     .opt:hover {
       color: rgb(13, 66, 135);
@@ -776,10 +792,9 @@
   h2.title{
     color: var(--secondary-color);
     margin-top: 32px;
-    
   }
 
-  .lineAndTravels{
+  .lineAndTravels, .desplegableSection{
     background-color: var(--white-color);
     width: 100%;
     margin: 1.6rem;
@@ -788,7 +803,7 @@
     border-radius: 15px;
   }
 
-  .line{
+  .line, .desplegableTitle{
     width: 100%;
     display:flex;
     align-items: center;
@@ -799,7 +814,7 @@
   }
 
 
-  .travels {
+  .travels, .desplegableContent {
     max-height: 0px;
     overflow-y: hidden;
     display: flex;
@@ -820,12 +835,12 @@
     min-width: fit-content;
   }
 
-  .lineAndTravels.active .travels {
+  .lineAndTravels.active .travels, .desplegableSection.active .desplegableContent {
     padding-top: 1rem;
     max-height: 1000px;
   }
 
-  #lineToggle{
+  #lineToggle, #toggleArrow{
     height: 30px;
     width: 30px;
     justify-content: center;
@@ -834,7 +849,7 @@
     border-radius: 3px;
   }
 
-  #lineToggle::before{
+  #lineToggle::before, #toggleArrow::before{
     content: '';
     position: absolute;
     width: 14px;
@@ -848,7 +863,7 @@
     transition: 0.25s;
   }
 
-  #lineToggle::after{
+  #lineToggle::after, #toggleArrow::after{
     content: '';
     position: absolute;
     width: 14px;
@@ -862,14 +877,14 @@
     transition: 0.25s;
   }
 
-  .lineAndTravels.active #lineToggle::before{
+  .lineAndTravels.active #lineToggle::before, .desplegableSection.active  > * > #toggleArrow::before{
     transform: 
     translateX(-2px)
     translateY(18px)
     rotate(40deg);
   }
 
-  .lineAndTravels.active #lineToggle::after{
+  .lineAndTravels.active #lineToggle::after,  .desplegableSection.active  > * > #toggleArrow::after{
     transform: 
      translateX(-12px)
      translateY(18px)
@@ -1057,7 +1072,7 @@
 /*----*/
 
 
-/*-- lineAndTravelR --*/
+/*-- stopCRUD --*/
 #stopsMap { 
   margin-top: 1.6rem;
   font-size: var(--font-xs);
@@ -1066,6 +1081,11 @@
   border-radius: 15px;
   font-size: var(--font-xs);
   cursor: pointer;
+ }
+
+ #stopsMap.tiny { 
+  height: 50vh;
+  cursor:grab;
  }
 
  #stopsMap:active{
@@ -1167,6 +1187,125 @@
   filter:drop-shadow(0 0 0.25rem var(--secondary-color));
 }
 
+/*-- BusLookUp --*/
+  #reservationSpecification{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+  #busLookUpForm{
+    width:100%;
+  }
+
+  .tripleLabel,
+  .doubleLabel{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .container#form .tripleLabel > .top-left,
+  .container#form .tripleLabel > .top-right{
+    min-width: 0px;
+    width: 50%;
+    margin-bottom: 0px;
+  }
+
+  .container#form .tripleLabel > .top-left{
+    border: 1px solid var(--whitesmoke-color);
+    border-width:  0 1px 1px  0;
+    border-radius: 15px 0  0  0 ;
+    
+  }
+
+  .container#form .tripleLabel > .top-right{
+    border: 1px solid var(--whitesmoke-color);
+    border-width:  0 0 1px 1px ;
+    border-radius:  0 15px 0  0 ;
+  }
+
+  .container#form .tripleLabel > .bottom{
+    margin: 0px;
+    border: 1px solid var(--whitesmoke-color);
+    border-width: 1px 0 0 0;
+    border-radius: 0 0 15px 15px ;
+    width: 100%;
+  }
+
+  .container#form .doubleLabel > .left{
+    min-width: 0px;
+    width: 65%;
+  }
+
+  .container#form .doubleLabel > .right{
+    min-width: 0px;
+    width: 35%;
+  }
+
+  .container#form .doubleLabel > .right{
+    border: 1px solid var(--whitesmoke-color);
+    border-width:  0 0 0 1px ;
+    border-radius:  0 15px 15px  0 ;
+  }
+
+  .container#form .doubleLabel > .left{
+    border: 1px solid var(--whitesmoke-color);
+    border-width:  0 1px 0 0 ;
+    border-radius: 15px 0 0 15px ;
+  }
+
+  
+.leaflet-popup-content .button .busIcons.up::before,
+.leaflet-popup-content .button .busIcons.down::before{
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 2px;
+  background-color: white;
+  transform: 
+   translateX(-2px)
+   translateY(14px)
+   rotate(45deg); 
+  border-radius: 3px;
+  transition: 0.25s;
+  filter:drop-shadow(0 0 0.25rem var(--secondary-color))
+}
+
+.leaflet-popup-content .button .busIcons.up::after,
+.leaflet-popup-content .button .busIcons.down::after{
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transform: 
+   translateX(-5px)
+   translateY(14px)
+   rotate(-45deg);
+  transition: 0.25s;
+  filter:drop-shadow(0 0 0.25rem var(--secondary-color));
+}
+
+.leaflet-popup-content .button .busIcons.down::before{
+
+  transform: 
+   translateX(-2px)
+   translateY(14px)
+   rotate(-45deg); 
+}
+
+.leaflet-popup-content .button .busIcons.down::after{
+  transform: 
+   translateX(-5px)
+   translateY(14px)
+   rotate(45deg);
+}
+
+/*--  --*/
+
 /*-- MovileFirst Design --*/
   
   /* xs */
@@ -1265,24 +1404,21 @@
         }
 
         .menu{
-          width:300px;
-          inset: 60px -300px 0px auto;
+          width:400px;
+          inset: 60px -400px 0px auto;
           justify-content: left;
         }
 
      
         .menuOpt {
-          padding-left: 2.5vw;
-          line-height: 50px;
           list-style: none;
           transition: 2s;
+          padding-left: 16px;
         }
   
         #userOpt {
-          line-height: 25px;
           position: absolute;
           bottom: 30px;
-          font-size: var(--font-sm);
         }
       /*----*/
     
@@ -1366,4 +1502,3 @@
     }
   }
 /*----*/
-    
