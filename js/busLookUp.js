@@ -4,12 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const errorContainer = document.getElementById("errorContainer");
         const errorMessages = errorContainer.querySelector("p");
         errorMessages.textContent = message;
-        errorContainer.classList.add("slideIn"); // Agrega la clase slideIn para mostrar el error
-
-        // Elimina la clase slideIn después de 2,3 segundos
+        errorContainer.classList.remove("slideIn");
+         // Agrega la clase slideIn para mostrar el error, timeout para poder recargar la clase
         setTimeout(() => {
-            errorContainer.classList.remove("slideIn");
-        }, 2300);
+            errorContainer.classList.add("slideIn");
+        }, .1);
     }
 
     const busLookUpForm = document.getElementById("busLookUpForm");
