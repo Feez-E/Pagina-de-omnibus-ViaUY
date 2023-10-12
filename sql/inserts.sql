@@ -1216,8 +1216,8 @@ INSERT INTO MetodoPago(metodo) VALUES
 INSERT INTO Tiquet(codigo) VALUES 
 ("2023083010110001"),
 ("2023090119070001"),
-("2023091517110001"),
-("2023091517110002");
+("2023090119070002"),
+("2023091517110001");
 
 INSERT INTO Reserva (codigo_Tiquet, numero_Asiento, codigo_L_R_T_Asiento, idInicial_T_R_T_Asiento, idFinal_T_R_T_Asiento, orden_R_T_Asiento, numero_U_T_Asiento, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento, id_Usuario, metodo_MetodoPago, fecha, hora, estado, nombre_P_ParametroTime, fechaLimite) VALUES
 ("2023083010110001", 21, 1, 1, 2, 1, 2, "06:00", "07:30", 1, "MasterCard", "2023-08-30", "10:11", "Pagado", "tiempoReserva", "2023-09-1"),
@@ -1251,14 +1251,14 @@ INSERT INTO Reserva (codigo_Tiquet, numero_Asiento, codigo_L_R_T_Asiento, idInic
 ("2023090119070002", 8, 1, 9, 10, 9, 2, "06:00", "07:30", 2, "Efectivo", "2023-09-01", "19:07", "En Espera", "tiempoReserva", "2023-09-3"),
 
 
-("2023091517110001", 16, 1, 2, 3, 2, 2, "18:00", "19:30", 2, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
-("2023091517110001", 16, 1, 3, 4, 3, 2, "18:00", "19:30", 2, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
-("2023091517110001", 16, 1, 4, 5, 4, 2, "18:00", "19:30", 2, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
-("2023091517110001", 16, 1, 5, 6, 5, 2, "18:00", "19:30", 2, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
-("2023091517110001", 16, 1, 6, 7, 6, 2, "18:00", "19:30", 2, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
-("2023091517110001", 16, 1, 7, 8, 7, 2, "18:00", "19:30", 2, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
-("2023091517110001", 16, 1, 8, 9, 8, 2, "18:00", "19:30", 2, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
-("2023091517110001", 16, 1, 9, 10, 9, 2, "18:00", "19:30", 2, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17");
+("2023091517110001", 16, 1, 2, 3, 2, 2, "18:00", "19:30", 3, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
+("2023091517110001", 16, 1, 3, 4, 3, 2, "18:00", "19:30", 3, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
+("2023091517110001", 16, 1, 4, 5, 4, 2, "18:00", "19:30", 3, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
+("2023091517110001", 16, 1, 5, 6, 5, 2, "18:00", "19:30", 3, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
+("2023091517110001", 16, 1, 6, 7, 6, 2, "18:00", "19:30", 3, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
+("2023091517110001", 16, 1, 7, 8, 7, 2, "18:00", "19:30", 3, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
+("2023091517110001", 16, 1, 8, 9, 8, 2, "18:00", "19:30", 3, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17"),
+("2023091517110001", 16, 1, 9, 10, 9, 2, "18:00", "19:30", 3, "MasterCard", "2023-09-15", "17:17", "En Espera", "tiempoReserva", "2023-09-17");
 
 INSERT INTO Linea (codigo, nombre, origen, destino, vigencia) VALUES 
 (null, "L499", "Pando", "Salinas", true);
