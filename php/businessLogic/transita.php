@@ -1,6 +1,7 @@
 <?php
 
-class Transita {
+class Transita implements JsonSerializable
+{
     private $idInicial_T_Recorre;
     private $idFinal_T_Recorre;
     private $codigo_L_Recorre;
@@ -10,12 +11,12 @@ class Transita {
     private $horaLlegada_Llegada;
 
     public function __construct(
-        $idInicial_T_Recorre, 
-        $idFinal_T_Recorre, 
-        $codigo_L_Recorre, 
-        $orden_Recorre, 
-        $numero_Unidad, 
-        $horaSalida_Salida, 
+        $idInicial_T_Recorre,
+        $idFinal_T_Recorre,
+        $codigo_L_Recorre,
+        $orden_Recorre,
+        $numero_Unidad,
+        $horaSalida_Salida,
         $horaLlegada_Llegada
     ) {
         $this->idInicial_T_Recorre = $idInicial_T_Recorre;
@@ -27,42 +28,64 @@ class Transita {
         $this->horaLlegada_Llegada = $horaLlegada_Llegada;
     }
 
-    public function getIdInicial_T_Recorre() {
+    public function getIdInicial_T_Recorre()
+    {
         return $this->idInicial_T_Recorre;
     }
 
 
-    public function getIdFinal_T_Recorre() {
+    public function getIdFinal_T_Recorre()
+    {
         return $this->idFinal_T_Recorre;
     }
 
-    public function getCodigo_L_Recorre() {
+    public function getCodigo_L_Recorre()
+    {
         return $this->codigo_L_Recorre;
     }
 
-    public function getOrden_Recorre() {
+    public function getOrden_Recorre()
+    {
         return $this->orden_Recorre;
     }
 
 
-    public function getNumero_Unidad() {
+    public function getNumero_Unidad()
+    {
         return $this->numero_Unidad;
     }
 
-    public function getHoraSalida_Salida() {
+    public function getHoraSalida_Salida()
+    {
         return $this->horaSalida_Salida;
     }
 
-    public function setHoraSalida_Salida($horaSalida_Salida) {
+    public function setHoraSalida_Salida($horaSalida_Salida)
+    {
         $this->horaSalida_Salida = $horaSalida_Salida;
     }
 
-    public function getHoraLlegada_Llegada() {
+    public function getHoraLlegada_Llegada()
+    {
         return $this->horaLlegada_Llegada;
     }
 
-    public function setHoraLlegada_Llegada($horaLlegada_Llegada) {
+    public function setHoraLlegada_Llegada($horaLlegada_Llegada)
+    {
         $this->horaLlegada_Llegada = $horaLlegada_Llegada;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            "idInicial_T_Recorre" => $this->idInicial_T_Recorre,
+            "idFinal_T_Recorre" => $this->idFinal_T_Recorre,
+            "codigo_L_Recorre" => $this->codigo_L_Recorre,
+            "orden_Recorre" => $this->orden_Recorre,
+            "numero_Unidad" => $this->numero_Unidad,
+            "horaSalida_Salida" => $this->horaSalida_Salida,
+            "horaLlegada_Llegada" => $this->horaLlegada_Llegada
+        ];
     }
 }
 

@@ -1,5 +1,5 @@
 <?php
-class Linea
+class Linea implements JsonSerializable
 {
 	private int $codigo;
 	private string $nombre;
@@ -76,4 +76,15 @@ class Linea
 	{
 		$this->vigencia = $vigencia;
 	}
+
+	public function jsonSerialize()
+    {
+        return [
+			"codigo" => $this->codigo,
+			"nombre" => $this->nombre,
+			"origen" => $this->origen,
+			"destino" => $this->destino,
+			"vigencia" => $this->vigencia
+        ];
+    }
 }

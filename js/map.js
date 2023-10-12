@@ -91,6 +91,10 @@ function stopsMapOnClick(e, map, customIcon, customIconFalse) {
 
 function paradasLoopThrough(map, customIcon, customIconFalse, buttons) {
 
+    if (buttons === "busLookUp") {
+        var startDataList = document.getElementById("startStopsList");
+        var endDataList = document.getElementById("endStopsList");
+    }
     for (const parada of paradasArray) {
         var id = parada.id;
         const direccion = parada.direccion;
@@ -101,28 +105,39 @@ function paradasLoopThrough(map, customIcon, customIconFalse, buttons) {
         if (!isNaN(latitud) && !isNaN(longitud)) {
 
             var buttonsDiv = null;
-            if (buttons) {
-                buttonsDiv = createStopsButtons();
-            }
 
             const marker = L.marker([latitud, longitud], { icon: vigencia ? customIcon : customIconFalse }).addTo(map);
 
             const popupContent = L.DomUtil.create("div");
+            popupContent.classList.add("stopPopupContent");
             popupContent.innerHTML = `
                 <b>${id}</b>
                 <p>${direccion}</p>
                 <p>${latitud}, ${longitud}</p>
             `;
 
-            if (buttons) {
+            if (buttons === "stopCRUD") {
+                buttonsDiv = createStopsButtons();
                 popupContent.appendChild(buttonsDiv);
+            } else if (buttons === "busLookUp") {
+                buttonsDiv = createBusLookUpButtons();
+                popupContent.appendChild(buttonsDiv);
+                const optionStart = document.createElement("option");
+                optionStart.value = id;
+                startDataList.appendChild(optionStart);
+                
+                const optionEnd = document.createElement("option");
+                optionEnd.value = id;
+                endDataList.appendChild(optionEnd);
             }
 
             // Bind the popup content to the marker
             marker.bindPopup(popupContent);
 
-            if (buttons) {
-                stopsButtonsOnClick(popupContent, marker, map, customIcon, customIconFalse, vigencia);
+            if (buttons === "stopCRUD") {
+                stopCRUDButtonOnClick(popupContent, marker, map, customIcon, customIconFalse, vigencia);
+            } else if (buttons === "busLookUp") {
+                stopsBusLookUpButtonOnClick(popupContent);
             }
         }
     }
@@ -175,6 +190,7 @@ function buttonOnClick(map, isValid, latlng, direccion, customIcon, customIconFa
                     const buttonsDiv = createStopsButtons();
 
                     const popupContent = L.DomUtil.create("div");
+                    popupContent.classList.add("stopPopupContent");
                     popupContent.innerHTML = `
                         <b>${id}</b>
                         <p>${direccion}</p>
@@ -187,7 +203,7 @@ function buttonOnClick(map, isValid, latlng, direccion, customIcon, customIconFa
                     marker.bindPopup(popupContent);
 
                     // Attach a click event listener to the "deleteButton" element
-                    stopsButtonsOnClick(popupContent, marker, map, customIcon, customIconFalse, true);
+                    stopCRUDButtonOnClick(popupContent, marker, map, customIcon, customIconFalse, true);
 
                     // Close the current popup
                     map.closePopup(popup);
@@ -225,7 +241,7 @@ function createStopsButtons() {
 }
 
 
-function stopsButtonsOnClick(popupContent, marker, map, customIcon, customIconFalse, vigencia) {
+function stopCRUDButtonOnClick(popupContent, marker, map, customIcon, customIconFalse, vigencia) {
     const deleteButton = popupContent.querySelector(".deleteButton");
     deleteButton.addEventListener("click", () => {
         const id = popupContent.firstElementChild.innerHTML;
@@ -255,7 +271,7 @@ function stopsButtonsOnClick(popupContent, marker, map, customIcon, customIconFa
         });
     });
     const deregisterButton = popupContent.querySelector(".deregisterButton");
-    if(!vigencia) {
+    if (!vigencia) {
         deregisterButton.classList.remove("deregisterButton");
         deregisterButton.classList.add("addStopButton");
         deregisterButton.lastElementChild.classList.remove("slash");
@@ -297,4 +313,35 @@ function stopsButtonsOnClick(popupContent, marker, map, customIcon, customIconFa
         });
     });
 }
-export { stopsMapOnClick, paradasLoopThrough, paradasCustomIcons, newMap };
+
+function createBusLookUpButtons() {
+    const popupBusLookUpButtonContainer = document.createElement("div");
+    popupBusLookUpButtonContainer.className = "buttons";
+    popupBusLookUpButtonContainer.id = "latest";
+    popupBusLookUpButtonContainer.innerHTML = `
+    <a class="button start">
+        <img src='/Proyecto Final/img/UnidadIcono.png'>
+        <div class='busIcons up'></div>
+    </a>
+    <a class="button end">
+        <img src='/Proyecto Final/img/UnidadIcono.png'>
+        <div class='busIcons down'></div>
+    </a>
+    `;
+
+    return (popupBusLookUpButtonContainer);
+}
+
+function stopsBusLookUpButtonOnClick(popupContent) {
+    const startButton = popupContent.querySelector(".button.start");
+    startButton.addEventListener("click", () => {
+        const startStopInput = document.getElementById("startStop");
+        startStopInput.value = startButton.parentElement.parentElement.firstElementChild.innerHTML
+    });
+    const endButton = popupContent.querySelector(".button.end");
+    endButton.addEventListener("click", () => {
+        const endStopInput = document.getElementById("endStop");
+        endStopInput.value = endButton.parentElement.parentElement.firstElementChild.innerHTML
+    });
+}
+export { createBusLookUpButtons, stopsMapOnClick, paradasLoopThrough, paradasCustomIcons, newMap };
