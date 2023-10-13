@@ -40,7 +40,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 data: dataToSend,
                 success: (response) => {
                     if (response.status === "success") {
-                        console.log(response.lineas)
+                        const linesContainer = loadLines(response.lineas);
+                        const betterLines = document.getElementById("betterLines");
+                        betterLines.innerHTML = "";
+                        betterLines.appendChild(linesContainer);
                     } else {
                         console.log("Error al procesar la solicitud.");
                         console.error(response);
@@ -54,3 +57,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
         });
 });
+
+
+function loadLines(lineas) {
+    const linesContainer = document.createElement("div");
+    linesContainer.className = "lines";
+    console.log(lineas);
+
+    for (const key in lineas) {
+        if (lineas.hasOwnProperty(key)) {
+            const currentLinea = lineas[key];
+
+            const stopsIds = currentLinea.StopsId; // Array of stop IDs
+            const days = currentLinea.days; // Array of days
+
+            const lineDiv = document.createElement("div");
+            lineDiv.className = "line";
+
+            // Append the Stop IDs to lineDiv
+            const stopIdsParagraph = document.createElement("p");
+            stopIdsParagraph.textContent = `Stop IDs: ${stopsIds.join(', ')}`;
+            lineDiv.appendChild(stopIdsParagraph);
+
+            // Append times for each data property to lineDiv
+            for (const data in currentLinea) {
+                if (data !== "days" && data !== "StopsId") {
+                    const timesParagraph = document.createElement("p");
+                    timesParagraph.textContent = `${data}: ${currentLinea[data].join(', ')}`;
+                    lineDiv.appendChild(timesParagraph);
+                }
+            }
+
+            // Append the Days to lineDiv
+            const daysParagraph = document.createElement("p");
+            daysParagraph.textContent = `Days: ${days.join(', ')}`;
+            lineDiv.appendChild(daysParagraph);
+
+            linesContainer.appendChild(lineDiv);
+        }
+    }
+
+    return linesContainer;
+}
