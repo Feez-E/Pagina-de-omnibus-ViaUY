@@ -37,18 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date = new DateTime($_POST["date"]);
     $dow = $date->format("l");
     $days = [
-        'Monday' => 'L',
-        // Lunes
-        'Tuesday' => 'M',
-        // Martes
-        'Wednesday' => 'X',
-        // Miércoles
-        'Thursday' => 'J',
-        // Jueves
-        'Friday' => 'V',
-        // Viernes
-        'Saturday' => 'S',
-        // Sábado
+        'Monday' => 'L', // Lunes
+        'Tuesday' => 'M', // Martes
+        'Wednesday' => 'X', // Miércoles
+        'Thursday' => 'J', // Jueves
+        'Friday' => 'V', // Viernes
+        'Saturday' => 'S', // Sábado
         'Sunday' => 'D' // Domingo
     ];
     $dayFirstLetter = $days[$dow];
@@ -158,7 +152,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Enviar la respuesta JSON
     header('Content-Type: application/json');
     echo json_encode($response);
-
 
 } else {
     echo 'Método no permitido';
