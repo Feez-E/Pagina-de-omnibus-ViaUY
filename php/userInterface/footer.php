@@ -3,14 +3,14 @@
         <p class= tel>Telefono: 22959873</p>
    
       <ul class="socials shadow">
-        <li><a href = '#' class=social>
+        <li><a href = 'https://wwww.facebook.com' class=social aria-label="facebook">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
              stroke-linejoin="round" class="socialImg">
                 <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
             </svg>
         </a></li>
-        <li><a href = '#' class=social>
+        <li><a href = 'https://www.instagram.com' class=social aria-label="instagram">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
              fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
              stroke-linejoin="round" class="socialImg">
@@ -19,7 +19,7 @@
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
             </svg>
         </a></li>
-        <li><a href = '#' class=social>
+        <li><a href = 'https://www.twitter.com' class=social aria-label="twitter">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
              fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
              stroke-linejoin="round" class="socialImg">
@@ -28,7 +28,7 @@
                  20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
             </svg>
         </a></li>
-        <li><a href = '#' class=social>
+        <li><a href = 'https://www.linkedin.com' class=social aria-label="linkedin">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
              fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" 
              stroke-linejoin="round" class="socialImg">
