@@ -17,14 +17,15 @@ SELECT ROUND((SELECT distancia FROM Tramo WHERE idInicial = 1 AND idFinal = 2)*
 (SELECT valorDouble FROM ParametroDouble WHERE nombre_Parametro = "precioKm")*
 (SELECT ROUND(SUM(multiplicador)-(COUNT(*)-1), 2) FROM Caracteristica WHERE numero_Unidad = 2), 2); -- Calcula el precio de un tramo en base a las caracteristicas de la Unidad
 
-SELECT id_Usuario, codigo_Tiquet, numero_Asiento, codigo_L_R_T_Asiento, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento,
+SELECT id_Usuario, codigo_Tiquet, numero_Asiento, nombre AS nombreLinea, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento,
 	numero_U_T_Asiento, estado, ROUND(SUM(Asiento.precio), 2) AS precio, metodo_MetodoPago, fecha, hora, fechaLimite 
 FROM Reserva 
 INNER JOIN Tiquet ON Reserva.codigo_Tiquet = Tiquet.codigo
+INNER JOIN Linea ON Reserva.codigo_L_R_T_Asiento = Linea.codigo
 INNER JOIN Asiento ON Reserva.numero_Asiento = Asiento.numero AND Reserva.numero_U_T_Asiento = Asiento.numero_U_Transita 
 	AND Reserva.idInicial_T_R_T_Asiento = Asiento.idInicial_T_R_Transita AND Reserva.idFinal_T_R_T_Asiento = Asiento.idFinal_T_R_Transita
     AND Reserva.codigo_L_R_T_Asiento = Asiento.codigo_L_R_Transita AND Reserva.horaSalida_S_T_Asiento = Asiento.horaSalida_S_Transita 
-AND Reserva.horaLlegada_L_T_Asiento = Asiento.horaLlegada_L_Transita
+	AND Reserva.horaLlegada_L_T_Asiento = Asiento.horaLlegada_L_Transita
 WHERE id_Usuario = 2
 GROUP BY codigo_Tiquet, numero_Asiento, codigo_L_R_T_Asiento, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento,
 	numero_U_T_Asiento, estado, metodo_MetodoPago, fecha, hora, fechaLimite; -- Muestra las reservas de forma estilizadas segun el id del usuario solitado, junto con el precio total.
