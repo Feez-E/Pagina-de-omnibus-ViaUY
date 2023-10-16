@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $linesArray = [];
     $timesArray = [];
     $returnArray = [];
+    $stopsArray = [];
 
     $startStop = $_POST["startStop"];
     $endStop = $_POST["endStop"];
@@ -55,17 +56,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $indicePrevio = $indice;
             if ($linea->getVigencia()) {
                 $linea_diasHabilesArr = $linea_diaHabilLink->getLinea_diaHabilByCodigo_Linea($linea->getCodigo());
-
+                
                 $fecha = new DateTime($transitasArr[$indice]->getHoraSalida_Salida());
                 $hora_llegada = new DateTime($transitasArr[$indice]->getHoraLlegada_Llegada());
                 $timesArray[] = ($paradaLink->getParadaById($transitasArr[$indice]->getIdInicial_T_Recorre())->getId());
                 $linesArray = [];
                 $diasHabiles = [];
 
+                $paradaInicial = $paradaLink->getParadaById($transitasArr[$indice]->getIdInicial_T_Recorre());
+                $direccionInicial = $paradaInicial->getDireccion();
+                $direccionInicialSeparada = explode(",", $direccionInicial);
+                $ciudadInicial = trim($direccionInicialSeparada[1]);
+                
+                $stopsArray[] =  $ciudadInicial;
+
+
                 foreach ($linea_diasHabilesArr as $linea_diaHabil) {
                     $diasHabiles[] = $linea_diaHabil->getDia();
                 }
                 $linesArray["days"] = $diasHabiles;
+                $linesArray["description"] = ($linea->getOrigen()." ".$linea->getDestino());
             }
 
             while ($indice < count($transitasArr) && $transitasArr[$indice]->getCodigo_L_Recorre() == $linea->getCodigo()) {
@@ -76,8 +86,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ) {
                         break;
                     }
+
                     $paradaInicial = $paradaLink->getParadaById($transitasArr[$indice]->getIdInicial_T_Recorre());
                     $paradaFinal = $paradaLink->getParadaById($transitasArr[$indice]->getIdFinal_T_Recorre());
+                    $direccionFinal = $paradaFinal->getDireccion();
+                    $direccionFinalSeparada = explode(",", $direccionFinal);
+                    $ciudadFinal = trim($direccionFinalSeparada[1]);
+                    
+                    $stopsArray[] =  $ciudadFinal;
+                    
                     $tramo = $tramoLink->getTramoByIdInicialAndIdFinal($paradaInicial->getId(), $paradaFinal->getId());
                     $hora = (($tramo->getTiempo())->format('H:i:s'));
                     list($horas, $minutos, $segundos) = explode(':', $hora);
@@ -94,6 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($linea->getVigencia()) {
                 $indice = $indicePrevio;
                 $linesArray["StopsId"] = $timesArray;
+                $linesArray["StopsDirections"] = $stopsArray;
+                $stopsArray = [];
                 $timesArray = [];
                 $fecha = new DateTime($transitasArr[$indice]->getHoraSalida_Salida());
                 $timesArray[] = $fecha->format('H:i');

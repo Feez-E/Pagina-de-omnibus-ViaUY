@@ -94,6 +94,8 @@ function paradasLoopThrough(map, customIcon, customIconFalse, buttons) {
     if (buttons === "busLookUp") {
         var startDataList = document.getElementById("startStopsList");
         var endDataList = document.getElementById("endStopsList");
+    } else if (buttons === "lines") {
+        var stopsArray = [];
     }
     for (const parada of paradasArray) {
         var id = parada.id;
@@ -125,12 +127,16 @@ function paradasLoopThrough(map, customIcon, customIconFalse, buttons) {
                 const optionStart = document.createElement("option");
                 optionStart.value = id;
                 startDataList.appendChild(optionStart);
-                
+
                 const optionEnd = document.createElement("option");
                 optionEnd.value = id;
                 endDataList.appendChild(optionEnd);
+            } else if (buttons === "lines") {
+                const latLngArray = [];
+                latLngArray["lat"] = latitud;
+                latLngArray["lng"] = longitud;
+                stopsArray[id] = latLngArray;
             }
-
             // Bind the popup content to the marker
             marker.bindPopup(popupContent);
 
@@ -140,6 +146,9 @@ function paradasLoopThrough(map, customIcon, customIconFalse, buttons) {
                 stopsBusLookUpButtonOnClick(popupContent);
             }
         }
+    }
+    if (buttons === "lines") {
+        return { stopsArray };
     }
 }
 
@@ -344,4 +353,81 @@ function stopsBusLookUpButtonOnClick(popupContent) {
         endStopInput.value = endButton.parentElement.parentElement.firstElementChild.innerHTML
     });
 }
-export { createBusLookUpButtons, stopsMapOnClick, paradasLoopThrough, paradasCustomIcons, newMap };
+
+
+function recorridosLoopThrough(map, stopsArray) {
+    var rutasVisibles = []
+    var waypointsForLines = [];
+    var waypoints = [];
+    var lastCodigoLinea = null;
+    var fstTime = true;
+    var routeControls = {};
+    var codigoLinea = null;
+
+    for (const recorrido of recorridosArray) {
+        const idInicialTramo = recorrido.idInicialTramo;
+        const idFinalTramo = recorrido.idFinalTramo;
+        codigoLinea = recorrido.codigoLinea;
+
+        if (fstTime) {
+            let stop = stopsArray[idInicialTramo];
+            waypoints.push(L.latLng(stop.lat, stop.lng));
+            fstTime = false;
+            lastCodigoLinea = codigoLinea;
+            
+        }
+
+        let stop = stopsArray[idFinalTramo];
+        if(codigoLinea == lastCodigoLinea){
+            waypoints.push(L.latLng(stop.lat, stop.lng));
+        }
+      
+
+        if (codigoLinea !== lastCodigoLinea) {
+            showLine(map, waypoints, (codigoLinea-1), routeControls, rutasVisibles);
+            waypointsForLines[(codigoLinea-1)] = waypoints;
+            waypoints = [];
+            let stop = stopsArray[idInicialTramo];
+            waypoints.push(L.latLng(stop.lat, stop.lng));
+            lastCodigoLinea = codigoLinea;
+            
+        }
+    }
+
+    // Asegúrate de mostrar la última ruta si quedó alguna
+    if (waypoints.length > 0) {
+        waypointsForLines[codigoLinea] = waypoints;
+        showLine(map, waypoints, codigoLinea, routeControls, rutasVisibles);
+    }
+
+    return {rutasVisibles, waypointsForLines, routeControls };
+}
+
+function showLine(map, waypoints, codigoLinea, routeControls, rutasVisibles) {
+
+    const routeControl = L.Routing.control({
+        waypoints: waypoints,
+        fitSelectedRoutes: true, // Ajusta la vista a la ruta
+        createMarker: function (_i, _waypoint, _n) {
+            // No crea marcadores
+            return null;
+        },
+        addWaypoints: false, // Deshabilita la adición de puntos de ruta
+    }).addTo(map);
+
+    routeControls[codigoLinea] = routeControl;
+    rutasVisibles[codigoLinea] = true;
+
+}
+
+function removeLine(codigoLinea, routeControls, map, rutasVisibles) {
+    if (routeControls[codigoLinea]) {
+        routeControls[codigoLinea].spliceWaypoints(0, routeControls[codigoLinea].getWaypoints().length - 1);
+        map.removeControl(routeControls[codigoLinea]);
+    }
+
+    rutasVisibles[codigoLinea] = false;
+}
+
+
+export {showLine, removeLine, recorridosLoopThrough, createBusLookUpButtons, stopsMapOnClick, paradasLoopThrough, paradasCustomIcons, newMap };

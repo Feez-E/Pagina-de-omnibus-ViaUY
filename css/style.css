@@ -836,10 +836,12 @@
     max-height: 0px;
     overflow-y: hidden;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     transition: .25s;
     gap:10px;
     overflow-x: auto;
+    padding-left: 10vw;
+    padding-right: 10vw;
   }
 
   .travels .travel:first-child{
@@ -879,6 +881,36 @@
      rotate(-40deg); 
     border-radius: 3px;
     transition: 0.25s;
+  }
+
+  #toggleArrow.leftToRight::before{
+    width: 12px;
+    transform: 
+     translateX(-2px)
+     translateY(-3.5px)
+     rotate(-40deg); 
+  }
+
+  #toggleArrow.leftToRight::after{
+    width: 12px;
+    transform: 
+     translateX(-2px)
+     translateY(3.5px)
+     rotate(40deg); 
+  }
+
+  *.hidden>*>#toggleArrow.leftToRight::before{
+    transform: 
+     translateX(-2px)
+     translateY(-3.5px)
+     rotate(40deg); 
+  }
+
+  *.hidden>*>#toggleArrow.leftToRight::after{
+    transform: 
+     translateX(-2px)
+     translateY(3.5px)
+     rotate(-40deg); 
   }
 
   #lineToggle::after, #toggleArrow::after{
@@ -1322,6 +1354,108 @@
    rotate(45deg);
 }
 
+#betterLines{
+  width: 100%;
+}
+
+#betterLines .lineAndTravels{
+  margin: 1.6rem 0px ;
+}
+
+/*--  --*/
+
+/*-- TravelAndLineRD --*/
+
+.leaflet-routing-container .leaflet-routing-instructions.show,
+.leaflet-top.leaflet-right {
+  display: none;
+}
+
+#stopsMap.grabbable{
+  cursor: grab;
+}
+
+#stopsMap.grabbable:active{
+  cursor: grabbing;
+}
+
+.leaflet-bottom.leaflet-left{
+  display: flex;
+  max-width: 50%;
+  overflow-x: hidden;
+  background-color: var(--whitesmoke-color);
+  padding:5px 5px 0 0;
+  border-radius: 0 15px 0  0;
+  transition: .3s;
+}
+
+.leaflet-bottom.leaflet-left {
+  pointer-events: all;
+}
+
+.leaflet-bottom.leaflet-left.hidden{
+  max-width: 35px;
+  overflow: hidden;
+  margin: 0px;
+}
+
+.leaflet-bottom.leaflet-left .leaflet-control,
+.leaflet-bottom.leaflet-left .leaflet-control *{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-justify: center;
+
+}
+
+.leaflet-bottom.leaflet-left .leaflet-control{
+  background-color: var(--secondary-color);
+  width: 25px;
+  height: 25px;
+  font-size: var(--font-sm);
+  border-radius: 50%;
+  margin-bottom: 5px;
+  justify-content: space-between;
+}
+
+
+
+.leaflet-bottom.leaflet-left .control-content{
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  text-justify: center;
+  
+}
+
+.leaflet-bottom.leaflet-left .control-content.show{
+  overflow-x: auto;
+}
+
+
+.leaflet-bottom.leaflet-left .control-content>div{
+  display: flex;
+  align-items: center;
+  text-justify: center;
+  width: fit-content;
+}
+
+
+
+.leaflet-bottom.leaflet-left .leaflet-control> a{
+
+  color:var(--button-text-color);
+  width: 100%;
+}
+.leaflet-bottom.leaflet-left .collapseButton{
+  min-width: 25px;
+  background-color: transparent;
+}
+
+
+.leaflet-bottom.leaflet-left .collapseButton a{
+  color: var(--primary-color);
+}
 /*--  --*/
 
 /*-- MovileFirst Design --*/
