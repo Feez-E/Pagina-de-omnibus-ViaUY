@@ -39,17 +39,20 @@ document.addEventListener("DOMContentLoaded", function () {
             type: "POST",
             data: dataToSend,
             success: (response) => {
-                
+
                 if (response.status === "success") {
                     const betterLines = document.getElementById("betterLines");
-                    
-                    if (Object.keys(response.lineas).length > 0) {
+
+                    if (response.lineas && Object.keys(response.lineas).length > 0) {
                         const linesContainer = loadLines(response.lineas);
-                        betterLines.innerHTML= ""
+                        betterLines.innerHTML = ""
                         betterLines.appendChild(linesContainer);
+                    } else if (response.error) {
+                        showError(response.error);
                     } else {
                         showError("Lo sentimos, no hay viajes disponibles que se ajusten a sus necesidades.");
                     }
+                    console.log(response.param);
                 } else {
                     console.log("Error al procesar la solicitud.");
                     console.error(response);
@@ -109,6 +112,20 @@ function loadLines(lineas) {
                     const timesParagraph = document.createElement("div");
                     timesParagraph.className = "travel";
                     timesParagraph.innerHTML = currentLinea[data].map(time => `<p>${time}</p>`).join('');
+                    
+                    const nuevoElemento = document.createElement("div");
+                    nuevoElemento.className = "travelButtons";
+                    nuevoElemento.innerHTML = `
+                        <a class = 'buttons busButton'>
+                            <img src='/Proyecto Final/img/UnidadIcono.png'>
+                        </a>
+                        <a class = 'buttons reserveButton'>
+                            <img src='/Proyecto Final/img/UnidadIcono.png'>
+                        </a>
+                    `;
+
+                    timesParagraph.appendChild(nuevoElemento);
+
                     travelsDiv.appendChild(timesParagraph);
                 }
             }
