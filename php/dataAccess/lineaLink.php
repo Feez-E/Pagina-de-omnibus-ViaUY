@@ -35,5 +35,22 @@ class LineaLink
         return $lineas;
     }
     
+    public function getNombreLineaByCodigo($codigo)
+    {
+        include_once(BUSINESS_PATH.'linea.php');
+
+        $stmt = $this->conn->prepare(
+            "SELECT nombre FROM Linea WHERE codigo = ?;"
+        );
+        $stmt->bind_param("i", $codigo);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows === 1) {
+            $codigo = $result->fetch_assoc();
+            return $codigo['nombre'];
+        }
+        return null;
+    }
+    
 }
 ?>
