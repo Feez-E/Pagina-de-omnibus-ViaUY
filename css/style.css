@@ -169,6 +169,7 @@ a {
   transition: all 0.55s ease;
   text-decoration: none;
 }
+
 .button:hover {
   background: transparent;
   border: 1px solid var(--secondary-color);
@@ -1281,10 +1282,24 @@ h2.title {
 .busButton {
   padding: 8px;
   border-radius: 50% 0px 0px 50%;
+  border: 1px solid var(--whitesmoke-color);
+  transition: .25s;
 }
 .reserveButton {
   padding: 8px;
   border-radius: 0px 50% 50% 0px;
+  border: 1px solid var(--whitesmoke-color); 
+  transition: .25s;
+}
+
+.reserveButton:hover,
+.busButton:hover {
+  border: 1px solid var(--secondary-color);
+  transform: translateX(5px);
+}
+
+.busButton:hover {
+  transform: translateX(-5px);
 }
 
 .travelButtons {
@@ -1377,6 +1392,83 @@ h2.title {
 .leaflet-bottom.leaflet-left .collapseButton a {
   color: var(--primary-color);
 }
+
+.leaflet-popup-content .button .busIcons {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  filter: drop-shadow(0 0 0.25rem var(--secondary-color));
+}
+
+.button.wIcon{
+  min-width: 40px;
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 0.25rem var(--secondary-color));
+  align-self: center;
+}
+
+.button .icons.plus::before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 4px;
+  background-color: white;
+  transform: translateX(-1px) translateY(7px) rotate(-90deg);
+  border-radius: 3px;
+  transition: 0.25s;
+}
+.button .icons.plus::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 4px;
+  background-color: white;
+  transform: translateX(-1px) translateY(7px);
+  border-radius: 3px;
+  transition: 0.25s;
+}
+
+
+.button.wIcon:hover .icons.plus::before,
+.button.wIcon:hover .icons.plus::after {
+  background-color: var(--primary-color);
+}
+
+.travels.travelAndLine{
+  flex-direction: column;
+  padding:0px;
+}
+
+
+.lineAndTravels.active .travels.travelAndLinePage{
+  max-height: 10000px;
+}
+
+.lineAndTravels.travelAndLinePage #toggleArrow{
+  display: none;
+}
+
+.lineAndTravels.travelAndLinePage.active #toggleArrow{
+  display: block;
+}
+
+.desplegableSection.travelAndLinePage {
+  margin: 0px;
+  padding:0px;
+}
+
+.desplegableSection.travelAndLinePage .desplegableContent {
+ flex-direction: column;
+}
+
+.desplegableSubtitle{
+  color: var(--tertiary-color)
+}
+
+
 /*--  --*/
 
 /*-- MovileFirst Design --*/

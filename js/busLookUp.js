@@ -116,10 +116,10 @@ function loadLines(lineas) {
                     const nuevoElemento = document.createElement("div");
                     nuevoElemento.className = "travelButtons";
                     nuevoElemento.innerHTML = `
-                        <a class = 'buttons busButton'>
+                        <a class = 'busButton'>
                             <img src='/Proyecto Final/img/UnidadIcono.png'>
                         </a>
-                        <a class = 'buttons reserveButton'>
+                        <a class = 'reserveButton'>
                             <img src='/Proyecto Final/img/UnidadIcono.png'>
                         </a>
                     `;

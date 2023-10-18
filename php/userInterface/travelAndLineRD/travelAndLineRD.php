@@ -47,6 +47,9 @@
             var paradasArray = <?php echo $jsonParadas; ?>;
             var recorridosArray = <?php echo $jsonRecorridos; ?>;
         </script>
+         <?php
+            include 'showLineas.php';
+        ?>
     </main>
     <?php
     include '../footer.php';
@@ -54,5 +57,6 @@
 </body>
 <script type="module" src="../../../js/linesMap.js"></script>
 <script src="../../../js/lineToggleSelector.js"></script>
+<script src="../../../js/toggleSelector.js"></script>
 
 </html>
