@@ -145,7 +145,9 @@ html {
 body {
   background-image: var(--backgroundImage);
   background-attachment: fixed;
+  background-repeat: repeat-y;
   overflow-x: hidden;
+  background-color: var(--whitesmoke-color);
 }
 
 p {
@@ -1305,6 +1307,28 @@ h2.title {
 .travelButtons {
   margin-top: 10px;
   display: flex;
+}
+
+.unitInfo{
+  background-color: var(--whitesmoke-color);
+  text-align: left;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.caracts{
+  margin-top: 30px;
+}
+
+
+.unitInfo p{
+ color: var(--tertiary-color);
+}
+.unitInfo .subtitle{
+  color: var(--secondary-color);
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 /*--  --*/
 

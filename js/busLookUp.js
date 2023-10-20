@@ -52,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     } else {
                         showError("Lo sentimos, no hay viajes disponibles que se ajusten a sus necesidades.");
                     }
-                    console.log(response.param);
                 } else {
                     console.log("Error al procesar la solicitud.");
                     console.error(response);
@@ -112,13 +111,14 @@ function loadLines(lineas) {
                     const timesParagraph = document.createElement("div");
                     timesParagraph.className = "travel";
                     timesParagraph.innerHTML = currentLinea[data].map(time => `<p>${time}</p>`).join('');
-                    
+
                     const nuevoElemento = document.createElement("div");
                     nuevoElemento.className = "travelButtons";
                     nuevoElemento.innerHTML = `
                         <a class = 'busButton'>
                             <img src='/Proyecto Final/img/UnidadIcono.png'>
                         </a>
+                        <div class = pageCover></div>
                         <a class = 'reserveButton'>
                             <img src='/Proyecto Final/img/UnidadIcono.png'>
                         </a>
@@ -141,6 +141,95 @@ function loadLines(lineas) {
                 // Alterna la clase 'active' en el elemento padre del elemento padre de 'lineToggle' (dos niveles hacia arriba)
                 lineToggle.parentElement.parentElement.classList.toggle('active');
             }
+        });
+
+        const busButtons = linesContainer.querySelectorAll(".busButton");
+
+        busButtons.forEach(busButton => {
+
+            const reserveButton = busButton.parentElement.lastElementChild;
+            const pageCover = busButton.nextElementSibling;
+            const horaSalida = busButton.parentElement.parentElement.firstElementChild.innerHTML;
+            const nombreLineaOrigenDestino = busButton.parentElement.parentElement.parentElement.previousElementSibling.firstElementChild.firstElementChild.innerHTML.split(" - ");
+
+            const nombreLinea = nombreLineaOrigenDestino[0];
+            console.log(nombreLinea);
+            console.log(horaSalida);
+
+            let dataToSend = {
+                nombreLinea: nombreLinea,
+                horaSalida: horaSalida
+            };
+
+            $.ajax({
+                url: "getUnit.php",
+                type: "POST",
+                data: dataToSend,
+                success: (response) => {
+
+                    if (response.status === "success") {
+
+                        if (response.unidad) {
+                            unidad = response.unidad;
+                            caracts = response.caracteristicas;
+                            const caractsHTML = caracts.map(time => `<p>${time.propiedad}</p>`).join('');
+                            pageCover.innerHTML = `
+                             <div class = "unitInfo">
+                                <p class = subtitle> Información general </p>
+                                <p> Numero de Unidad: ${response.unidad.numero} </p>
+                                <p> Matricula: ${response.unidad.matricula} </p>
+                                <p> Capacidad del 1° piso: ${response.unidad.capacidadPrimerPiso} </p>
+                                <p> Capacidad del 2° piso: ${response.unidad.capacidadSegundoPiso} </p>
+                                <div class = caracts>
+                                <p class = subtitle> Características </p>
+                                    ${caractsHTML}
+                                </div>
+                             </div>
+                             `;
+                        } else if (response.error) {
+                            showError(response.error);
+                        } else {
+                            showError("Lo sentimos, hubo un error");
+                        }
+                    } else {
+                        console.log("Error al procesar la solicitud.");
+                        console.error(response);
+                    }
+                },
+                error: (_xhr, _status, error) => {
+                    console.log("Error en la solicitud AJAX.");
+                    console.error(error);
+                },
+            });
+
+            busButton.onclick = () => {
+                pageCover.classList.toggle("active");
+            };
+
+            pageCover.style.borderRadius = "15px";
+            pageCover.onclick = () => {
+                pageCover.classList.toggle("active");
+            };
+
+            reserveButton.onclick = () => {
+                console.log(unidad)
+                console.log(caracts)
+
+                delete unidad.vigencia;
+                delete unidad.numeroChasis;
+                delete unidad.matricula;
+                caracts.forEach((caract) => {
+                    delete caract.numeroUnidad;
+                });
+
+                var unidadJSON = JSON.stringify(unidad);
+                var caractsJSON = JSON.stringify(caracts);
+
+                // Crea el enlace con los objetos como parámetros
+                var enlace = `busReserve/busReserve.php?unidad=${encodeURIComponent(unidadJSON)}&caracts=${encodeURIComponent(caractsJSON)}`;
+            
+                reserveButton.setAttribute('href', enlace)
+            };
         });
     }
 
