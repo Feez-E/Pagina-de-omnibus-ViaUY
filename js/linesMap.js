@@ -26,26 +26,27 @@ rutasVisibles.forEach((ruta, i) => {
     const buttonsDiv = document.createElement("div");
     buttonsDiv.className = "leaflet-control";
 
-    ajaxForName(i, function (name) {
-        console.log(name);
+    ajaxForName(i, (name) => {
+            console.log(name);
 
-        const buttonsDivContent = `
+            const buttonsDivContent = `
             <a class="showButton">${name}</a>
         `;
 
-        control.appendChild(buttonsDiv);
-        buttonsDiv.innerHTML = buttonsDivContent;
+            control.appendChild(buttonsDiv);
+            buttonsDiv.innerHTML = buttonsDivContent;
 
-        const showButton = buttonsDiv.querySelector(".showButton");
+            const showButton = buttonsDiv.querySelector(".showButton");
 
-        showButton.onclick = () => {
-            if (rutasVisibles[i]) {
-                removeLine(i, routeControls, map, rutasVisibles);
-            } else {
-                showLine(map, waypointsForLines[i], i, routeControls, rutasVisibles);
-            }
-        };
-    });
+            showButton.onclick = () => {
+                if (rutasVisibles[i]) {
+                    removeLine(i, routeControls, map, rutasVisibles);
+                } else {
+                    showLine(map, waypointsForLines[i], i, routeControls, rutasVisibles);
+                }
+                showButton.classList.toggle("active");
+            };
+        });
 });
 
 const linesCollapseDiv = document.createElement("div");

@@ -21,20 +21,43 @@
 </head>
 
 <body>
-<?php
+    <?php
     include_once($_SERVER['DOCUMENT_ROOT'] . '/Proyecto Final/dirs.php');
     include '../navBar/navBar.php';
     $rolPermitido = "Administrador Maestro";
     ?>
     <main class="container">
-        <h2 class="title">Administrar lineas</h2>
+        <h2 class="title">Administrar viajes y líneas</h2>
         <?php
-        if(!isset($_SESSION["userData"]) || $_SESSION["userData"]->getNombreRol() !== $rolPermitido){
+        if (!isset($_SESSION["userData"]) || $_SESSION["userData"]->getNombreRol() !== $rolPermitido) {
             echo "<p class = 'errorMessage'> Inicie sesión como administrador para ver esta pagina </p>";
             exit;
         }
         ?>
-        <div id="stopsMap" class="grabbable shadow"></div>
+        <div class="desplegableSection container shadow">
+            <div class="desplegableTitle">
+                <div>
+                    <h3>Mapa de líneas</h3>
+                    <p>Ver líneas y paradas disponibles</p>
+                </div>
+                <div id="toggleArrow"></div>
+            </div>
+            <div class="desplegableContent" style="padding: 0px;">
+                <div id="stopsMap" class="grabbable shadow"></div>
+            </div>
+        </div>
+
+        <div class="container linesSubtitle">
+            <h3>Líneas</h3>
+                <a class=button>Ver unidades</a>
+        </div>
+        <div class = "desplegableSection shadow">
+            <div class = desplegableTitle>
+                <div class = lineLeft><h3 class = subtitle> Agregar linea</h3><p>Creación de lineas</p></div>
+                <div id = "toggleArrow"></div>
+            </div>
+            <div class = desplegableContent></div>
+        </div>
         <?php
         include_once("../../dataAccess/paradaLink.php");
         $paradaLink = new ParadaLink($conn);
@@ -47,8 +70,8 @@
             var paradasArray = <?php echo $jsonParadas; ?>;
             var recorridosArray = <?php echo $jsonRecorridos; ?>;
         </script>
-         <?php
-            include 'showLineas.php';
+        <?php
+        include 'showLineas.php';
         ?>
     </main>
     <?php

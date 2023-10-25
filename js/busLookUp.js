@@ -20,6 +20,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const date = document.getElementById("date").value;
         const time = document.getElementById("time").value;
 
+        const subida = busLookUpForm.firstElementChild.firstElementChild.children[1].value;
+        const bajada = busLookUpForm.firstElementChild.children[1].children[1].value;
+        const dia = busLookUpForm.children[1].firstElementChild.children[1].value;
+        params = { "subida": subida, "bajada": bajada,  "dia": dia};
+
         // Realiza la validación (puedes agregar tus propias condiciones)
         if (startStop.trim() === "" || endStop.trim() === "" || date.trim() === "" || time.trim() === "") {
             showError("Por favor, complete todos los campos.");
@@ -120,7 +125,7 @@ function loadLines(lineas) {
                         </a>
                         <div class = pageCover></div>
                         <a class = 'reserveButton'>
-                            <img src='/Proyecto Final/img/UnidadIcono.png'>
+                            <img src='/Proyecto Final/img/ReservaIcono.png'>
                         </a>
                     `;
 
@@ -222,13 +227,57 @@ function loadLines(lineas) {
                     delete caract.numeroUnidad;
                 });
 
+
+                var regexSubida = new RegExp("\\b" + params["subida"] + "\\b");
+                var regexBajada = new RegExp("\\b" + params["bajada"] + "\\b");
+
+                var travelElements = reserveButton.parentElement.parentElement.parentElement.firstElementChild.querySelectorAll('p');
+                
+                console.log(travelElements );
+                travelElements.forEach((element, i) => {
+                    if (regexSubida.test(element.textContent)) {
+                        const horaSalida = busButton.parentElement.parentElement.children[i].innerHTML;
+                        params["horaSubida"] = horaSalida;
+                        console.log(horaSalida);
+                    }
+                    if (regexBajada.test(element.textContent)) {
+                        const horaLlegada = busButton.parentElement.parentElement.children[i].innerHTML;
+                        params["horaBajada"] = horaLlegada;
+                        console.log(horaLlegada);
+                    }  
+                });
+
                 var unidadJSON = JSON.stringify(unidad);
                 var caractsJSON = JSON.stringify(caracts);
+                var paramsJSON = JSON.stringify(params);
 
-                // Crea el enlace con los objetos como parámetros
-                var enlace = `busReserve/busReserve.php?unidad=${encodeURIComponent(unidadJSON)}&caracts=${encodeURIComponent(caractsJSON)}`;
-            
-                reserveButton.setAttribute('href', enlace)
+                // Crea un formulario dinámico
+                var form = document.createElement('form');
+                form.action = 'busReserve/busReserve.php'; // URL de la página de destino
+                form.method = 'post'; // Utiliza el método POST
+
+                // Crea campos de entrada ocultos para los datos
+                var unidadInput = document.createElement('input');
+                unidadInput.type = 'hidden';
+                unidadInput.name = 'unidad';
+                unidadInput.value = unidadJSON;
+                form.appendChild(unidadInput);
+
+                var caractsInput = document.createElement('input');
+                caractsInput.type = 'hidden';
+                caractsInput.name = 'caracts';
+                caractsInput.value = caractsJSON;
+                form.appendChild(caractsInput);
+
+                var paramsInput = document.createElement('input');
+                paramsInput.type = 'hidden';
+                paramsInput.name = 'params';
+                paramsInput.value = paramsJSON;
+                form.appendChild(paramsInput);
+
+                // Agrega el formulario al cuerpo del documento y envíalo
+                document.body.appendChild(form);
+                form.submit(); 
             };
         });
     }
