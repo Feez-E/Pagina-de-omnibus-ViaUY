@@ -10,12 +10,7 @@ var { stopsArray } = paradasLoopThrough(map, customIcon, customIconFalse, "lines
 
 var { rutasVisibles, waypointsForLines, routeControls } = recorridosLoopThrough(map, stopsArray);
 
-
-
-
-
-/* showLine( map, waypointsForLines["4"],"4", routeControls, rutasVisibles); */
-console.log(rutasVisibles)
+console.log(stopsArray)
 
 let control = document.querySelector("#stopsMap .leaflet-control-container .leaflet-bottom.leaflet-left")
 control.innerHTML = "<div class = 'control-content show'><div class =control-container></div></div>";
@@ -27,26 +22,26 @@ rutasVisibles.forEach((ruta, i) => {
     buttonsDiv.className = "leaflet-control";
 
     ajaxForName(i, (name) => {
-            console.log(name);
+        console.log(name);
 
-            const buttonsDivContent = `
+        const buttonsDivContent = `
             <a class="showButton">${name}</a>
         `;
 
-            control.appendChild(buttonsDiv);
-            buttonsDiv.innerHTML = buttonsDivContent;
+        control.appendChild(buttonsDiv);
+        buttonsDiv.innerHTML = buttonsDivContent;
 
-            const showButton = buttonsDiv.querySelector(".showButton");
+        const showButton = buttonsDiv.querySelector(".showButton");
 
-            showButton.onclick = () => {
-                if (rutasVisibles[i]) {
-                    removeLine(i, routeControls, map, rutasVisibles);
-                } else {
-                    showLine(map, waypointsForLines[i], i, routeControls, rutasVisibles);
-                }
-                showButton.classList.toggle("active");
-            };
-        });
+        showButton.onclick = () => {
+            if (rutasVisibles[i]) {
+                removeLine(i, routeControls, map, rutasVisibles);
+            } else {
+                showLine(map, waypointsForLines[i], i, routeControls, rutasVisibles);
+            }
+            showButton.classList.toggle("active");
+        };
+    });
 });
 
 const linesCollapseDiv = document.createElement("div");
@@ -100,6 +95,34 @@ function ajaxForName(lineId, callback) {
     });
 }
 
+function agregarParada() {
+        const addStopInput = document.getElementById("addStop");
+        const parada = addStopInput.value.trim();
+
+        if (parada !== "" && stopsArray.hasOwnProperty(parada)) {
+            const listaParadas = document.getElementById("stopsList");
+            const nuevaParada = document.createElement("li");
+            nuevaParada.textContent = parada;
+            listaParadas.appendChild(nuevaParada);
+            addStopInput.value = "";
+        } else {
+            showError("Ingrese una parada correcta");
+        }
+}
+
+function showError(message) {
+    const errorContainer = document.getElementById("errorContainer");
+    const errorMessages = errorContainer.querySelector("p");
+    errorMessages.textContent = message;
+    errorContainer.classList.remove("slideIn");
+    // Agrega la clase slideIn para mostrar el error, timeout para poder recargar la clase
+    setTimeout(() => {
+        errorContainer.classList.add("slideIn");
+    }, .1);
+}
+
+
+export {agregarParada}
 
 
 

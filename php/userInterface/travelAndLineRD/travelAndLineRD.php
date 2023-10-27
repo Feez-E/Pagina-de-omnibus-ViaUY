@@ -26,6 +26,9 @@
     $rolPermitido = "Administrador Maestro";
     ?>
     <main class="container">
+        <div id="errorContainer" class="confirmationMessage container shadow">
+            <p></p>
+        </div>
         <h2 class="title">Administrar viajes y líneas</h2>
         <?php
         if (!isset($_SESSION["userData"]) || $_SESSION["userData"]->getNombreRol() !== $rolPermitido) {
@@ -42,20 +45,46 @@
                 <div id="toggleArrow"></div>
             </div>
             <div class="desplegableContent" style="padding: 0px;">
-                <div id="stopsMap" class="grabbable shadow"></div>
+                <div id="stopsMap" class="shadow"></div>
             </div>
         </div>
 
         <div class="container linesSubtitle">
             <h3>Líneas</h3>
-                <a class=button>Ver unidades</a>
+            <a class=button>Ver unidades</a>
         </div>
-        <div class = "desplegableSection shadow">
-            <div class = desplegableTitle>
-                <div class = lineLeft><h3 class = subtitle> Agregar linea</h3><p>Creación de lineas</p></div>
-                <div id = "toggleArrow"></div>
+        <div class="desplegableSection shadow">
+            <div class=desplegableTitle>
+                <div class=lineLeft>
+                    <h3 class=subtitle> Agregar linea</h3>
+                    <p>Creación de lineas</p>
+                </div>
+                <div id="toggleArrow"></div>
             </div>
-            <div class = desplegableContent></div>
+            <div class="desplegableContent container" id=form>
+                <form id="lineForm" action="#" method="post">
+                    <label for="lineName">
+                        <span>Nombre de la línea:</span>
+                        <input type="text" id="lineName" name="lineName" autocomplete="off" />
+                    </label>
+                    <fieldset>
+                        <legend>Paradas:</legend>
+                        <ul id="stopsList">
+                        </ul>
+                        <label for="addStop" style="background: white;">
+                            <input type="number" id="addStop" name="addStop" autocomplete="off"
+                                placeholder="Ej. 1" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-plus" id  = "addStopButton">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </label>
+                    </fieldset>
+                    <input type="submit" value="Confirmar" class="button" />
+                </form>
+            </div>
         </div>
         <?php
         include_once("../../dataAccess/paradaLink.php");
@@ -77,8 +106,22 @@
     include '../footer.php';
     ?>
 </body>
-<script type="module" src="../../../js/linesMap.js"></script>
+
 <script src="../../../js/lineToggleSelector.js"></script>
 <script src="../../../js/toggleSelector.js"></script>
+<script type="module" src="../../../js/linesMap.js"></script>
+<script type="module">
+    import { agregarParada } from '../../../js/linesMap.js';
+
+    window.addEventListener('load', () => {
+        document.getElementById("addStop").onkeydown = function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                agregarParada();
+            }
+        };
+        document.getElementById("addStopButton").onclick = agregarParada;
+    });
+</script>
 
 </html>
