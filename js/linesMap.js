@@ -97,17 +97,20 @@ function ajaxForName(lineId, callback) {
 
 function agregarParada() {
         const addStopInput = document.getElementById("addStop");
-        const parada = addStopInput.value.trim();
+        const id = addStopInput.value.trim();
 
-        if (parada !== "" && stopsArray.hasOwnProperty(parada)) {
-            const listaParadas = document.getElementById("stopsList");
-            const nuevaParada = document.createElement("li");
-            nuevaParada.textContent = parada;
-            listaParadas.appendChild(nuevaParada);
+        if (id !== "" && stopsArray.hasOwnProperty(id)) {
+            const stopsList = document.getElementById("stopsList");
+            const newStop = document.createElement("li");
+            newStop.textContent = id;
+            stopsList.appendChild(newStop);
             addStopInput.value = "";
+            const latLng = stopsArray[id];
+
+            return {id, latLng};
         } else {
             showError("Ingrese una parada correcta");
-        }
+        }        
 }
 
 function showError(message) {
@@ -121,8 +124,17 @@ function showError(message) {
     }, .1);
 }
 
+function lineFormSubmit(paradas){
+    const busLookUpForm = document.getElementById("lineForm");
+    busLookUpForm.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-export {agregarParada}
+        console.log(paradas)
+    });
+}
+
+
+export {agregarParada, lineFormSubmit}
 
 
 

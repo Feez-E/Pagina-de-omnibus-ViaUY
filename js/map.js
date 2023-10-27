@@ -13,6 +13,8 @@ function newMap(div) {
 
     // Agrega una capa de mosaico de OpenStreetMap al mapa
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxNativeZoom:19,
+        maxZoom:25,
         minZoom: 3,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);

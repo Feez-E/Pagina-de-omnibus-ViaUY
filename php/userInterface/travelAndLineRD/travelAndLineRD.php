@@ -71,7 +71,7 @@
                         <legend>Paradas:</legend>
                         <ul id="stopsList">
                         </ul>
-                        <label for="addStop" style="background: white;">
+                        <label for="addStop">
                             <input type="number" id="addStop" name="addStop" autocomplete="off"
                                 placeholder="Ej. 1" />
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -111,16 +111,30 @@
 <script src="../../../js/toggleSelector.js"></script>
 <script type="module" src="../../../js/linesMap.js"></script>
 <script type="module">
-    import { agregarParada } from '../../../js/linesMap.js';
+    import { agregarParada,  lineFormSubmit } from '../../../js/linesMap.js';
 
+
+    let paradas = [];
     window.addEventListener('load', () => {
         document.getElementById("addStop").onkeydown = function(event) {
             if (event.key === "Enter") {
                 event.preventDefault();
-                agregarParada();
+                const stop = agregarParada();
+                if(stop){
+                    paradas.push(stop);
+                }
+                
+               
             }
         };
-        document.getElementById("addStopButton").onclick = agregarParada;
+        document.getElementById("addStopButton").onclick = () =>{
+            const stop = agregarParada();
+                if(stop){
+                    paradas.push(stop);
+                }
+        }
+
+        lineFormSubmit(paradas);
     });
 </script>
 

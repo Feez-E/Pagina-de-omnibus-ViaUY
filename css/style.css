@@ -131,6 +131,18 @@ body *::-webkit-scrollbar-track {
 /*----*/
 
 /*-- GeneralSettings --*/
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] { 
+  appearance:textfield;
+  -moz-appearance:textfield;
+ }
+
 ul {
   list-style: none;
 }
@@ -960,7 +972,8 @@ fieldset{
   background-color: var(--whitesmoke-color);
 }
 
-.container#form label span {
+.container#form label span, 
+legend{
   color: var(--tertiary-color);
   padding: 5px 0 5px 0;
   position: static;
@@ -1722,6 +1735,9 @@ fieldset{
   gap: 10px
 }
 
+.desplegableContent.container#form label[for="addStop"]{
+  background: var(--white-color);
+}
 
 /*----*/
 
