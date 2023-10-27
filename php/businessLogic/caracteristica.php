@@ -1,5 +1,5 @@
 <?php
-class Caracteristica {
+class Caracteristica implements JsonSerializable{
     private int $numeroUnidad;
     private string $propiedad;
     private float $multiplicador;
@@ -33,6 +33,18 @@ class Caracteristica {
     // Setter para $multiplicador
     public function setMultiplicador(float $multiplicador): void {
         $this->multiplicador = $multiplicador;
+    }
+
+    public function jsonSerialize()
+    {
+
+
+        return [
+            "numeroUnidad" => $this->numeroUnidad,
+            "propiedad" => $this->propiedad,
+            "multiplicador" => $this->multiplicador 
+        ];
+
     }
 }
 

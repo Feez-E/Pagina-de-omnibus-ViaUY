@@ -48,5 +48,37 @@ class Linea_diaHabilLink
 
         return $lineaDiaHabilArray;
     }
+
+    public function updateLineaDiaHabil($codigo_Linea , $dia)
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT * FROM Linea_diaHabil WHERE codigo_Linea = ? AND dia = ?;"
+        );
+        $stmt->bind_param("is", $codigo_Linea, $dia);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $stmt = $this->conn->prepare(
+                "DELETE FROM Linea_diaHabil WHERE codigo_Linea = ? AND dia = ?;"
+                );
+                $stmt->bind_param("is", $codigo_Linea, $dia);
+                if($stmt->execute()) {
+                    return "deletedLineaDiaHabil";
+                } else {
+                    return false;
+                }
+        } else {
+            $stmt = $this->conn->prepare(
+                "INSERT INTO Linea_diaHabil  (codigo_Linea, dia) VALUES (?, ?);"
+                );
+                $stmt->bind_param("is", $codigo_Linea, $dia);
+                if($stmt->execute()) {
+                    return "addedLineaDiaHabil";
+                } else {
+                    return false;
+                }
+        }
+    }
 }
 ?>

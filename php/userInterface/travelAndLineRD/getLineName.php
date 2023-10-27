@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
        // Crear un arreglo asociativo para la respuesta JSON
        $response = array('status' => 'success', 'lineName' => $lineaName);
-
        // Enviar la respuesta JSON
        header('Content-Type: application/json');
        echo json_encode($response);

@@ -1,5 +1,6 @@
 <?php
-class Unidad {
+class Unidad implements JsonSerializable
+{
     private int $numero;
     private string $matricula;
     private string $numeroChasis;
@@ -9,10 +10,10 @@ class Unidad {
 
     public function __construct(
         int $numero,
-        string $matricula, 
-        string $numeroChasis, 
-        int $capacidadPrimerPiso, 
-        ?int $capacidadSegundoPiso, 
+        string $matricula,
+        string $numeroChasis,
+        int $capacidadPrimerPiso,
+        ?int $capacidadSegundoPiso,
         bool $vigencia
     ) {
         $this->numero = $numero;
@@ -24,58 +25,84 @@ class Unidad {
     }
 
     // Getter para $numero
-    public function getNumero(): int {
+    public function getNumero(): int
+    {
         return $this->numero;
     }
 
     // Getter para $matricula
-    public function getMatricula(): string {
+    public function getMatricula(): string
+    {
         return $this->matricula;
     }
 
     // Setter para $matricula
-    public function setMatricula(string $matricula): void {
+    public function setMatricula(string $matricula): void
+    {
         $this->matricula = $matricula;
     }
 
     // Getter para $numeroChasis
-    public function getNumeroChasis(): string {
+    public function getNumeroChasis(): string
+    {
         return $this->numeroChasis;
     }
 
     // Setter para $numeroChasis
-    public function setNumeroChasis(string $numeroChasis): void {
+    public function setNumeroChasis(string $numeroChasis): void
+    {
         $this->numeroChasis = $numeroChasis;
     }
 
     // Getter para $capacidadPrimerPiso
-    public function getCapacidadPrimerPiso(): int {
+    public function getCapacidadPrimerPiso(): int
+    {
         return $this->capacidadPrimerPiso;
     }
 
     // Setter para $capacidadPrimerPiso
-    public function setCapacidadPrimerPiso(int $capacidadPrimerPiso): void {
+    public function setCapacidadPrimerPiso(int $capacidadPrimerPiso): void
+    {
         $this->capacidadPrimerPiso = $capacidadPrimerPiso;
     }
 
     // Getter para $capacidadSegundoPiso
-    public function getCapacidadSegundoPiso(): ?int {
+    public function getCapacidadSegundoPiso(): ?int
+    {
         return $this->capacidadSegundoPiso;
     }
 
     // Setter para $capacidadSegundoPiso
-    public function setCapacidadSegundoPiso(?int $capacidadSegundoPiso): void {
+    public function setCapacidadSegundoPiso(?int $capacidadSegundoPiso): void
+    {
         $this->capacidadSegundoPiso = $capacidadSegundoPiso;
     }
 
     // Getter para $vigencia
-    public function getVigencia(): bool {
+    public function getVigencia(): bool
+    {
         return $this->vigencia;
     }
 
     // Setter para $vigencia
-    public function setVigencia(bool $vigencia): void {
+    public function setVigencia(bool $vigencia): void
+    {
         $this->vigencia = $vigencia;
+    }
+
+    public function jsonSerialize()
+    {
+
+
+        return [
+            "numero" => $this->numero,
+            "matricula" => $this->matricula,
+            "numeroChasis" => $this->numeroChasis,
+            "capacidadPrimerPiso" => $this->capacidadPrimerPiso,
+            "capacidadSegundoPiso" => $this->capacidadSegundoPiso,
+            "vigencia" => $this->vigencia
+        ];
+
     }
 }
 

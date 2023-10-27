@@ -52,4 +52,13 @@ SELECT *
 FROM Transita
 ORDER BY  codigo_L_Recorre, horaSalida_Salida ASC, orden_Recorre ASC;
 
+SELECT distinct U.*
+FROM Unidad U
+INNER JOIN Transita T ON U.numero = T.numero_Unidad
+INNER JOIN Linea L ON T.codigo_L_Recorre = L.codigo
+WHERE L.nombre = 'L1'
+AND T.horaSalida_Salida = '18:00';
+
+SELECT * FROM Caracteristica WHERE numero_unidad = "2"
+
 

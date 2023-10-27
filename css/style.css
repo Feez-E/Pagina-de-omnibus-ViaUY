@@ -7,6 +7,8 @@
   --shadow-color: rgb(119, 156, 204);
   --white-color: white;
   --whitesmoke-color: whitesmoke;
+  --valid-color: rgb(157, 219, 157);
+  --notValid-color: rgb(227, 129, 129);
   --footer-gradient-up: linear-gradient(
     180deg,
     rgb(40, 80, 134) 0%,
@@ -35,6 +37,7 @@
   --font-lg: 2.4rem;
   --font-1-5: 1.5em;
   --font-double: 2em;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -69,6 +72,7 @@
     --backgroundImage: url(../img/EfectoFondo_Dark.webp);
     --white-transparentColor: rgba(13, 18, 24, 0.211);
     --shadow-filter: drop-shadow(0.2rem 0.2rem 0.25rem var(--shadow-color));
+
   }
 }
 
@@ -127,8 +131,27 @@ body *::-webkit-scrollbar-track {
 /*----*/
 
 /*-- GeneralSettings --*/
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] { 
+  appearance:textfield;
+  -moz-appearance:textfield;
+ }
+
 ul {
   list-style: none;
+}
+
+@font-face {
+  font-family: 'Century Gothic';
+  src: url('fonts/Century Gothic.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
@@ -142,10 +165,13 @@ html {
   font-size: 62.5%;
 }
 
+
 body {
   background-image: var(--backgroundImage);
   background-attachment: fixed;
+  background-repeat: repeat-y;
   overflow-x: hidden;
+  background-color: var(--whitesmoke-color);
 }
 
 p {
@@ -930,7 +956,8 @@ h2.title {
   width: 100%;
 }
 
-.container#form label {
+.container#form label,
+fieldset{
   width: 100%;
   border: 1px solid transparent;
   background-color: var(--white-color);
@@ -945,7 +972,8 @@ h2.title {
   background-color: var(--whitesmoke-color);
 }
 
-.container#form label span {
+.container#form label span, 
+legend{
   color: var(--tertiary-color);
   padding: 5px 0 5px 0;
   position: static;
@@ -1306,6 +1334,30 @@ h2.title {
   margin-top: 10px;
   display: flex;
 }
+
+.unitInfo{
+  background-color: var(--whitesmoke-color);
+  text-align: left;
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.caracts{
+  margin-top: 30px;
+}
+
+
+.unitInfo p{
+ color: var(--tertiary-color);
+}
+.unitInfo .subtitle,
+.desplegableContent .subtitle,
+.travelAndLine .subtitle{
+  color: var(--secondary-color);
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
 /*--  --*/
 
 /*-- TravelAndLineRD --*/
@@ -1391,6 +1443,16 @@ h2.title {
 
 .leaflet-bottom.leaflet-left .collapseButton a {
   color: var(--primary-color);
+
+}
+
+.leaflet-bottom.leaflet-left .leaflet-control > a.active{
+  color: var(--secondary-color);
+  background-color: var(--whitesmoke-color);
+  border-radius: 50%;
+  width: 21px;
+  height: 21px;
+  transition: .1s;
 }
 
 .leaflet-popup-content .button .busIcons {
@@ -1443,8 +1505,8 @@ h2.title {
 }
 
 
-.lineAndTravels.active .travels.travelAndLinePage{
-  max-height: 10000px;
+.lineAndTravels.active .travels.travelAndLine{
+  max-height: fit-content;
 }
 
 .lineAndTravels.travelAndLinePage #toggleArrow{
@@ -1468,6 +1530,126 @@ h2.title {
   color: var(--tertiary-color)
 }
 
+.caract {
+  display: flex;
+  justify-content: space-between;
+}
+
+.linesSubtitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 30px  0 30px;
+}
+
+.linesSubtitle h3{
+  color: var(--secondary-color);
+  font-size: var(--font-md);
+}
+
+.lineActive{
+  background-color: var(--valid-color);
+}
+
+.lineNotActive{
+  background-color: var(--notValid-color);
+}
+
+.days{
+  display: flex;
+  align-items: center;
+  margin-left: 25px;
+}
+
+.days section{
+  background-color: var(--whitesmoke-color);
+  border-radius: 15px;
+  padding: 5px;
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+  width: 40px;
+  height: 26px;
+  min-width: fit-content;
+  border:none;
+  margin: 0;
+  margin-right: 5px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  cursor: pointer;
+  inset: 0;
+  background-color: var(--notValid-color);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 3px;
+  background-color: var(--white-color);
+  transition: .25s;
+}
+
+input:checked + .slider {
+  background-color: var(--valid-color);
+}
+
+
+
+input:checked + .slider:before {
+  transform: translateX(15px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 24px;
+}
+
+.lineDays{
+  display: flex;
+  text-wrap:wrap;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 130px;
+  transition: .25s;
+  max-height: 40px;
+}
+
+.lineDays.active{
+  max-height: 500px;
+  flex-direction: column;
+  min-width: 130px;
+  gap: 5px;
+}
+
+.lineDays.active>*{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.lineDays svg{
+  height: 20px;
+}
 
 /*--  --*/
 
@@ -1522,6 +1704,39 @@ h2.title {
     left: 2px;
     top: -25px;
   }
+}
+
+.desplegableContent.container#form {
+  margin: 0px;
+}
+
+.desplegableContent.container#form label,
+fieldset{
+  background-color: var(--whitesmoke-color);
+}
+
+fieldset{
+  padding: min(7px, 1vh) 10px;;
+  max-width: 100%;
+}
+
+.container#form label svg.feather-plus{
+  top: auto;
+}
+
+#lineForm{
+  width: 100%;
+ 
+}
+
+#stopsList{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px
+}
+
+.desplegableContent.container#form label[for="addStop"]{
+  background: var(--white-color);
 }
 
 /*----*/
