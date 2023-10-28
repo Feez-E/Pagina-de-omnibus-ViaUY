@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../../../../css/style.css">
     <link rel="icon" href="../../../../ico/icon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>ViaUY</title>
 </head>
 
@@ -13,34 +14,40 @@
     <?php
     include '../../navBar/navBar.php';
     ?>
-    <main>
-        <div class=content>
-        <?php
-if (isset($_POST['unidad']) && isset($_POST['caracts'])) {
-    // Decodifica los parámetros de URL
-    $unidadJSON = urldecode($_POST['unidad']);
-    $caractsJSON = urldecode($_POST['caracts']);
-    $paramsJSON = urldecode($_POST['params']);
+    <main class=content>
+        <h2 class="title">Reservar</h2>
+        <div class="busDiv">
 
-    // Analiza los objetos JSON en arrays o estructuras de datos
-    $unidad = json_decode($unidadJSON, true); // El segundo parámetro true convierte en array asociativo
-    $caracts = json_decode($caractsJSON, true);
-    $params = json_decode($paramsJSON, true);
+            <?php
+            if (isset($_POST['unidad']) && isset($_POST['caracts'])) {
+                // Decodifica los parámetros de URL
+                $unidadJSON = urldecode($_POST['unidad']);
+                $caractsJSON = urldecode($_POST['caracts']);
+                $paramsJSON = urldecode($_POST['params']);
 
-    echo'<pre>';
-    print_r($caracts);
-    print_r($unidad);
-    print_r($params);
-    echo'</pre>';
+                // Analiza los objetos JSON en arrays o estructuras de datos
+                $unidad = json_decode($unidadJSON, true); // El segundo parámetro true convierte en array asociativo
+                $caracts = json_decode($caractsJSON, true);
+                $params = json_decode($paramsJSON, true);
 
-    if ($unidad['capacidadSegundoPiso'] != 0) {
-        echo"2 pisos";
-    } else {
-        echo"1 piso";
-    }
 
-}
-?>
+
+                switch (true) {
+                    case $unidad['capacidadSegundoPiso'] != 0 && in_array("Sanitario", array_column($caracts, 'propiedad')):
+                        twoFloorsAndBathroom();
+                        break;
+                    case $unidad['capacidadSegundoPiso'] != 0:
+                        twoFloors();
+                        break;
+                    case in_array("Sanitario", array_column($caracts, 'propiedad')):
+                        oneFloorAndBathroom();
+                        break;
+                    default:
+                        oneFloor();
+                        break;
+                }
+            }
+            ?>
         </div>
     </main>
 
@@ -50,3 +57,41 @@ if (isset($_POST['unidad']) && isset($_POST['caracts'])) {
 </body>
 
 </html>
+
+<?php
+function twoFloorsAndBathroom()
+{
+    echo '
+    <div class = "bus" id = "twoFloors" >
+        <div  id = "twoFloorsFstFloor" class = "bathroom"></div>
+        <div  id = "twoFloorsSndFloor"></div>
+    </div>';
+}
+
+function twoFloors()
+{
+    echo '
+    <div class = "bus" id = "twoFloors" >
+        <div  id = "twoFloorsFstFloor"></div>
+        <div  id = "twoFloorsSndFloor"></div>
+    </div>';
+}
+
+function oneFloorAndBathroom()
+{
+    echo '<div class = "bus bathroom" id = "oneFloor" ></div>';
+}
+
+function oneFloor()
+{
+    echo '<div class = "bus" id = "oneFloor" ></div>';
+}
+?>
+
+<script>
+    var unidad =  <?php echo $unidadJSON; ?>;
+    var caracts = <?php echo $caractsJSON; ?>;
+    var params =  <?php echo $paramsJSON; ?>;
+</script>
+
+<script src="../../../../js/busReserve.js"></script>

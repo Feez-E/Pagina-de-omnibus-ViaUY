@@ -155,6 +155,8 @@ function loadLines(lineas) {
             const reserveButton = busButton.parentElement.lastElementChild;
             const pageCover = busButton.nextElementSibling;
             const horaSalida = busButton.parentElement.parentElement.firstElementChild.innerHTML;
+            const horaLlegada = busButton.parentElement.parentElement.children[busButton.parentElement.parentElement.children.length - 2].innerHTML;
+
             const nombreLineaOrigenDestino = busButton.parentElement.parentElement.parentElement.previousElementSibling.firstElementChild.firstElementChild.innerHTML.split(" - ");
 
             const nombreLinea = nombreLineaOrigenDestino[0];
@@ -219,6 +221,9 @@ function loadLines(lineas) {
             reserveButton.onclick = () => {
                 console.log(unidad)
                 console.log(caracts)
+                params["nombreLinea"] = nombreLinea;
+                params["horaSalida"] = horaSalida;
+                params["horaLLegada"] = horaLlegada;
 
                 delete unidad.vigencia;
                 delete unidad.numeroChasis;

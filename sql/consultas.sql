@@ -59,6 +59,16 @@ INNER JOIN Linea L ON T.codigo_L_Recorre = L.codigo
 WHERE L.nombre = 'L1'
 AND T.horaSalida_Salida = '18:00';
 
-SELECT * FROM Caracteristica WHERE numero_unidad = "2"
+SELECT * FROM Caracteristica WHERE numero_unidad = "2";
 
-
+SELECT numero_Asiento, 
+            idInicial_T_R_T_Asiento,
+            idFinal_T_R_T_Asiento 
+            FROM Reserva 
+            WHERE idInicial_T_R_T_Asiento >= 1 
+            AND idFinal_T_R_T_Asiento <= 19
+            AND codigo_L_R_T_Asiento = 1 
+            AND numero_U_T_Asiento = 2 
+            AND horaSalida_S_T_Asiento = "06:00:00"
+            AND horaLlegada_L_T_Asiento = "07:30:00" 
+            AND fecha = "2023-12-01";

@@ -8,6 +8,7 @@
   --white-color: white;
   --whitesmoke-color: whitesmoke;
   --valid-color: rgb(157, 219, 157);
+  --semiValid-color: rgb(209 203 131);
   --notValid-color: rgb(227, 129, 129);
   --footer-gradient-up: linear-gradient(
     180deg,
@@ -72,7 +73,7 @@
     --backgroundImage: url(../img/EfectoFondo_Dark.webp);
     --white-transparentColor: rgba(13, 18, 24, 0.211);
     --shadow-filter: drop-shadow(0.2rem 0.2rem 0.25rem var(--shadow-color));
-
+    --bus-filter: brightness(400%) saturate(0%);
   }
 }
 
@@ -95,6 +96,18 @@
   100% {
     opacity: 0;
     display: none;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    display: none;
+  
+  }
+  100% {
+    opacity: 1;
+    display: flex;
   }
 }
 
@@ -1738,6 +1751,148 @@ fieldset{
 .desplegableContent.container#form label[for="addStop"]{
   background: var(--white-color);
 }
+
+/*----*/
+
+/*--busReserve--*/
+
+.busDiv{
+  margin-top: 30px;
+}
+
+.bus{
+  width: 250px;
+  height: 687px;
+  color:var(--tertiary-color);
+
+  position: relative;
+}
+
+.bus#twoFloors {
+  height: fit-content;
+}
+
+
+.bus#oneFloor::before,
+.bus#twoFloors >*::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  filter: var(--bus-filter); 
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1; 
+}
+
+.bus#twoFloors #twoFloorsFstFloor{
+  position: relative;
+  height: 687px;
+  margin-bottom: 100px;
+}
+
+.bus#twoFloors #twoFloorsSndFloor{
+  height: 687px;
+}
+
+.bus#oneFloor::before {
+  background-image: url("../img/BusReserva_PrimeroPiso.svg");
+}
+
+.bus#oneFloor.bathroom::before {
+  background-image: url("../img/BusReserva_PrimeroPiso_Baño.svg");
+}
+
+.bus#twoFloors #twoFloorsFstFloor::before {
+  background-image: url("../img/BusReserva_PrimeroPiso_Escaleras.svg");
+}
+
+.bus#twoFloors #twoFloorsFstFloor.bathroom::before{
+  background-image: url("../img/BusReserva_PrimeroPiso_Baño_Escaleras.svg");
+}
+
+.bus#twoFloors #twoFloorsSndFloor::before{
+  top: 787px;
+  height: 687px;
+  background-image: url("../img/BusReserva_SegundoPiso.svg");
+}
+
+.busTable{
+  width: 100%;
+  text-align: center;
+}
+
+.busTable tr{ 
+  height: 44px;
+}
+
+.busTable td{
+  width: 47.59px;
+}
+.busTable tr span{ 
+  display:inline-flex;
+  align-items: center;
+  justify-content: center;
+  color:var(--whitesmoke-color);
+  width: 30px;
+  height: 30px;
+  border-radius: 5px 5px 50% 50% ;
+  background-color: var(--valid-color);
+}
+
+.busTable tr span.notValid{ 
+  background-color: var(--notValid-color);
+}
+
+.busTable tr span.semiValid{ 
+
+  background-color: var(--semiValid-color);
+}
+
+.busTable.fstFloor{
+  padding-top: 100px;
+}
+.busTable.sndFloor{
+  padding-top: 55px;
+}
+
+td .reserves{
+  display: none;
+  position: absolute;
+
+  background-color: var(--white-color);
+  border-radius: 15px;
+  padding: 10px;
+  max-width: 60%;
+  color:var(--primary-color)
+}
+
+td span:hover{
+  background-color: var(--semiValid-color);
+  cursor:pointer;
+  transition: .25s;
+}
+
+td span:hover + .reserves{
+  display: flex;
+  flex-wrap: wrap;
+  animation: fadeIn .5s;
+}
+
+.seatReserve{
+  min-width: fit-content;
+}
+td .reserves .subtitle{
+  font-weight: bold;
+  font-size: var(--font-xs);
+}
+td .reserves .seatReserve{
+  color:var(--tertiary-color)
+}
+
+
 
 /*----*/
 
