@@ -29,8 +29,8 @@ PRIMARY KEY (idInicial, idFinal)
 CREATE TABLE Linea(
 codigo INT AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(15) UNIQUE KEY NOT NULL,
-origen VARCHAR(30) NOT NULL,
-destino VARCHAR(30) NOT NULL,
+origen VARCHAR(40) NOT NULL,
+destino VARCHAR(40) NOT NULL,
 vigencia BOOLEAN
 );
 
@@ -92,29 +92,29 @@ PRIMARY KEY(idInicial_T_Recorre, idFinal_T_Recorre, codigo_L_Recorre, orden_Reco
 );
 
 CREATE TABLE Parametro(
-nombre VARCHAR(20) PRIMARY KEY NOT NULL
+nombre VARCHAR(30) PRIMARY KEY NOT NULL
 );
 
 CREATE TABLE ParametroBoolean(
-nombre_Parametro VARCHAR(20) PRIMARY KEY,
+nombre_Parametro VARCHAR(30) PRIMARY KEY,
 FOREIGN KEY(nombre_Parametro) REFERENCES Parametro (nombre),
 valorBoolean BOOLEAN NOT NULL
 );
 
 CREATE TABLE ParametroDouble(
-nombre_Parametro VARCHAR(20) PRIMARY KEY,
+nombre_Parametro VARCHAR(30) PRIMARY KEY,
 FOREIGN KEY(nombre_Parametro) REFERENCES Parametro (nombre),
 valorDouble DOUBLE NOT NULL
 );
 
 CREATE TABLE ParametroVarchar(
-nombre_Parametro VARCHAR(20) PRIMARY KEY,
+nombre_Parametro VARCHAR(30) PRIMARY KEY,
 FOREIGN KEY(nombre_Parametro) REFERENCES Parametro (nombre),
-valorVarchar VARCHAR(50) NOT NULL
+valorVarchar VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE ParametroTime(
-nombre_Parametro VARCHAR(20) PRIMARY KEY,
+nombre_Parametro VARCHAR(30) PRIMARY KEY,
 FOREIGN KEY(nombre_Parametro) REFERENCES Parametro (nombre),
 valorTime TIME NOT NULL
 );
@@ -129,9 +129,6 @@ numero_U_Transita INT,
 horaSalida_S_Transita TIME,
 horaLlegada_L_Transita TIME,
 FOREIGN KEY(idInicial_T_R_Transita, idFinal_T_R_Transita, codigo_L_R_Transita, orden_R_Transita, numero_U_Transita, horaSalida_S_Transita, horaLlegada_L_Transita) REFERENCES Transita (idInicial_T_Recorre, idFinal_T_Recorre, codigo_L_Recorre, orden_Recorre, numero_Unidad, horaSalida_Salida, horaLlegada_Llegada),
-nombre_P_ParametroDouble VARCHAR(30),
-FOREIGN KEY(nombre_P_ParametroDouble) REFERENCES ParametroDouble (nombre_Parametro),
-precio DOUBLE NOT NULL,
 PRIMARY KEY(numero, idInicial_T_R_Transita, idFinal_T_R_Transita, codigo_L_R_Transita, orden_R_Transita, numero_U_Transita, horaSalida_S_Transita, horaLlegada_L_Transita)
 );
 
@@ -157,8 +154,8 @@ PRIMARY KEY(nombre_Rol, nombre_Permiso)
 CREATE TABLE Usuario (
 id INT AUTO_INCREMENT PRIMARY KEY,
 apodo VARCHAR(32) UNIQUE KEY NOT NULL,
-nombre VARCHAR(20) NOT NULL,
-apellido VARCHAR(25) NOT NULL,
+nombre VARCHAR(30) NOT NULL,
+apellido VARCHAR(30) NOT NULL,
 correo VARCHAR(64) NOT NULL,
 contrasena VARCHAR(60) NOT NULL,
 telefono VARCHAR(10) NOT NULL,
@@ -172,7 +169,9 @@ metodo VARCHAR(25) PRIMARY KEY
 );
 
 CREATE TABLE Tiquet (
-codigo VARCHAR(16) PRIMARY KEY
+codigo VARCHAR(16),
+precio DOUBLE NOT NULL,
+PRIMARY KEY(codigo, precio)
 );
 
 CREATE TABLE Reserva(
