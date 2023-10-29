@@ -1,3 +1,5 @@
+import { showError } from "./components.js";
+
 console.log(unidad);
 console.log(caracts);
 console.log(params);
@@ -22,9 +24,12 @@ if (id === "oneFloor") {
     }
 }
 
+let precio = 0;
 let precioTotal = 0;
+let asientosSeleccionados = [];
 
-dataToSend = {
+const payButton = document.querySelector(".button.payButton")
+const dataToSend = {
     nombreLinea: params["nombreLinea"],
     unidad: parseInt(unidad['numero']),
     idInicial: parseInt(params['subida']),
@@ -36,6 +41,9 @@ dataToSend = {
 
 reservationsAJAX(dataToSend)
 calcularPrecios();
+payButtonOnClick(payButton);
+const checkOutForm = document.getElementById("form");
+checkOutFormSubmit(checkOutForm)
 
 
 function oneFloorTable(floor, bathroom) {
@@ -329,6 +337,7 @@ function seatOnClick(seat, seatsDiv) {
             const seatDiv = document.createElement("div");
             seatDiv.className = `seatAndPrice ${seat.parentElement.id}`;
             seatDiv.innerHTML = `<p class = seat>${seatNumber}</p><p class = price>$<span>${precio.toFixed(2)}</span></p>`
+            asientosSeleccionados.push(seatNumber);
             precioTotal += precio;
 
             const totalDiv = document.createElement("div");
@@ -346,9 +355,11 @@ function seatOnClick(seat, seatsDiv) {
             precioTotal -= precio;
             seat.classList.remove("semiValid")
             const seatDiv = seatsDiv.querySelector(`.${seat.parentElement.id}`);
+            const seatSplit = seat.parentElement.id.split("_");
+            const seatNumber = seatSplit[1];
+
+            asientosSeleccionados.splice(asientosSeleccionados.indexOf(seatNumber), 1);
             seatsDiv.removeChild(seatDiv);
-
-
 
             const actualTotalDiv = seatsDiv.querySelector(`.total`);
             if (actualTotalDiv) {
@@ -358,6 +369,7 @@ function seatOnClick(seat, seatsDiv) {
 
             if (seatsDiv.innerHTML.trim() === `<div class="seatAndPrice title"><p class="seat">Asiento</p><p class="price">Precio</p></div>`) {
                 seatsDiv.innerHTML = "<p>Seleccione uno o más asientos</p>";
+                payButton.parentElement.classList.remove("active");
             } else {
 
                 const totalDiv = document.createElement("div");
@@ -369,8 +381,6 @@ function seatOnClick(seat, seatsDiv) {
 
 
         }
-
-        console.log(seatsDiv.innerHTML)
     }
 }
 
@@ -408,7 +418,64 @@ async function calcularPrecios() {
             const precioTramo = await seatPriceAJAX(unidad["numero"], params["paradas"][i], params["paradas"][i + 1]);
             precio += precioTramo;
         } catch (error) {
-            console.error(error);
         }
     }
+}
+
+function payButtonOnClick(payButton) {
+    payButton.nextElementSibling.onclick = () => {
+        payButton.parentElement.classList.remove("active");
+    };
+    payButton.onclick = () => {
+
+        if (precioTotal.toFixed(1) > 0) {
+            console.log(precioTotal)
+            console.log(asientosSeleccionados)
+            payButton.parentElement.classList.add("active");
+
+        } else {
+            showError("No hay asientos seleccionados");
+        }
+    }
+}
+
+function checkOutFormSubmit(form) {
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        var metodosDePago = document.getElementById("metodosDePago").value;
+
+        if (metodosDePago != "Default") {
+            // Crea campos de entrada ocultos para los datos
+            var precioTotalInput = document.createElement('input');
+            precioTotalInput.type = 'hidden';
+            precioTotalInput.name = 'precioTotal';
+            precioTotalInput.value = JSON.stringify(precioTotal);
+            form.appendChild(precioTotalInput);
+
+            var paramsInput = document.createElement('input');
+            paramsInput.type = 'hidden';
+            paramsInput.name = 'params';
+            paramsInput.value = JSON.stringify(params);
+            form.appendChild(paramsInput);
+
+            var unidadInput = document.createElement('input');
+            unidadInput.type = 'hidden';
+            unidadInput.name = 'unidad';
+            unidadInput.value = JSON.stringify(unidad);
+            form.appendChild(unidadInput);
+
+            var asientosInput = document.createElement('input');
+            asientosInput.type = 'hidden';
+            asientosInput.name = 'asientos';
+            asientosInput.value = JSON.stringify(asientosSeleccionados);
+            form.appendChild(asientosInput);
+
+            // Envía el formulario
+            form.submit();
+        } else {
+            showError("Por favor, seleccione un método de pago")
+        }
+
+    });
 }

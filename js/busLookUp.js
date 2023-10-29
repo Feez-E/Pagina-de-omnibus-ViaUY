@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         showError(response.error);
                     } else {
                         showError("Lo sentimos, no hay viajes disponibles que se ajusten a sus necesidades.");
+                        betterLines.innerHTML = ""
                     }
                 } else {
                     console.log("Error al procesar la solicitud.");
@@ -241,21 +242,29 @@ function loadLines(lineas) {
                 console.log(travelElements);
 
                 params["paradas"] = [];
+                params["allhoras"] = [];
+                let subida = false;
+                let bajada = 1;
 
                 travelElements.forEach((element, i) => {
+                    const hora = busButton.parentElement.parentElement.children[i].innerHTML;
                     if (regexSubida.test(element.textContent)) {
-                        const horaSalida = busButton.parentElement.parentElement.children[i].innerHTML;
-                        params["horaSubida"] = horaSalida;
-                        console.log(horaSalida);
+                        subida = true;
                     }
                     if (regexBajada.test(element.textContent)) {
-                        const horaLlegada = busButton.parentElement.parentElement.children[i].innerHTML;
-                        params["horaBajada"] = horaLlegada;
-                        console.log(horaLlegada);
+                        bajada = 2;
                     }
+                    //paradas
                     const startStopsSplit = busButton.parentElement.parentElement.parentElement.firstElementChild.children[i].innerHTML.split("-");
                     const startStop = startStopsSplit["0"];
-                    params["paradas"][i] = parseInt(startStop.trim());
+                    if (subida && bajada !== 0) {
+                        params["paradas"][i + 1] = parseInt(startStop.trim());
+                        params["allhoras"][i + 1] = hora;
+                    }
+                    if (subida && bajada === 2) {
+                        bajada = 0;
+                    }
+
                 });
 
                 var unidadJSON = JSON.stringify(unidad);

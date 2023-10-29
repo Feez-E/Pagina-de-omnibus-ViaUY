@@ -10,6 +10,7 @@
   --valid-color: rgb(157, 219, 157);
   --semiValid-color: rgb(209 203 131);
   --notValid-color: rgb(227, 129, 129);
+  --seat-text-color:whitesmoke;
   --footer-gradient-up: linear-gradient(
     180deg,
     rgb(40, 80, 134) 0%,
@@ -32,6 +33,7 @@
   --backgroundImage: url(../img/EfectoFondo_Light.webp);
   --white-transparentColor: rgba(13, 18, 24, 0.099);
   --shadow-filter: drop-shadow(0.2rem 0.2rem 0.25rem rgba(20, 42, 74, 0.25));
+  --seat-filter: saturate(0%);
   --font-xs: 1.2rem;
   --font-sm: 1.6rem;
   --font-md: 2rem;
@@ -51,6 +53,9 @@
     --shadow-color: rgb(24, 27, 35);
     --white-color: rgb(32, 34, 40);
     --whitesmoke-color: rgb(29, 31, 37);
+    --valid-color: rgb(92, 143, 92);
+    --semiValid-color: rgb(146, 140, 74);
+    --notValid-color: rgb(143, 76, 76);
     --footer-gradient-up: linear-gradient(
       180deg,
       rgb(31, 58, 93) 0%,
@@ -73,7 +78,9 @@
     --backgroundImage: url(../img/EfectoFondo_Dark.webp);
     --white-transparentColor: rgba(13, 18, 24, 0.211);
     --shadow-filter: drop-shadow(0.2rem 0.2rem 0.25rem var(--shadow-color));
-    --bus-filter: brightness(400%) saturate(0%);
+    --bus-filter: brightness(100%) saturate(90%);
+    --seat-filter: grayscale(100%) brightness(75%);
+    
   }
 }
 
@@ -1011,7 +1018,8 @@ legend{
   display: none;
 }
 
-.container#form .passwordSection {
+.container#form .passwordSection,
+.buttonDesplegableSection{
   width: 100%;
   padding: 15px;
   display: flex;
@@ -1020,23 +1028,27 @@ legend{
   border-radius: 15px;
 }
 
-.container#form .passwordSection.active {
+.container#form .passwordSection.active,
+.buttonDesplegableSection.active{
   background-color: var(--white-color);
   transition: 0.5s;
 }
 
-.container#form .passwordSection > .button:hover {
+.container#form .passwordSection > .button:hover, 
+.buttonDesplegableSection > .button:hover{
   transform: none;
 }
 
-.container#form .passwordSection.active > .button {
+.container#form .passwordSection.active > .button,
+.buttonDesplegableSection.active > .button{
   pointer-events: none;
   background-color: transparent;
   color: var(--primary-color);
   border-color: transparent;
 }
 
-.passwordSection.active #passwordCancel {
+.passwordSection.active #passwordCancel,
+.buttonDesplegableSection.active #closeButton{
   height: 30px;
   width: 30px;
   justify-content: center;
@@ -1047,7 +1059,8 @@ legend{
   right: 20px;
 }
 
-.passwordSection.active #passwordCancel::before {
+.passwordSection.active #passwordCancel::before,
+.buttonDesplegableSection.active #closeButton::before {
   content: "";
   position: absolute;
   width: 25px;
@@ -1057,7 +1070,8 @@ legend{
   border-radius: 3px;
 }
 
-.passwordSection.active #passwordCancel::after {
+.passwordSection.active #passwordCancel::after,
+.buttonDesplegableSection.active #closeButton::after {
   content: "";
   position: absolute;
   width: 25px;
@@ -1067,27 +1081,18 @@ legend{
   border-radius: 3px;
 }
 
-.container#form .passwordSection form {
+.container#form .passwordSection form, 
+.buttonDesplegableSection > .buttonDesplegableSectionContent{
   max-height: 0px;
   overflow-y: hidden;
-}
-
-.container#form .passwordSection.active form {
-  max-height: 500px;
-  height: fit-content;
-  transition: 0.5s;
-}
-
-.container#form .passwordSection form {
   width: 100%;
 }
 
-.container#form .passwordSection .confirmationMessage {
-  margin-top: 20px;
-}
-
-.container#form .passwordSection.active .confirmationMessage {
-  display: none;
+.container#form .passwordSection.active form,
+.buttonDesplegableSection.active > .buttonDesplegableSectionContent {
+  max-height: 500px;
+  height: fit-content;
+  transition: 0.5s;
 }
 
 #accSettingsForm input[type="submit"] {
@@ -1724,7 +1729,8 @@ input:checked + .slider:before {
 }
 
 .desplegableContent.container#form label,
-fieldset{
+fieldset,
+.buttonDesplegableSectionContent.container#form label{
   background-color: var(--whitesmoke-color);
 }
 
@@ -1755,8 +1761,58 @@ fieldset{
 /*----*/
 
 /*--busReserve--*/
+.busReserveMain{
+  display: flex;
+  flex-direction: column;
+}
+
+.busReserveMain>div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.busReserveMain .busAndInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+#travelInfo {
+  background-color: var(--white-color);   
+  margin: 1.6rem;
+  padding: 1.6rem;
+  border-radius: 15px;
+  color:var(--tertiary-color);
+}
+
+#travelInfo > *{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#travelInfo > * > section{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--whitesmoke-color);
+  border-radius: 15px;
+  padding: 10px;
+  width: 35%;
+}
+
+#travelInfo .top{
+  margin-bottom: 16px;
+  font-weight: bold;
+}
 
 
+ 
 .bus{
   margin-top: 30px;
   margin-bottom: 30px;
@@ -1834,7 +1890,7 @@ fieldset{
   display:inline-flex;
   align-items: center;
   justify-content: center;
-  color:var(--whitesmoke-color);
+  color:var(--seat-text-color);
   width: 30px;
   height: 30px;
   border-radius: 5px 5px 50% 50% ;
@@ -1873,7 +1929,7 @@ td .reserves{
 
 td span{
   transition: .25s;
-  filter: saturate(0%);
+  filter: var(--seat-filter);
 }
 
 td span:hover{
@@ -1937,22 +1993,38 @@ td .reserves .seatReserve{
   display: flex;
   justify-content: space-between;
   color:var(--tertiary-color);
-  margin: 0 10px 0 10px
+  margin: 0 10px 0 10px;
+
 }
 
-.seatAndPrice#total{
-  margin-top: 50px;
+.seatAndPrice.total{
+  font-weight: bold;
+  margin:0;
+  margin-top: 10px;
 }
 
 .seatAndPrice.title{
   margin: 0;
+  margin-bottom: 10px;
+  color:var(--primary-color);
+  font-weight: bolder;
 }
 
 .payButton{
   display:inline-flex;
-  margin-top: 30px;
   width: fit-content;
   align-self: center;
+}
+
+select{
+  border: none;
+  background-color: transparent;
+  font-size: var(--font-sm);
+  color: var(--tertiary-color)
+}
+
+select:focus-visible{
+ outline: none;
 }
 
 /*----*/
@@ -1961,6 +2033,16 @@ td .reserves .seatReserve{
 @media (min-width: 640px) {
   .container {
     max-width: 640px;
+  }
+
+  @keyframes slideIn {
+    0% {
+      display: block;
+      transform: translateX(-50%) translateY(-200%) scale(0.5);
+    }
+    100% {
+      transform: translateX(-50%) translateY(50%);
+    }
   }
 
   /*-- NavBar --*/
@@ -2034,6 +2116,26 @@ td .reserves .seatReserve{
     border-radius: 15px;
   }
   /*----*/
+
+  /* --busReserve-- */
+  .bus#twoFloors{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    gap: 30px
+  }
+
+  .bus#twoFloors > *{
+    width: 250px;
+  }
+
+  .bus#twoFloors #twoFloorsSndFloor::before{
+    width: 250px;
+    top:0px;
+    right: auto;
+    left: auto;
+  }
+  /*----*/
 }
 
 /*----*/
@@ -2065,6 +2167,70 @@ td .reserves .seatReserve{
   .container {
     max-width: 1024px;
   }
+
+  /* --busReserve-- */
+  
+.busReserveMain>div{
+  display: flex;
+  flex-direction: row;
+  align-items:flex-start;
+  min-height: 80vh;
+}
+
+#travelInfo{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-right: 0px;
+  border-radius: 15px 0 0 15px;
+  border: 2px solid var(--whitesmoke-color);
+  border-width: 0 10px 0 0;
+}
+
+#travelInfo .top{
+  display: block;
+}
+
+#travelInfo .bottom {
+  min-width: 60%;
+  gap: 30px
+}
+
+#travelInfo .bottom > section{
+  min-width: 50%;
+}
+
+.busReserveMain .busAndInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+}
+
+.bus{
+  margin: 0;
+  transform: scale(0.9);
+}
+
+.bus#twoFloors #twoFloorsFstFloor {
+  margin-bottom: 0;
+}
+
+.selectedSeats{
+  min-height: 80vh;
+  justify-content:flex-start;
+  gap: 30px;
+  margin-left: 0px;
+  border-radius: 0 15px 15px 15px;
+  padding: 30px;
+}
+
+
+
+
+  /*----*/
 }
 /*---*/
 

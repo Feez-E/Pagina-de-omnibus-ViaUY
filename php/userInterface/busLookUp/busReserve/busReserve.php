@@ -14,45 +14,82 @@
     <?php
     include '../../navBar/navBar.php';
     ?>
-    <main class='container'>
+    <main class='container busReserveMain'>
         <h2 class="title">Reservar</h2>
+        <div>
+            <div class="busAndInfo">
+                <?php
+                if (isset($_POST['unidad']) && isset($_POST['caracts'])) {
+                    // Decodifica los parámetros de URL
+                    $unidadJSON = $_POST['unidad'];
+                    $caractsJSON = $_POST['caracts'];
+                    $paramsJSON = $_POST['params'];
 
-        <?php
-        if (isset($_POST['unidad']) && isset($_POST['caracts'])) {
-            // Decodifica los parámetros de URL
-            $unidadJSON = urldecode($_POST['unidad']);
-            $caractsJSON = urldecode($_POST['caracts']);
-            $paramsJSON = urldecode($_POST['params']);
+                    // Analiza los objetos JSON en arrays o estructuras de datos
+                    $unidad = json_decode($unidadJSON, true); // El segundo parámetro true convierte en array asociativo
+                    $caracts = json_decode($caractsJSON, true);
+                    $params = json_decode($paramsJSON, true);
 
-            // Analiza los objetos JSON en arrays o estructuras de datos
-            $unidad = json_decode($unidadJSON, true); // El segundo parámetro true convierte en array asociativo
-            $caracts = json_decode($caractsJSON, true);
-            $params = json_decode($paramsJSON, true);
+                    echo "
+            <div class = 'container shadow' id='travelInfo' >
+                <div class ='top'>
+                    <p><span>Linea: </span>" . $params["nombreLinea"] . "</p>
+                    <p><span>Unidad: </span>" . $unidad["numero"] . "</p>
+                </div>
+                <div class ='bottom'>
+                    <section>
+                        <p>Subida:</p>
+                        <p>" . $params["subida"] . "</p>
+                        <p><span></span>" . $params["allhoras"][array_search($params["subida"], $params["paradas"])] . "</p>
+                    </section>
+                    <section>
+                        <p>Bajada:</p>
+                        <p>" . $params["bajada"] . "</p>
+                        <p>" . $params["allhoras"][array_search($params["bajada"], $params["paradas"])] . "</p>
+                    </section>
+                </div>
+            </div>";
 
-
-
-            switch (true) {
-                case $unidad['capacidadSegundoPiso'] != 0 && in_array("Sanitario", array_column($caracts, 'propiedad')):
-                    twoFloorsAndBathroom();
-                    break;
-                case $unidad['capacidadSegundoPiso'] != 0:
-                    twoFloors();
-                    break;
-                case in_array("Sanitario", array_column($caracts, 'propiedad')):
-                    oneFloorAndBathroom();
-                    break;
-                default:
-                    oneFloor();
-                    break;
-            }
-        }
-        ?>
-        <div class='selectedSeats container shadow'>
-            <h3 class='pageSubtitle'>Asientos seleccionados:</h3>
-            <div id='seatsAndPrices'>
-                <p>Seleccione uno o más asientos</p>
+                    switch (true) {
+                        case $unidad['capacidadSegundoPiso'] != 0 && in_array("Sanitario", array_column($caracts, 'propiedad')):
+                            twoFloorsAndBathroom();
+                            break;
+                        case $unidad['capacidadSegundoPiso'] != 0:
+                            twoFloors();
+                            break;
+                        case in_array("Sanitario", array_column($caracts, 'propiedad')):
+                            oneFloorAndBathroom();
+                            break;
+                        default:
+                            oneFloor();
+                            break;
+                    }
+                }
+                ?>
             </div>
-            <a class='button payButton'>Reservar</a>
+            <div class='selectedSeats container shadow'>
+                <h3 class='pageSubtitle'>Asientos seleccionados:</h3>
+                <div id='seatsAndPrices'>
+                    <p>Seleccione uno o más asientos</p>
+                </div>
+                <div class="buttonDesplegableSection">
+                    <a class='button payButton'>Pagar</a>
+                    <div id="closeButton"></div>
+                    <form class="buttonDesplegableSectionContent container" id="form"
+                        action="../emailSend/emailSend.php" method="post">
+                        <label for="metodosDePago" class="top-left">
+                            <select id="metodosDePago" name="metodosDePago">
+                                <option value="Default">Seleccione su método de pago</option>
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="MasterCard">MasterCard</option>
+                                <option value="PayPal">PayPal</option>
+                                <option value="Visa">Visa</option>
+                            </select>
+                        </label>
+                        <input type="submit" class="button" value="Reservar" />
+                    </form>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -99,4 +136,4 @@ function oneFloor()
     var params = <?php echo $paramsJSON; ?>;
 </script>
 
-<script src="../../../../js/busReserve.js"></script>
+<script type="module" src="../../../../js/busReserve.js"></script>
