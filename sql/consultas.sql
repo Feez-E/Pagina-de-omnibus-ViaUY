@@ -12,8 +12,8 @@ SELECT distancia FROM Tramo WHERE idInicial = 1 AND idFinal = 2; -- Devuelve el 
 SELECT multiplicador FROM Tramo INNER JOIN Estado ON Tramo.estado_Estado = Estado.estado WHERE idInicial = 1 AND idFinal = 2; -- Devuelve el multiplicador asociado al estado de un tramo
 SELECT ROUND(SUM(multiplicador)-(COUNT(*)-1), 2) FROM Caracteristica WHERE numero_Unidad = 2; -- Devuelve el multiplicador general de todas las caracteristicas de una unidad, redondeandolo.
 
-SELECT ROUND((SELECT distancia FROM Tramo WHERE idInicial = 1 AND idFinal = 2)*
-(SELECT multiplicador FROM Tramo INNER JOIN Estado ON Tramo.estado_Estado = Estado.estado WHERE idInicial = 3 AND idFinal = 4)*
+SELECT ROUND((SELECT distancia FROM Tramo WHERE idInicial = 1 AND idFinal = 3)*
+(SELECT multiplicador FROM Tramo INNER JOIN Estado ON Tramo.estado_Estado = Estado.estado WHERE idInicial = 1 AND idFinal = 3)*
 (SELECT valorDouble FROM ParametroDouble WHERE nombre_Parametro = "precioKm")*
 (SELECT ROUND(SUM(multiplicador)-(COUNT(*)-1), 2) FROM Caracteristica WHERE numero_Unidad = 2), 2); -- Calcula el precio de un tramo en base a las caracteristicas de la Unidad
 
@@ -65,7 +65,7 @@ SELECT numero_Asiento,
             idInicial_T_R_T_Asiento,
             idFinal_T_R_T_Asiento 
             FROM Reserva 
-            WHERE idInicial_T_R_T_Asiento >= 1 
+            WHERE idInicial_T_R_T_Asiento >= 5 
             AND idFinal_T_R_T_Asiento <= 19
             AND codigo_L_R_T_Asiento = 1 
             AND numero_U_T_Asiento = 2 

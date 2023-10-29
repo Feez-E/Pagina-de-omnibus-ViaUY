@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const subida = busLookUpForm.firstElementChild.firstElementChild.children[1].value;
         const bajada = busLookUpForm.firstElementChild.children[1].children[1].value;
         const dia = busLookUpForm.children[1].firstElementChild.children[1].value;
-        params = { "subida": subida, "bajada": bajada,  "dia": dia};
+        params = { "subida": subida, "bajada": bajada, "dia": dia };
 
         // Realiza la validación (puedes agregar tus propias condiciones)
         if (startStop.trim() === "" || endStop.trim() === "" || date.trim() === "" || time.trim() === "") {
@@ -237,8 +237,11 @@ function loadLines(lineas) {
                 var regexBajada = new RegExp("\\b" + params["bajada"] + "\\b");
 
                 var travelElements = reserveButton.parentElement.parentElement.parentElement.firstElementChild.querySelectorAll('p');
-                
-                console.log(travelElements );
+
+                console.log(travelElements);
+
+                params["paradas"] = [];
+
                 travelElements.forEach((element, i) => {
                     if (regexSubida.test(element.textContent)) {
                         const horaSalida = busButton.parentElement.parentElement.children[i].innerHTML;
@@ -249,7 +252,10 @@ function loadLines(lineas) {
                         const horaLlegada = busButton.parentElement.parentElement.children[i].innerHTML;
                         params["horaBajada"] = horaLlegada;
                         console.log(horaLlegada);
-                    }  
+                    }
+                    const startStopsSplit = busButton.parentElement.parentElement.parentElement.firstElementChild.children[i].innerHTML.split("-");
+                    const startStop = startStopsSplit["0"];
+                    params["paradas"][i] = parseInt(startStop.trim());
                 });
 
                 var unidadJSON = JSON.stringify(unidad);
@@ -279,10 +285,9 @@ function loadLines(lineas) {
                 paramsInput.name = 'params';
                 paramsInput.value = paramsJSON;
                 form.appendChild(paramsInput);
-
                 // Agrega el formulario al cuerpo del documento y envíalo
                 document.body.appendChild(form);
-                form.submit(); 
+                form.submit();
             };
         });
     }

@@ -1756,11 +1756,10 @@ fieldset{
 
 /*--busReserve--*/
 
-.busDiv{
-  margin-top: 30px;
-}
 
 .bus{
+  margin-top: 30px;
+  margin-bottom: 30px;
   width: 250px;
   height: 687px;
   color:var(--tertiary-color);
@@ -1844,11 +1843,13 @@ fieldset{
 
 .busTable tr span.notValid{ 
   background-color: var(--notValid-color);
+  filter: none;
 }
 
 .busTable tr span.semiValid{ 
 
   background-color: var(--semiValid-color);
+  filter: none;
 }
 
 .busTable.fstFloor{
@@ -1861,18 +1862,24 @@ fieldset{
 td .reserves{
   display: none;
   position: absolute;
-
   background-color: var(--white-color);
   border-radius: 15px;
   padding: 10px;
   max-width: 60%;
-  color:var(--primary-color)
+  color:var(--primary-color);
+  z-index: 99;
+}
+
+
+td span{
+  transition: .25s;
+  filter: saturate(0%);
 }
 
 td span:hover{
-  background-color: var(--semiValid-color);
+  transform: scale(1.2);
+  filter: none;
   cursor:pointer;
-  transition: .25s;
 }
 
 td span:hover + .reserves{
@@ -1892,7 +1899,61 @@ td .reserves .seatReserve{
   color:var(--tertiary-color)
 }
 
+.pageSubtitle{
+  font-size: var(--font-md);
+  color: var(--secondary-color);
+  margin-bottom: 30px;
+  align-self: center;
+}
 
+.selectedSeats{
+  background-color: var(--white-color);
+  padding: 30px;
+  margin: 1.6rem;
+  padding: 1.6rem;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
+  justify-content: space-between;
+}
+
+#seatsAndPrices{
+  display: flex;
+  flex-direction: column;
+}
+
+#seatsAndPrices>p{
+  align-self: center;
+  color:var(--tertiary-color)
+}
+
+#seatsAndPrices>*{
+  animation: fadeIn .25s;
+}
+
+
+.seatAndPrice{
+  display: flex;
+  justify-content: space-between;
+  color:var(--tertiary-color);
+  margin: 0 10px 0 10px
+}
+
+.seatAndPrice#total{
+  margin-top: 50px;
+}
+
+.seatAndPrice.title{
+  margin: 0;
+}
+
+.payButton{
+  display:inline-flex;
+  margin-top: 30px;
+  width: fit-content;
+  align-self: center;
+}
 
 /*----*/
 

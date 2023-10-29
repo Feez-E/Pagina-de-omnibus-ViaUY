@@ -14,40 +14,45 @@
     <?php
     include '../../navBar/navBar.php';
     ?>
-    <main class=content>
+    <main class='container'>
         <h2 class="title">Reservar</h2>
-        <div class="busDiv">
 
-            <?php
-            if (isset($_POST['unidad']) && isset($_POST['caracts'])) {
-                // Decodifica los parámetros de URL
-                $unidadJSON = urldecode($_POST['unidad']);
-                $caractsJSON = urldecode($_POST['caracts']);
-                $paramsJSON = urldecode($_POST['params']);
+        <?php
+        if (isset($_POST['unidad']) && isset($_POST['caracts'])) {
+            // Decodifica los parámetros de URL
+            $unidadJSON = urldecode($_POST['unidad']);
+            $caractsJSON = urldecode($_POST['caracts']);
+            $paramsJSON = urldecode($_POST['params']);
 
-                // Analiza los objetos JSON en arrays o estructuras de datos
-                $unidad = json_decode($unidadJSON, true); // El segundo parámetro true convierte en array asociativo
-                $caracts = json_decode($caractsJSON, true);
-                $params = json_decode($paramsJSON, true);
-
+            // Analiza los objetos JSON en arrays o estructuras de datos
+            $unidad = json_decode($unidadJSON, true); // El segundo parámetro true convierte en array asociativo
+            $caracts = json_decode($caractsJSON, true);
+            $params = json_decode($paramsJSON, true);
 
 
-                switch (true) {
-                    case $unidad['capacidadSegundoPiso'] != 0 && in_array("Sanitario", array_column($caracts, 'propiedad')):
-                        twoFloorsAndBathroom();
-                        break;
-                    case $unidad['capacidadSegundoPiso'] != 0:
-                        twoFloors();
-                        break;
-                    case in_array("Sanitario", array_column($caracts, 'propiedad')):
-                        oneFloorAndBathroom();
-                        break;
-                    default:
-                        oneFloor();
-                        break;
-                }
+
+            switch (true) {
+                case $unidad['capacidadSegundoPiso'] != 0 && in_array("Sanitario", array_column($caracts, 'propiedad')):
+                    twoFloorsAndBathroom();
+                    break;
+                case $unidad['capacidadSegundoPiso'] != 0:
+                    twoFloors();
+                    break;
+                case in_array("Sanitario", array_column($caracts, 'propiedad')):
+                    oneFloorAndBathroom();
+                    break;
+                default:
+                    oneFloor();
+                    break;
             }
-            ?>
+        }
+        ?>
+        <div class='selectedSeats container shadow'>
+            <h3 class='pageSubtitle'>Asientos seleccionados:</h3>
+            <div id='seatsAndPrices'>
+                <p>Seleccione uno o más asientos</p>
+            </div>
+            <a class='button payButton'>Reservar</a>
         </div>
     </main>
 
@@ -89,9 +94,9 @@ function oneFloor()
 ?>
 
 <script>
-    var unidad =  <?php echo $unidadJSON; ?>;
+    var unidad = <?php echo $unidadJSON; ?>;
     var caracts = <?php echo $caractsJSON; ?>;
-    var params =  <?php echo $paramsJSON; ?>;
+    var params = <?php echo $paramsJSON; ?>;
 </script>
 
 <script src="../../../../js/busReserve.js"></script>

@@ -22,6 +22,8 @@ if (id === "oneFloor") {
     }
 }
 
+let precioTotal = 0;
+
 dataToSend = {
     nombreLinea: params["nombreLinea"],
     unidad: parseInt(unidad['numero']),
@@ -32,15 +34,15 @@ dataToSend = {
     horaLlegada: params["horaLLegada"],
 };
 
-console.log(dataToSend)
 reservationsAJAX(dataToSend)
+calcularPrecios();
+
 
 function oneFloorTable(floor, bathroom) {
 
     // Crea un tableulario dinámico
     var table = document.createElement('table');
     table.className = "busTable fstFloor"
-
     let seatNumber = 1;
 
     if (bathroom) {
@@ -261,22 +263,40 @@ function reservationsAJAX(dataToSend) {
 
                 if (response.tramos) {
                     console.log(response.tramos)
-                    response.tramos.forEach(tramo => {
-                        const numeroAsiento = tramo["numeroAsiento"]
-                        console.log(numeroAsiento);
-                        let asiento = document.getElementById("seat_" + numeroAsiento);
-                        asiento.firstElementChild.classList.add("notValid");
+                    /*  console.log(params["paradas"]) */
 
-                        const reserveParagraph = document.createElement("p");
-                        reserveParagraph.className = "seatReserve";
-                        reserveParagraph.innerHTML = ` (${tramo["idInicial"]}, ${tramo["idFinal"]})`;
-                        asiento.lastElementChild.appendChild(reserveParagraph)
+                    response.tramos.forEach(tramo => {
+                        /* console.log(tramo["idInicial"]); */
+                        if (
+                            params["paradas"].includes(tramo["idInicial"]) &&
+                            params["paradas"].includes(tramo["idFinal"])
+                        ) {
+                            // Obtener las posiciones de los elementos en el array
+                            const posicionInicial = params["paradas"].indexOf(tramo["idInicial"]);
+                            const posicionFinal = params["paradas"].indexOf(tramo["idFinal"]);
+
+                            // Verificar que la posición inicial sea menor que la posición final
+                            if (posicionInicial < posicionFinal) {
+
+
+                                const numeroAsiento = tramo["numeroAsiento"]
+                                let asiento = document.getElementById("seat_" + numeroAsiento);
+                                asiento.firstElementChild.classList.add("notValid");
+
+                                const reserveParagraph = document.createElement("p");
+                                reserveParagraph.className = "seatReserve";
+                                reserveParagraph.innerHTML = ` (${tramo["idInicial"]}, ${tramo["idFinal"]})`;
+                                asiento.lastElementChild.appendChild(reserveParagraph)
+                            }
+                        }
                     });
 
                 }
-                const reserves = document.querySelectorAll(".reserves")
+                const reserves = document.querySelectorAll(".reserves");
+                const seatsAndPrices = document.getElementById("seatsAndPrices");
                 reserves.forEach(reserve => {
                     if (reserve.innerHTML.trim() == '<p class="subtitle">Tramos reservados:</p>') {
+                        seatOnClick(reserve.previousElementSibling, seatsAndPrices)
                         reserve.remove();
                     }
                 });
@@ -292,4 +312,103 @@ function reservationsAJAX(dataToSend) {
             console.error(xhr);
         },
     });
+}
+
+function seatOnClick(seat, seatsDiv) {
+    seat.onclick = () => {
+        if (!seat.className) {
+            seat.classList.add("semiValid")
+
+            if (seatsDiv.innerHTML.trim() === "<p>Seleccione uno o más asientos</p>") {
+                seatsDiv.innerHTML = `<div class = "seatAndPrice title"><p class = seat>Asiento</p><p class = price>Precio</p></div>`;
+            }
+
+            const seatSplit = seat.parentElement.id.split("_");
+            const seatNumber = seatSplit[1];
+
+            const seatDiv = document.createElement("div");
+            seatDiv.className = `seatAndPrice ${seat.parentElement.id}`;
+            seatDiv.innerHTML = `<p class = seat>${seatNumber}</p><p class = price>$<span>${precio.toFixed(2)}</span></p>`
+            precioTotal += precio;
+
+            const totalDiv = document.createElement("div");
+            totalDiv.className = `seatAndPrice total`;
+            totalDiv.innerHTML = `<p class = seat> Total</p><p class = price>$${precioTotal.toFixed(2)}</p>`
+
+            const actualTotalDiv = seatsDiv.querySelector(`.total`);
+            if (actualTotalDiv) {
+                seatsDiv.removeChild(actualTotalDiv)
+            }
+
+            seatsDiv.appendChild(seatDiv);
+            seatsDiv.appendChild(totalDiv);
+        } else {
+            precioTotal -= precio;
+            seat.classList.remove("semiValid")
+            const seatDiv = seatsDiv.querySelector(`.${seat.parentElement.id}`);
+            seatsDiv.removeChild(seatDiv);
+
+
+
+            const actualTotalDiv = seatsDiv.querySelector(`.total`);
+            if (actualTotalDiv) {
+                seatsDiv.removeChild(actualTotalDiv)
+            }
+
+
+            if (seatsDiv.innerHTML.trim() === `<div class="seatAndPrice title"><p class="seat">Asiento</p><p class="price">Precio</p></div>`) {
+                seatsDiv.innerHTML = "<p>Seleccione uno o más asientos</p>";
+            } else {
+
+                const totalDiv = document.createElement("div");
+                totalDiv.className = `seatAndPrice total`;
+                totalDiv.innerHTML = `<p class = seat> Total</p><p class = price>$${precioTotal.toFixed(2)}</p>`
+
+                seatsDiv.appendChild(totalDiv);
+            }
+
+
+        }
+
+        console.log(seatsDiv.innerHTML)
+    }
+}
+
+function seatPriceAJAX(unitNumber, startId, endId) {
+    return new Promise((resolve, reject) => {
+        const dataToSend = {
+            unidad: unitNumber,
+            idInicial: startId,
+            idFinal: endId
+        };
+
+        $.ajax({
+            url: "getPrice.php",
+            type: "POST",
+            data: dataToSend,
+            success: (response) => {
+                if (response.status === "success" && response.precio) {
+                    resolve(response.precio);
+                } else {
+                    reject("Error al obtener el precio.");
+                }
+            },
+            error: (xhr, _status, error) => {
+                reject("Error en la solicitud AJAX: " + error);
+            },
+        });
+    });
+}
+
+async function calcularPrecios() {
+    precio = 0;
+
+    for (let i = 0; i < params["paradas"].length - 1; i++) {
+        try {
+            const precioTramo = await seatPriceAJAX(unidad["numero"], params["paradas"][i], params["paradas"][i + 1]);
+            precio += precioTramo;
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

@@ -1,5 +1,5 @@
 <?php
-include_once(BUSINESS_PATH . 'reserva.php'); // Asegúrate de incluir la clase Reserva
+include_once(BUSINESS_PATH . 'reserva.php');
 
 class ReservaLink
 {
@@ -60,15 +60,13 @@ class ReservaLink
             fecha,
             hora
             FROM Reserva 
-            WHERE idInicial_T_R_T_Asiento >= ? 
-            AND idFinal_T_R_T_Asiento <= ? 
-            AND codigo_L_R_T_Asiento = ? 
+            WHERE codigo_L_R_T_Asiento = ? 
             AND numero_U_T_Asiento = ? 
             AND horaSalida_S_T_Asiento = ? 
             AND horaLlegada_L_T_Asiento = ? 
             AND fecha = ?;"
         );
-        $stmt->bind_param("iiiisss", $idInicial, $idFinal, $linea, $unidad, $horaSalida, $horaLlegada, $fecha);
+        $stmt->bind_param("iisss", $linea, $unidad, $horaSalida, $horaLlegada, $fecha);
         $stmt->execute();
         $result = $stmt->get_result();
         $asientos = array();
@@ -79,10 +77,10 @@ class ReservaLink
 
             $asiento = [
                 "numeroAsiento" => $row['numero_Asiento'],
-                "idInicial" =>  $row['idInicial_T_R_T_Asiento'],
-                "idFinal" =>  $row['idFinal_T_R_T_Asiento'],
-                "estado" =>  $row['estado'],
-               
+                "idInicial" => $row['idInicial_T_R_T_Asiento'],
+                "idFinal" => $row['idFinal_T_R_T_Asiento'],
+                "estado" => $row['estado'],
+
             ];
 
             $asientos[] = $asiento;
