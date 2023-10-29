@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const subida = busLookUpForm.firstElementChild.firstElementChild.children[1].value;
         const bajada = busLookUpForm.firstElementChild.children[1].children[1].value;
         const dia = busLookUpForm.children[1].firstElementChild.children[1].value;
-        params = { "subida": subida, "bajada": bajada,  "dia": dia};
+        params = { "subida": subida, "bajada": bajada, "dia": dia };
 
         // Realiza la validación (puedes agregar tus propias condiciones)
         if (startStop.trim() === "" || endStop.trim() === "" || date.trim() === "" || time.trim() === "") {
@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         showError(response.error);
                     } else {
                         showError("Lo sentimos, no hay viajes disponibles que se ajusten a sus necesidades.");
+                        betterLines.innerHTML = ""
                     }
                 } else {
                     console.log("Error al procesar la solicitud.");
@@ -155,6 +156,8 @@ function loadLines(lineas) {
             const reserveButton = busButton.parentElement.lastElementChild;
             const pageCover = busButton.nextElementSibling;
             const horaSalida = busButton.parentElement.parentElement.firstElementChild.innerHTML;
+            const horaLlegada = busButton.parentElement.parentElement.children[busButton.parentElement.parentElement.children.length - 2].innerHTML;
+
             const nombreLineaOrigenDestino = busButton.parentElement.parentElement.parentElement.previousElementSibling.firstElementChild.firstElementChild.innerHTML.split(" - ");
 
             const nombreLinea = nombreLineaOrigenDestino[0];
@@ -219,6 +222,9 @@ function loadLines(lineas) {
             reserveButton.onclick = () => {
                 console.log(unidad)
                 console.log(caracts)
+                params["nombreLinea"] = nombreLinea;
+                params["horaSalida"] = horaSalida;
+                params["horaLLegada"] = horaLlegada;
 
                 delete unidad.vigencia;
                 delete unidad.numeroChasis;
@@ -232,19 +238,33 @@ function loadLines(lineas) {
                 var regexBajada = new RegExp("\\b" + params["bajada"] + "\\b");
 
                 var travelElements = reserveButton.parentElement.parentElement.parentElement.firstElementChild.querySelectorAll('p');
-                
-                console.log(travelElements );
+
+                console.log(travelElements);
+
+                params["paradas"] = [];
+                params["allhoras"] = [];
+                let subida = false;
+                let bajada = 1;
+
                 travelElements.forEach((element, i) => {
+                    const hora = busButton.parentElement.parentElement.children[i].innerHTML;
                     if (regexSubida.test(element.textContent)) {
-                        const horaSalida = busButton.parentElement.parentElement.children[i].innerHTML;
-                        params["horaSubida"] = horaSalida;
-                        console.log(horaSalida);
+                        subida = true;
                     }
                     if (regexBajada.test(element.textContent)) {
-                        const horaLlegada = busButton.parentElement.parentElement.children[i].innerHTML;
-                        params["horaBajada"] = horaLlegada;
-                        console.log(horaLlegada);
-                    }  
+                        bajada = 2;
+                    }
+                    //paradas
+                    const startStopsSplit = busButton.parentElement.parentElement.parentElement.firstElementChild.children[i].innerHTML.split("-");
+                    const startStop = startStopsSplit["0"];
+                    if (subida && bajada !== 0) {
+                        params["paradas"][i + 1] = parseInt(startStop.trim());
+                        params["allhoras"][i + 1] = hora;
+                    }
+                    if (subida && bajada === 2) {
+                        bajada = 0;
+                    }
+
                 });
 
                 var unidadJSON = JSON.stringify(unidad);
@@ -274,10 +294,9 @@ function loadLines(lineas) {
                 paramsInput.name = 'params';
                 paramsInput.value = paramsJSON;
                 form.appendChild(paramsInput);
-
                 // Agrega el formulario al cuerpo del documento y envíalo
                 document.body.appendChild(form);
-                form.submit(); 
+                form.submit();
             };
         });
     }

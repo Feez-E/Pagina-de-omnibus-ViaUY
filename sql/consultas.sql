@@ -42,6 +42,7 @@ INNER JOIN Asiento ON Reserva.numero_Asiento = Asiento.numero AND Reserva.numero
 	AND Reserva.horaLlegada_L_T_Asiento = Asiento.horaLlegada_L_Transita
 WHERE id_Usuario = 1
 GROUP BY codigo_Tiquet, numero_Asiento, codigo_L_R_T_Asiento, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento,
+<<<<<<< HEAD
 	numero_U_T_Asiento, estado, precio, metodo_MetodoPago, fecha, fechaLimite; -- Muestra las reservas de forma estilizadas segun el id del usuario, junto con el precio total.
 
 SELECT codigo_L_R_T_Asiento AS codigoLinea, Linea.nombre, COUNT(DISTINCT(Tiquet.codigo)) AS reservasPorLinea
@@ -52,3 +53,49 @@ WHERE fecha BETWEEN '2023-01-01' AND '2023-12-31'
 GROUP BY codigo_L_R_T_Asiento
 ORDER BY reservasPorLinea DESC
 LIMIT 1; -- Muestra la línea más reservada entre dos fechas establecidas.
+=======
+	numero_U_T_Asiento, estado, metodo_MetodoPago, fecha, fechaLimite; -- Muestra las reservas de forma estilizadas segun el id del usuario solitado, junto con el precio total.
+
+SELECT DISTINCT(apodo), direccion, codigo_Tiquet, numero_Asiento, fecha, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento, fechaLimite FROM Parada
+INNER JOIN Usuario ON Parada.id = Usuario.id
+INNER JOIN Reserva ON Usuario.id = Reserva.id_Usuario
+WHERE Usuario.id = "1";
+
+SELECT * FROM Linea
+INNER JOIN Transita ON Linea.codigo = Transita.codigo_L_Recorre;
+
+SELECT Linea.codigo, Linea.nombre, Linea.origen, Linea.destino, Linea.vigencia, Transita.orden_Recorre
+FROM Linea
+INNER JOIN Transita ON Linea.codigo = Transita.codigo_L_Recorre
+GROUP BY Linea.codigo, Linea.nombre, Linea.origen, Linea.destino, Linea.vigencia, Transita.orden_Recorre
+ORDER BY Transita.orden_Recorre;
+
+SELECT *
+FROM Linea;
+
+
+SELECT *
+FROM Transita
+ORDER BY  codigo_L_Recorre, horaSalida_Salida ASC, orden_Recorre ASC;
+
+SELECT distinct U.*
+FROM Unidad U
+INNER JOIN Transita T ON U.numero = T.numero_Unidad
+INNER JOIN Linea L ON T.codigo_L_Recorre = L.codigo
+WHERE L.nombre = 'L1'
+AND T.horaSalida_Salida = '18:00';
+
+SELECT * FROM Caracteristica WHERE numero_unidad = "2";
+
+SELECT numero_Asiento, 
+            idInicial_T_R_T_Asiento,
+            idFinal_T_R_T_Asiento 
+            FROM Reserva 
+            WHERE idInicial_T_R_T_Asiento >= 5 
+            AND idFinal_T_R_T_Asiento <= 19
+            AND codigo_L_R_T_Asiento = 1 
+            AND numero_U_T_Asiento = 2 
+            AND horaSalida_S_T_Asiento = "06:00:00"
+            AND horaLlegada_L_T_Asiento = "07:30:00" 
+            AND fecha = "2023-12-01";
+>>>>>>> efbf7fab0d5a17a8949468587da12378722878c2
