@@ -1811,6 +1811,23 @@ fieldset{
   font-weight: bold;
 }
 
+#travelInfo .mid{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#travelInfo .mid>*{
+  display: flex;
+  flex-direction: column;
+}
+
+#travelInfo .mid span{
+  font-weight: bold;
+}
+
 
  
 .bus{
@@ -2189,11 +2206,12 @@ select:focus-visible{
 
 #travelInfo .top{
   display: block;
+  margin-bottom: 0;
 }
 
 #travelInfo .bottom {
-  min-width: 60%;
-  gap: 30px
+  min-width: 50%;
+  gap: 20px
 }
 
 #travelInfo .bottom > section{

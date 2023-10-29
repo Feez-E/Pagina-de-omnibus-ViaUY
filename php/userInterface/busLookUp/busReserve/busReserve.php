@@ -35,6 +35,10 @@
                 <div class ='top'>
                     <p><span>Linea: </span>" . $params["nombreLinea"] . "</p>
                     <p><span>Unidad: </span>" . $unidad["numero"] . "</p>
+                   
+                </div>
+                <div class = 'mid'>
+                <p><span>Día: </span>" . $params["dia"] . "</p>
                 </div>
                 <div class ='bottom'>
                     <section>
