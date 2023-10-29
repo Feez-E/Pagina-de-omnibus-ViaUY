@@ -11,8 +11,6 @@ SELECT * FROM Reserva;
 
 SELECT t.nombre_rol, p.nombre, p.descripcion, p.url FROM Permiso p JOIN Tiene t ON p.nombre = t.nombre_permiso WHERE nombre_rol = "Cliente" ; -- Muestra todos los permisos de un rol.
 
-
-
 SELECT DISTINCT U.*
 FROM Unidad U
 INNER JOIN Transita T ON U.numero = T.numero_Unidad
