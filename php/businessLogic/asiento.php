@@ -1,4 +1,3 @@
-
 <?php
 class Asiento implements JsonSerializable
 {
@@ -10,8 +9,6 @@ class Asiento implements JsonSerializable
     private int $numero_U_Transita;
     private DateTime $horaSalida_S_Transita;
     private DateTime $horaLlegada_L_Transita;
-    private string $nombre_P_ParametroDouble;
-    private float $precio;
 
     public function __construct(
         ?int $numero,
@@ -22,8 +19,6 @@ class Asiento implements JsonSerializable
         ?int $numero_U_Transita,
         ?DateTime $horaSalida_S_Transita,
         ?DateTime $horaLlegada_L_Transita,
-        ?string $nombre_P_ParametroDouble,
-        ?float $precio
     ) {
         $this->numero = $numero ?? 0;
         $this->idInicial_T_R_Transita = $idInicial_T_R_Transita ?? 0;
@@ -33,8 +28,6 @@ class Asiento implements JsonSerializable
         $this->numero_U_Transita = $numero_U_Transita ?? 0;
         $this->horaSalida_S_Transita = $horaSalida_S_Transita;
         $this->horaLlegada_L_Transita = $horaLlegada_L_Transita;
-        $this->nombre_P_ParametroDouble = $nombre_P_ParametroDouble ?? 0;
-        $this->precio = $precio ?? 0.0;
     }
 
     public function getNumero(): int
@@ -97,7 +90,7 @@ class Asiento implements JsonSerializable
         $this->numero_U_Transita = $numero_U_Transita;
     }
 
-    public function getHoraSalida_S_Transita(): DateTime 
+    public function getHoraSalida_S_Transita(): DateTime
     {
         return $this->horaSalida_S_Transita;
     }
@@ -107,34 +100,14 @@ class Asiento implements JsonSerializable
         $this->horaSalida_S_Transita = $horaSalida_S_Transita;
     }
 
-    public function getHoraLlegada_L_Transita(): DateTime 
+    public function getHoraLlegada_L_Transita(): DateTime
     {
         return $this->horaLlegada_L_Transita;
     }
 
-    public function setHoraLlegada_L_Transita(DateTime  $horaLlegada_L_Transita): void
+    public function setHoraLlegada_L_Transita(DateTime $horaLlegada_L_Transita): void
     {
         $this->horaLlegada_L_Transita = $horaLlegada_L_Transita;
-    }
-
-    public function getNombre_P_ParametroDouble(): string
-    {
-        return $this->nombre_P_ParametroDouble;
-    }
-
-    public function setNombre_P_ParametroDouble(string $nombre_P_ParametroDouble): void
-    {
-        $this->nombre_P_ParametroDouble = $nombre_P_ParametroDouble;
-    }
-
-    public function getPrecio(): float
-    {
-        return $this->precio;
-    }
-
-    public function setPrecio(float $precio): void
-    {
-        $this->precio = $precio;
     }
 
     public function jsonSerialize()
@@ -148,8 +121,6 @@ class Asiento implements JsonSerializable
             "numero_U_Transita" => $this->numero_U_Transita,
             "horaSalida_S_Transita" => $this->horaSalida_S_Transita,
             "horaLlegada_L_Transita" => $this->horaLlegada_L_Transita,
-            "nombre_P_ParametroDouble" => $this->nombre_P_ParametroDouble,
-            "precio" => $this->precio
         ];
     }
 }
