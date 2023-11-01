@@ -176,7 +176,6 @@ function loadLines(lineas) {
                 success: (response) => {
 
                     if (response.status === "success") {
-
                         if (response.unidad) {
                             unidad = response.unidad;
                             caracts = response.caracteristicas;

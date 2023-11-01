@@ -12,7 +12,6 @@
 
 <body>
     <?php
-    use Vtiful\Kernel\Format;
 
     include '../../navBar/navBar.php';
     ?>
@@ -20,6 +19,21 @@
         <h2 class="title">Reservar</h2>
 
         <?php
+        include_once($_SERVER['DOCUMENT_ROOT'] . '/Proyecto Final/dirs.php');
+        include_once(BUSINESS_PATH . 'reserva.php');
+        include_once(DATA_PATH . 'reservaLink.php');
+        include_once(DATA_PATH . 'lineaLink.php');
+        include_once(BUSINESS_PATH . 'asiento.php');
+        include_once(DATA_PATH . 'asientoLink.php');
+        include_once(BUSINESS_PATH . 'tiquet.php');
+        include_once(DATA_PATH . 'tiquetLink.php');
+        include_once(DATA_PATH . 'connection.php');
+
+        $lineaLink = new LineaLink($conn);
+        $reservaLink = new ReservaLink($conn);
+        $asientoLink = new AsientoLink($conn);
+        $tiquetLink = new TiquetLink($conn);
+
         // Decodifica los parámetros de URL
         $precioTotalJSON = $_POST['precioTotal'];
         $unidadJSON = $_POST['unidad'];
@@ -46,30 +60,59 @@
 
             }
         }
-        echo "<pre>";
-        print_r("Ticket: \n");
-        print_r((new DateTime())->format("YmdHi") . "\n \n");
-        echo "</pre>";
 
-        echo "<pre>";
-        print_r("Asientos: \n");
-        print_r($asientos);
-        print_r($tramos);
-        print_r($params["nombreLinea"]);
-        print_r($unidad["numero"]);
-        print_r($params["horaSalida"]);
-        print_r($params["horaLLegada"]);
-        echo "</pre>";
+        $fechaTiquet = (new DateTime())->format("YmdHi");
 
-        echo "<pre>";
-        print_r($unidad);
-        print_r($params);
-        print_r($asientos);
-        print_r($metodoDePago . "\n");
-        print_r($precioTotal . "\n");
+        $linea = $lineaLink->getCodigoLineaByNombre($params["nombreLinea"]);
 
-        print_r($tramos);
-        echo "</pre>";
+
+        $cantTiquets = $tiquetLink->selectTiquetsFromDate($fechaTiquet);
+        $tiquet = (intval($fechaTiquet . $cantTiquets) + 1);
+        if ($tiquetLink->insertTiquet(new Tiquet($tiquet, $precioTotal))) {
+            foreach ($asientos as $asiento) {
+                foreach ($tramos as $key => $tramo) {
+                    $asientoObj = new Asiento(
+                        $asiento,
+                        $tramo["inicio"],
+                        $tramo["fin"],
+                        $linea,
+                        $key,
+                        $unidad["numero"],
+                        new DateTime($params["horaSalida"]),
+                        new DateTime($params["horaLLegada"])
+                    );
+
+                    if ($asientoLink->insertAsiento($asientoObj)) {
+                        echo (
+                            $reservaLink->insertReserva(
+                                $asiento,
+                                $tramo["inicio"],
+                                $tramo["fin"],
+                                $linea,
+                                $key,
+                                $unidad["numero"],
+                                $params["horaSalida"],
+                                $params["horaLLegada"],
+                                $_SESSION["userData"]->getId(),
+                                "tiempoReserva",
+                                "00-00-000",
+                                $metodoDePago,
+                                "Pagado",
+                                $params["dia"],
+                                $tramo["hora"],
+                                $tiquet
+                            )
+                            . "\n "
+                        );
+                    } else {
+                        echo "asiento no insertado";
+                    }
+                }
+            }
+        } else {
+            echo "error";
+        }
+
         ?>
         <script>
             var unidad = <?php echo json_encode($unidad); ?>;
@@ -89,6 +132,8 @@
             console.log(tramos);
         </script>
 
+
+        <script type="module" src="../../../../js/emailSend.js"></script>
     </main>
 
     <?php
