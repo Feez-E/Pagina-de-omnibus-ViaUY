@@ -41,14 +41,29 @@ INNER JOIN Asiento ON Reserva.numero_Asiento = Asiento.numero AND Reserva.numero
     AND Reserva.codigo_L_R_T_Asiento = Asiento.codigo_L_R_Transita AND Reserva.horaSalida_S_T_Asiento = Asiento.horaSalida_S_Transita 
 	AND Reserva.horaLlegada_L_T_Asiento = Asiento.horaLlegada_L_Transita
 WHERE id_Usuario = 1
-GROUP BY codigo_Tiquet, numero_Asiento, codigo_L_R_T_Asiento, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento,
+GROUP BY id_Usuario, codigo_Tiquet, numero_Asiento, codigo_L_R_T_Asiento, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento,
 	numero_U_T_Asiento, estado, precio, metodo_MetodoPago, fecha, fechaLimite; -- Muestra las reservas de forma estilizadas segun el id del usuario, junto con el precio total.
 
-SELECT codigo_L_R_T_Asiento AS codigoLinea, Linea.nombre, COUNT(DISTINCT(Tiquet.codigo)) AS reservasPorLinea
+SELECT codigo_L_R_T_Asiento AS codigoLinea, Linea.nombre, COUNT(DISTINCT(codigo_Tiquet)) AS reservasPorLinea
 FROM Reserva
-INNER JOIN Tiquet ON Reserva.codigo_Tiquet = Tiquet.codigo
 INNER JOIN Linea ON Reserva.codigo_L_R_T_Asiento = Linea.codigo
 WHERE fecha BETWEEN '2023-01-01' AND '2023-12-31' 
 GROUP BY codigo_L_R_T_Asiento
 ORDER BY reservasPorLinea DESC
 LIMIT 1; -- Muestra la línea más reservada entre dos fechas establecidas.
+
+SELECT numero_U_T_Asiento AS unidad, COUNT(DISTINCT(codigo_Tiquet)) AS reservasPorUnidad
+FROM Reserva
+GROUP BY numero_U_T_Asiento
+ORDER BY reservasPorUnidad DESC
+LIMIT 1; -- Muestra la unidad con menos reservas vendidas.
+
+SELECT codigo_Tiquet, Linea.nombre AS codigoLinea, numero_U_T_Asiento, numero_Asiento, orden_R_T_Asiento, fecha, hora,
+	idInicial_T_R_T_Asiento, idFinal_T_R_T_Asiento, tiempo, distancia, estado_Estado,
+    Parada.id AS 'idParada', Parada.direccion AS 'direccionParada', Parada.vigencia AS 'vigenciaParada'
+FROM Reserva
+INNER JOIN Linea ON Reserva.codigo_L_R_T_Asiento = Linea.codigo
+INNER JOIN Tramo ON Reserva.idInicial_T_R_T_Asiento = Tramo.idInicial AND Reserva.idFinal_T_R_T_Asiento = Tramo.idFinal
+INNER JOIN Parada ON Tramo.idInicial = Parada.id OR Tramo.idFinal = Parada.id
+WHERE id_Usuario = 1
+ORDER BY codigo_Tiquet, orden_R_T_Asiento ASC, 'idParada' DESC; -- Muestra los recorrido detallados de las reservas de un cliente.
