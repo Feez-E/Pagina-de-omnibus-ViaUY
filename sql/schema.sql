@@ -196,5 +196,5 @@ fecha DATE NOT NULL,
 hora TIME NOT NULL,
 codigo_Tiquet VARCHAR(16),
 FOREIGN KEY(codigo_Tiquet) REFERENCES Tiquet(codigo),
-PRIMARY KEY(numero_Asiento, idInicial_T_R_T_Asiento, idFinal_T_R_T_Asiento, codigo_L_R_T_Asiento, orden_R_T_Asiento, numero_U_T_Asiento, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento)
+PRIMARY KEY(numero_Asiento, idInicial_T_R_T_Asiento, idFinal_T_R_T_Asiento, codigo_L_R_T_Asiento, orden_R_T_Asiento, numero_U_T_Asiento, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento, hora, fecha)
 );
