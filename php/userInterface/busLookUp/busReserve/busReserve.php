@@ -15,7 +15,6 @@
     include '../../navBar/navBar.php';
     ?>
     <main class='container busReserveMain'>
-        <h2 class="title">Reservar</h2>
         <div>
             <div class="busAndInfo">
                 <?php

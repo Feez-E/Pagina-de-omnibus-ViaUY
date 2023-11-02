@@ -137,5 +137,20 @@ class ReservaLink
         }
     }
 
+    public function deleteReservaByCodigoTiquet($codigo)
+    {
+        $stmt = $this->conn->prepare(
+            "DELETE FROM Reserva WHERE codigo_Tiquet = ?"
+        );
+
+        $stmt->bind_param("i", $codigo);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
 ?>

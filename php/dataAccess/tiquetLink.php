@@ -68,4 +68,18 @@ class TiquetLink
 
 
     }
+    public function deleteTiquetByCodigo($codigo)
+    {
+        $stmt = $this->conn->prepare(
+            "DELETE FROM Tiquet WHERE codigo = ?"
+        );
+
+        $stmt->bind_param("i", $codigo);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

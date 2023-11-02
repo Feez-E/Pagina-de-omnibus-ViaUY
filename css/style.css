@@ -82,7 +82,7 @@
   }
 }
 
-/*-- Animations --*/
+/*!-- Animations --*/
 
 @keyframes slideIn {
   0% {
@@ -117,7 +117,7 @@
 
 /*----*/
 
-/*-- ScrollBar --*/
+/*!-- ScrollBar --*/
 
 *::-webkit-scrollbar {
   -webkit-appearance: none;
@@ -147,7 +147,7 @@ body *::-webkit-scrollbar-track {
 
 /*----*/
 
-/*-- GeneralSettings --*/
+/*!-- GeneralSettings --*/
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
@@ -219,10 +219,14 @@ a {
   transform: translateX(5px);
 }
 
+.button.inlineFlex {
+  display: inline-flex;
+}
+
 main {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - 30px);
   width: 100%;
   align-items: center;
   font-size: var(--font-sm);
@@ -355,7 +359,7 @@ label svg.eye:hover {
 
 /*----*/
 
-/*-- navBar --*/
+/*!-- navBar --*/
 
 a[href="index.php"] {
   display: flex;
@@ -531,7 +535,7 @@ nav {
 
 /*----*/
 
-/*-- footer --*/
+/*!-- footer --*/
 
 footer {
   box-shadow: 0 -5px 15px var(--shadow-color);
@@ -618,7 +622,7 @@ footer {
 
 /*----*/
 
-/*-- Index --*/
+/*!-- Index --*/
 .indexContent {
   display: flex;
   flex-direction: column;
@@ -671,7 +675,7 @@ footer {
 
 /*----*/
 
-/*-- Login --*/
+/*!-- Login --*/
 
 .pageCover {
   inset: 0px;
@@ -821,7 +825,7 @@ label[for="birthdate"].top input {
 
 /*----*/
 
-/*-- lineAndTravelR --*/
+/*!-- lineAndTravelR --*/
 
 h2.title {
   color: var(--secondary-color);
@@ -943,7 +947,7 @@ h2.title {
 
 /*----*/
 
-/*-- accountSettings --*/
+/*!-- accountSettings --*/
 
 .container#user {
   margin: 3.2rem 0 1.6rem 0;
@@ -1105,7 +1109,7 @@ legend {
 
 /*----*/
 
-/*-- stopCRUD --*/
+/*!-- stopCRUD --*/
 #stopsMap {
   margin-top: 1.6rem;
   font-size: var(--font-xs);
@@ -1212,7 +1216,7 @@ legend {
   filter: drop-shadow(0 0 0.25rem var(--secondary-color));
 }
 
-/*-- BusLookUp --*/
+/*!-- BusLookUp --*/
 #reservationSpecification {
   width: 100%;
   display: flex;
@@ -1373,7 +1377,7 @@ legend {
 }
 /*--  --*/
 
-/*-- TravelAndLineRD --*/
+/*!-- TravelAndLineRD --*/
 
 .leaflet-routing-container .leaflet-routing-instructions.show,
 .leaflet-top.leaflet-right {
@@ -1660,7 +1664,7 @@ input:checked + .slider:before {
 
 /*--  --*/
 
-/*-- MovileFirst Design --*/
+/*!-- MovileFirst Design --*/
 
 /* xs */
 @media (min-width: 475px) {
@@ -1748,7 +1752,7 @@ fieldset {
 
 /*----*/
 
-/*--busReserve--*/
+/*!--busReserve--*/
 .busReserveMain {
   display: flex;
   flex-direction: column;
@@ -1938,7 +1942,7 @@ td span:hover {
   cursor: pointer;
 }
 
-td span:hover + .reserves {
+td span:hover.notValid + .reserves {
   display: flex;
   flex-wrap: wrap;
   animation: fadeIn 0.5s;
@@ -2028,6 +2032,42 @@ select:focus-visible {
 
 /*----*/
 
+/*!-- emailSend --*/
+.centeredMain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#reserveMessage,
+#reserveMessage p {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-wrap: balance;
+  text-align: center;
+  color: var(--tertiary-color);
+}
+
+#reserveMessage p :first-child {
+  color: var(--primary-color);
+  font-size: var(--font-double);
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+#reserveMessage p :last-child {
+  margin-bottom: 30px;
+}
+
+#reserveMessage .bottom {
+  display: flex;
+  gap: 20px;
+}
+
+/*----*/
+
 /* sm */
 @media (min-width: 640px) {
   .container {
@@ -2047,6 +2087,10 @@ select:focus-visible {
   /*-- NavBar --*/
   .userName.button svg {
     display: block;
+  }
+
+  main {
+    min-height: calc(100vh - 60px);
   }
 
   header {
