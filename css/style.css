@@ -34,10 +34,10 @@
   --white-transparentColor: rgba(13, 18, 24, 0.099);
   --shadow-filter: drop-shadow(0.2rem 0.2rem 0.25rem rgba(20, 42, 74, 0.25));
   --seat-filter: saturate(0%);
-  --font-xs: 1.2rem;
-  --font-sm: 1.6rem;
-  --font-md: 2rem;
-  --font-lg: 2.4rem;
+  --font-xs: 1.3rem;
+  --font-sm: 1.7rem;
+  --font-md: 2.1rem;
+  --font-lg: 2.5rem;
   --font-1-5: 1.5em;
   --font-double: 2em;
 }
@@ -164,18 +164,11 @@ ul {
   list-style: none;
 }
 
-@font-face {
-  font-family: "Century Gothic";
-  src: url("fonts/Century Gothic.ttf") format("ttf");
-  font-weight: normal;
-  font-style: normal;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: "Century Gothic", Tahoma, sans-serif;
+  font-family: "Didact Gothic", Tahoma, sans-serif;
 }
 
 html {
