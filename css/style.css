@@ -2050,15 +2050,16 @@ select:focus-visible {
   color: var(--tertiary-color);
 }
 
-#reserveMessage p :first-child {
+#reserveMessage p .thanksMessage {
   color: var(--primary-color);
   font-size: var(--font-double);
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-#reserveMessage p :last-child {
+#reserveMessage p #message {
   margin-bottom: 30px;
+  animation: fadeIn 0.25s;
 }
 
 #reserveMessage .bottom {

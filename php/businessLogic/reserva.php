@@ -1,5 +1,5 @@
 <?php
-require 'Asiento.php';
+require 'asiento.php';
 
 class Reserva implements JsonSerializable
 {
@@ -23,13 +23,13 @@ class Reserva implements JsonSerializable
         ?string $codigo_Tiquet
     ) {
         $this->asiento = $asiento;
-        $this->id_Usuario = $id_Usuario?? 0;
+        $this->id_Usuario = $id_Usuario ?? 0;
         $this->fechaLimite = $fechaLimite;
-        $this->metodo_MetodoPago = $metodo_MetodoPago?? 0;
+        $this->metodo_MetodoPago = $metodo_MetodoPago ?? 0;
         $this->estado = $estado;
         $this->fecha = $fecha;
         $this->hora = $hora;
-        $this->codigo_Tiquet = $codigo_Tiquet?? 0;
+        $this->codigo_Tiquet = $codigo_Tiquet ?? 0;
     }
 
     // Getter y Setter para el objeto Asiento

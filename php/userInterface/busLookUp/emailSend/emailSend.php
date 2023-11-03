@@ -26,7 +26,7 @@
                 <p>
                     <?php
                     if ($result == 1) {
-                        reserveAccepted();
+                        reserveAccepted($fechaTiquet);
                     } else {
                         reserveNotAccepted($result);
                     }
@@ -40,7 +40,7 @@
                 <?php } ?>
             </div>
         </div>
-        <script type="module" src="../../../../js/emailSend.js"></script>
+
     </main>
 
     <?php
@@ -52,11 +52,22 @@
 
 <?php
 
-function reserveAccepted()
+function reserveAccepted($fecha)
 {
+
+
+    ?>
+    <script>
+        msg = "hola";
+        fecha = <?php echo $fecha; ?>;
+        email = `<?php echo $_SESSION['userData']->getCorreo(); ?>`;
+    </script>
+    <?php
     echo "
-    <span>¡Gracias por usar nuestros servicios!</span>
-    <span>Se le ha enviado un email con la información de su reserva</span>";
+    <span class = 'thanksMessage'>¡Gracias por usar nuestros servicios!</span>
+    <span id='message'></span>
+    <script src='../../../../js/emailSend.js'></script>
+    ";
 }
 
 function reserveNotAccepted($result)

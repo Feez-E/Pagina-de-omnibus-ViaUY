@@ -105,4 +105,3 @@ function insertarReservaYAsientos($tiquet, $precioTotal, $asientos, $tramos, $li
     }
     return $result;
 }
-?>

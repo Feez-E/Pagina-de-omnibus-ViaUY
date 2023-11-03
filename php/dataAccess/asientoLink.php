@@ -61,15 +61,19 @@ class AsientoLink
 
         $stmt->bind_param("iiiiiiss", $numero, $idInicial, $idFinal, $codigo, $orden, $numeroU, $horaSalida, $horaLlegada);
 
-        if ($stmt->execute()) {
-            return true;
-        } else {
-            if ($stmt->errno == 1062) {
-
+        try {
+            if ($stmt->execute()) {
                 return true;
             } else {
-                return false;
+                if ($stmt->errno == 1062) {
+
+                    return true;
+                } else {
+                    return false;
+                }
             }
+        } catch (Exception $e) {
+            return false;
         }
     }
 }
