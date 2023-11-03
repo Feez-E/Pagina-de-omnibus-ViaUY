@@ -20,6 +20,8 @@ $unidadJSON = $_POST['unidad'];
 $paramsJSON = $_POST['params'];
 $metodoDePago = $_POST['metodosDePago'];
 $asientosJSON = $_POST['asientos'];
+$horaInicial = null;
+$fstTime = true;
 
 // Analiza los objetos JSON en arrays o estructuras de datos
 $precioTotal = json_decode($precioTotalJSON, true); // El segundo parámetro true convierte en array asociativo
@@ -35,6 +37,10 @@ foreach ($params["paradas"] as $i => $parada) {
             $tramos[$i]["inicio"] = $parada;
             $tramos[$i]["fin"] = $params["paradas"][$i + 1];
             $tramos[$i]["hora"] = $params["allhoras"][$i];
+            if ($fstTime) {
+                $fstTime = false;
+                $horaInicial = $params["allhoras"][$i];
+            }
         }
 
 

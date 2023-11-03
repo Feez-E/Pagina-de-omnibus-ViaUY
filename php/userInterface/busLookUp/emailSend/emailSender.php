@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/Proyecto Final/vendor/autoload.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 

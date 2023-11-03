@@ -28,7 +28,7 @@
                 <p>
                     <?php
                     if ($result == 1) {
-                        reserveAccepted($fechaTiquet);
+                        reserveAccepted($tiquet, $params["dia"], $horaInicial, $asientosJSON);
                     } else {
                         reserveNotAccepted($result);
                     }
@@ -54,13 +54,13 @@
 
 <?php
 
-function reserveAccepted($fecha)
+function reserveAccepted($fecha, $dia, $hora, $asientos)
 {
 
 
     ?>
     <script>
-        msg = "hola";
+        msg = `<p style="font-weight:bold;font-size: 1.2rem;">Usted tiene una reserva para el <?php echo $dia; ?> a las <?php echo $hora; ?> </p><p>Asiento/s <?php echo $asientos; ?> </p>`;
         fecha = <?php echo $fecha; ?>;
         email = `<?php echo $_SESSION['userData']->getCorreo(); ?>`;
     </script>
@@ -76,12 +76,12 @@ function reserveNotAccepted($result)
 {
     if ($result == 1062) {
         echo " 
-        <span>Lo sentimos, hubo un error con su reserva</span>
-        <span>Alguno de los tramos de su viaje ya fue reservado, intente nuevamente</span>";
+        <span class = 'thanksMessage'>Lo sentimos, hubo un error con su reserva</span>
+        <span  id='message'>Alguno de los tramos de su viaje ya fue reservado, intente nuevamente</span>";
     } else {
         echo " 
-        <span>Lo sentimos, hubo un error inesperado con su reserva</span>
-        <span>Intente nuevamente más tarde</span>";
+        <span class = 'thanksMessage'>Lo sentimos, hubo un error inesperado con su reserva</span>
+        <span  id='message'>Intente nuevamente más tarde</span>";
     }
 
 }
