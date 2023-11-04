@@ -2,6 +2,9 @@
 <html lang="es">
 
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../../../css/style.css">
@@ -72,11 +75,10 @@
                         <ul id="stopsList">
                         </ul>
                         <label for="addStop">
-                            <input type="number" id="addStop" name="addStop" autocomplete="off"
-                                placeholder="Ej. 1" />
+                            <input type="number" id="addStop" name="addStop" autocomplete="off" placeholder="Ej. 1" />
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-plus" id  = "addStopButton">
+                                stroke-linejoin="round" class="feather feather-plus" id="addStopButton">
                                 <line x1="12" y1="5" x2="12" y2="19"></line>
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                             </svg>
@@ -111,27 +113,27 @@
 <script src="../../../js/toggleSelector.js"></script>
 <script type="module" src="../../../js/linesMap.js"></script>
 <script type="module">
-    import { agregarParada,  lineFormSubmit } from '../../../js/linesMap.js';
+    import { agregarParada, lineFormSubmit } from '../../../js/linesMap.js';
 
 
     let paradas = [];
     window.addEventListener('load', () => {
-        document.getElementById("addStop").onkeydown = function(event) {
+        document.getElementById("addStop").onkeydown = function (event) {
             if (event.key === "Enter") {
                 event.preventDefault();
                 const stop = agregarParada();
-                if(stop){
+                if (stop) {
                     paradas.push(stop);
                 }
-                
-               
+
+
             }
         };
-        document.getElementById("addStopButton").onclick = () =>{
+        document.getElementById("addStopButton").onclick = () => {
             const stop = agregarParada();
-                if(stop){
-                    paradas.push(stop);
-                }
+            if (stop) {
+                paradas.push(stop);
+            }
         }
 
         lineFormSubmit(paradas);

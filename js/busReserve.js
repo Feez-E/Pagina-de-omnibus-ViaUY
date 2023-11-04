@@ -259,73 +259,81 @@ function createSeat(cell, seatNumber) {
     return seatNumber;
 }
 
+
 function reservationsAJAX(dataToSend) {
 
-    $.ajax({
-        url: "getReservations.php",
-        type: "POST",
-        data: dataToSend,
-        success: (response) => {
-
-            if (response.status === "success") {
-
-                if (response.tramos) {
-                    console.log(response.tramos)
-                    /*  console.log(params["paradas"]) */
-
-                    response.tramos.forEach(tramo => {
-                        /* console.log(tramo["idInicial"]); */
-                        if (
-                            params["paradas"].includes(tramo["idInicial"]) &&
-                            params["paradas"].includes(tramo["idFinal"])
-                        ) {
-                            // Obtener las posiciones de los elementos en el array
-                            const posicionInicial = params["paradas"].indexOf(tramo["idInicial"]);
-                            const posicionFinal = params["paradas"].indexOf(tramo["idFinal"]);
-
-                            // Verificar que la posición inicial sea menor que la posición final
-                            if (posicionInicial < posicionFinal) {
 
 
-                                const numeroAsiento = tramo["numeroAsiento"]
-                                let asiento = document.getElementById("seat_" + numeroAsiento);
-                                asiento.firstElementChild.classList.add("notValid");
+    AJAX();
+    setInterval(() => {
+        AJAX();
+    }, 2000); // Realiza una solicitud cada 5 segundos (ajusta el intervalo según tus necesidades)
 
-                                const reserveParagraph = document.createElement("p");
-                                reserveParagraph.className = "seatReserve";
-                                reserveParagraph.innerHTML = ` (${tramo["idInicial"]}, ${tramo["idFinal"]})`;
-                                asiento.lastElementChild.appendChild(reserveParagraph)
-                            }
-                        }
-                    });
 
-                }
-                const reserves = document.querySelectorAll(".reserves");
-                const seatsAndPrices = document.getElementById("seatsAndPrices");
-                reserves.forEach(reserve => {
-                    if (reserve.innerHTML.trim() == '<p class="subtitle">Tramos reservados:</p>') {
-                        seatOnClick(reserve.previousElementSibling, seatsAndPrices)
-                        reserve.remove();
+    function AJAX() {
+        $.ajax({
+            url: "getReservations.php",
+            type: "POST",
+            data: dataToSend,
+            success: (response) => {
+                if (response.status === "success") {
+                    if (response.tramos) {
+                        // Actualiza la página con los datos recibidos
+                        actualizarPaginaConDatos(response.tramos);
                     }
-                });
+                } else {
+                    console.log("Error al procesar la solicitud.");
+                    console.error(response);
+                }
+            },
+            error: (xhr, _status, error) => {
+                console.log("Error en la solicitud AJAX.");
+                console.error(error);
+                console.error(xhr);
+            },
+        });
+    }
+}
 
-            } else {
-                console.log("Error al procesar la solicitud.");
-                console.error(response);
-            }
-        },
-        error: (xhr, _status, error) => {
-            console.log("Error en la solicitud AJAX.");
-            console.error(error);
-            console.error(xhr);
-        },
+let occupiedSeats = []
+
+function actualizarPaginaConDatos(tramos) {
+    // Procesa los datos de tramos y actualiza la página según tus necesidades
+    tramos.forEach((tramo) => {
+        // Aquí puedes realizar las actualizaciones en la página
+        const numeroAsiento = tramo.numeroAsiento;
+        const asiento = document.getElementById("seat_" + numeroAsiento);
+
+        // Realiza las actualizaciones necesarias en la página
+        asiento.firstElementChild.classList.add("notValid");
+
+
+        if (!(occupiedSeats.includes(`${numeroAsiento}, ${tramo.idInicial},  ${tramo.idFinal}`))) {
+            occupiedSeats.push(`${numeroAsiento}, ${tramo.idInicial},  ${tramo.idFinal}`);
+            const reserveParagraph = document.createElement("p");
+            reserveParagraph.className = "seatReserve";
+            reserveParagraph.innerHTML = ` (${tramo.idInicial}, ${tramo.idFinal})`;
+            asiento.lastElementChild.appendChild(reserveParagraph);
+        }
+
+
+    });
+
+    const reserves = document.querySelectorAll(".reserves");
+    const seatsAndPrices = document.getElementById("seatsAndPrices");
+    reserves.forEach((reserve) => {
+        if (reserve.innerHTML.trim() == '<p class="subtitle">Tramos reservados:</p>') {
+            seatOnClick(reserve.previousElementSibling, seatsAndPrices);
+        } else {
+            reserve.previousElementSibling.onclick = null;
+        }
     });
 }
 
 function seatOnClick(seat, seatsDiv) {
-    seat.onclick = () => {
+    seat.onclick = function seatOnClick() {
         if (!seat.className) {
-            seat.classList.add("semiValid")
+            seat.classList.add("semiValid");
 
             if (seatsDiv.innerHTML.trim() === "<p>Seleccione uno o más asientos</p>") {
                 seatsDiv.innerHTML = `<div class = "seatAndPrice title"><p class = seat>Asiento</p><p class = price>Precio</p></div>`;
@@ -336,24 +344,24 @@ function seatOnClick(seat, seatsDiv) {
 
             const seatDiv = document.createElement("div");
             seatDiv.className = `seatAndPrice ${seat.parentElement.id}`;
-            seatDiv.innerHTML = `<p class = seat>${seatNumber}</p><p class = price>$<span>${precio.toFixed(2)}</span></p>`
+            seatDiv.innerHTML = `<p class = seat>${seatNumber}</p><p class = price>$<span>${precio.toFixed(2)}</span></p>`;
             asientosSeleccionados.push(seatNumber);
             precioTotal += precio;
 
             const totalDiv = document.createElement("div");
             totalDiv.className = `seatAndPrice total`;
-            totalDiv.innerHTML = `<p class = seat> Total</p><p class = price>$${precioTotal.toFixed(2)}</p>`
+            totalDiv.innerHTML = `<p class = seat> Total</p><p class = price>$${precioTotal.toFixed(2)}</p>`;
 
             const actualTotalDiv = seatsDiv.querySelector(`.total`);
             if (actualTotalDiv) {
-                seatsDiv.removeChild(actualTotalDiv)
+                seatsDiv.removeChild(actualTotalDiv);
             }
 
             seatsDiv.appendChild(seatDiv);
             seatsDiv.appendChild(totalDiv);
         } else {
             precioTotal -= precio;
-            seat.classList.remove("semiValid")
+            seat.classList.remove("semiValid");
             const seatDiv = seatsDiv.querySelector(`.${seat.parentElement.id}`);
             const seatSplit = seat.parentElement.id.split("_");
             const seatNumber = seatSplit[1];
@@ -363,7 +371,7 @@ function seatOnClick(seat, seatsDiv) {
 
             const actualTotalDiv = seatsDiv.querySelector(`.total`);
             if (actualTotalDiv) {
-                seatsDiv.removeChild(actualTotalDiv)
+                seatsDiv.removeChild(actualTotalDiv);
             }
 
 
@@ -374,7 +382,7 @@ function seatOnClick(seat, seatsDiv) {
 
                 const totalDiv = document.createElement("div");
                 totalDiv.className = `seatAndPrice total`;
-                totalDiv.innerHTML = `<p class = seat> Total</p><p class = price>$${precioTotal.toFixed(2)}</p>`
+                totalDiv.innerHTML = `<p class = seat> Total</p><p class = price>$${precioTotal.toFixed(2)}</p>`;
 
                 seatsDiv.appendChild(totalDiv);
             }

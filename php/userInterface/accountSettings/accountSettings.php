@@ -2,6 +2,9 @@
 <html lang="es">
 
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../../../css/style.css">
@@ -13,18 +16,18 @@
     <?php
     include '../navBar/navBar.php';
     ?>
-    <main class = container>
-    <?php
-if (isset($_SESSION['message'])) { ?>
-    <div class="confirmationMessage container shadow slideIn">
-        <p>
-            <?php echo $_SESSION['message'] ?>
-        </p>
-    </div>
-    <?php
-    unset($_SESSION['message']); // Eliminar el mensaje de confirmación para que no se muestre nuevamente
-}
-?>
+    <main class=container>
+        <?php
+        if (isset($_SESSION['message'])) { ?>
+            <div class="confirmationMessage container shadow slideIn">
+                <p>
+                    <?php echo $_SESSION['message'] ?>
+                </p>
+            </div>
+            <?php
+            unset($_SESSION['message']); // Eliminar el mensaje de confirmación para que no se muestre nuevamente
+        }
+        ?>
         <h2 class="title">Ajustes de cuenta</h2>
         <div class="container" id="user">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="21.2" viewBox="0 0 24 21.2" fill="none"
@@ -34,19 +37,19 @@ if (isset($_SESSION['message'])) { ?>
                 <circle cx="12" cy="7" r="4"></circle>
                 <line x1="4" y1="21.2" x2="20" y2="21.2"></line>
             </svg>
-                <?php
-                try {
-                    if (isset($_SESSION["userData"])) {
-                        include_once(BUSINESS_PATH . "usuario.php");
-                        echo ($_SESSION["userData"]->getApodo() . " - " . $_SESSION["userData"]->getNombreRol());
-                    } else {
-                        echo "Nombre de usuario incorrecto";
-                    }
-
-                } catch (Exception) {
+            <?php
+            try {
+                if (isset($_SESSION["userData"])) {
+                    include_once(BUSINESS_PATH . "usuario.php");
+                    echo ($_SESSION["userData"]->getApodo() . " - " . $_SESSION["userData"]->getNombreRol());
+                } else {
                     echo "Nombre de usuario incorrecto";
                 }
-                ?>
+
+            } catch (Exception) {
+                echo "Nombre de usuario incorrecto";
+            }
+            ?>
         </div>
         <div class="container shadow" id="form">
             <?php

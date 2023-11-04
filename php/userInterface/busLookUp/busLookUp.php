@@ -2,7 +2,10 @@
 <html lang="es">
 
 <head>
-<meta charset="UTF-8" />
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../../../css/style.css">
     <link rel="icon" href="../../../ico/icon.ico">
@@ -22,9 +25,9 @@
     include '../navBar/navBar.php';
     ?>
     <main class="container">
-    <div id="errorContainer" class="confirmationMessage container shadow">
-    <p></p>
-</div>
+        <div id="errorContainer" class="confirmationMessage container shadow">
+            <p></p>
+        </div>
         <!--  <?php
         try {
             if (!isset($_SESSION["userData"])) {
@@ -40,41 +43,42 @@
             <h2 class="title">Reservar</h2>
             <div class="container shadow" id="form">
                 <form id="busLookUpForm" action="#" method="post">
-                    <section class ="tripleLabel">
-                    <label for="startStop" class="top-left">
-                        <span> Subida </span>
-                        <input type="number" id="startStop" name="startStop" list="startStopsList" autocomplete="off" />
-                        <datalist id=startStopsList>
-                        </datalist>
-                    </label>
-                    <label for="endStop" class="top-right">
-                        <span> Bajada </span>
-                        <input type="number" id="endStop" name="endStop" list="endStopsList" autocomplete="off" />
-                        <datalist id=endStopsList>
-                        </datalist>
-                    </label>
-                    <div class="desplegableSection mapSection bottom">
-                        <div class="desplegableTitle">
-                            <div class="desplegableSectionLeft">
-                                <h3 class="subtitle">Mapa de paradas</h3>
-                                <p>Seleccione sus paradas</p>
+                    <section class="tripleLabel">
+                        <label for="startStop" class="top-left">
+                            <span> Subida </span>
+                            <input type="number" id="startStop" name="startStop" list="startStopsList"
+                                autocomplete="off" />
+                            <datalist id=startStopsList>
+                            </datalist>
+                        </label>
+                        <label for="endStop" class="top-right">
+                            <span> Bajada </span>
+                            <input type="number" id="endStop" name="endStop" list="endStopsList" autocomplete="off" />
+                            <datalist id=endStopsList>
+                            </datalist>
+                        </label>
+                        <div class="desplegableSection mapSection bottom">
+                            <div class="desplegableTitle">
+                                <div class="desplegableSectionLeft">
+                                    <h3 class="subtitle">Mapa de paradas</h3>
+                                    <p>Seleccione sus paradas</p>
+                                </div>
+                                <div id="toggleArrow"></div>
                             </div>
-                            <div id="toggleArrow"></div>
+                            <div class="desplegableContent">
+                                <div id="stopsMap" class="tiny"></div>
+                            </div>
                         </div>
-                        <div class="desplegableContent">
-                            <div id="stopsMap" class ="tiny"></div>
-                        </div>
-                    </div>
                     </section>
-                    <section class ="doubleLabel">
-                    <label for="date" class="left">
-                        <span> Día </span>
-                        <input type="date" id="date" name="date" autocomplete="off" />
-                    </label>
-                    <label for="time" class="right">
-                        <span> Hora </span>
-                        <input type="time" id="time" name="time" autocomplete="off" />
-                    </label>
+                    <section class="doubleLabel">
+                        <label for="date" class="left">
+                            <span> Día </span>
+                            <input type="date" id="date" name="date" autocomplete="off" />
+                        </label>
+                        <label for="time" class="right">
+                            <span> Hora </span>
+                            <input type="time" id="time" name="time" autocomplete="off" />
+                        </label>
                     </section>
                     <input type="submit" value="Buscar viajes" class="button">
                 </form>

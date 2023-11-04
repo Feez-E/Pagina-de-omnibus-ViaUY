@@ -130,10 +130,30 @@ class ReservaLink
             $codigo_Tiquet
         );
 
+        try {
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                return $stmt->errno;
+            }
+        } catch (Exception $e) {
+            return $stmt->errno;
+        }
+
+    }
+
+    public function deleteReservaByCodigoTiquet($codigo)
+    {
+        $stmt = $this->conn->prepare(
+            "DELETE FROM Reserva WHERE codigo_Tiquet = ?"
+        );
+
+        $stmt->bind_param("i", $codigo);
+
         if ($stmt->execute()) {
             return true;
         } else {
-            return $stmt->errno;
+            return false;
         }
     }
 
