@@ -98,7 +98,6 @@ class ReservaLink
         $horaSalida_S_T_Asiento,
         $horaLlegada_L_T_Asiento,
         $id_Usuario,
-        $nombre_P_ParametroTime,
         $fechaLimite,
         $metodo_MetodoPago,
         $estado,
@@ -107,11 +106,11 @@ class ReservaLink
         $codigo_Tiquet
     ) {
         $stmt = $this->conn->prepare(
-            "INSERT INTO Reserva (numero_Asiento, idInicial_T_R_T_Asiento, idFinal_T_R_T_Asiento, codigo_L_R_T_Asiento, orden_R_T_Asiento, numero_U_T_Asiento, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento, id_Usuario, nombre_P_ParametroTime, fechaLimite, metodo_MetodoPago, estado, fecha, hora, codigo_Tiquet) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            "INSERT INTO Reserva (numero_Asiento, idInicial_T_R_T_Asiento, idFinal_T_R_T_Asiento, codigo_L_R_T_Asiento, orden_R_T_Asiento, numero_U_T_Asiento, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento, id_Usuario, fechaLimite, metodo_MetodoPago, estado, fecha, hora, codigo_Tiquet) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         );
         $stmt->bind_param(
-            "iiiiisssisssssss",
+            "iiiiisssissssss",
             $numero_Asiento,
             $idInicial_T_R_T_Asiento,
             $idFinal_T_R_T_Asiento,
@@ -121,7 +120,6 @@ class ReservaLink
             $horaSalida_S_T_Asiento,
             $horaLlegada_L_T_Asiento,
             $id_Usuario,
-            $nombre_P_ParametroTime,
             $fechaLimite,
             $metodo_MetodoPago,
             $estado,

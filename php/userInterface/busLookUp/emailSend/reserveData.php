@@ -87,7 +87,6 @@ function insertarReservaYAsientos($tiquet, $precioTotal, $asientos, $tramos, $li
                         $params["horaSalida"],
                         $params["horaLLegada"],
                         $_SESSION["userData"]->getId(),
-                        "tiempoReserva",
                         "00-00-000",
                         $metodoDePago,
                         "Pagado",
