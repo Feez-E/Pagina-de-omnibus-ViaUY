@@ -73,7 +73,7 @@ function ajaxForName(lineId, callback) {
     };
 
     $.ajax({
-        url: "getLineName.php",
+        url: "../busLookUp/getLineName.php",
         type: "POST",
         data: dataToSend,
         success: (response) => {
@@ -95,22 +95,24 @@ function ajaxForName(lineId, callback) {
     });
 }
 
-function agregarParada() {
-        const addStopInput = document.getElementById("addStop");
-        const id = addStopInput.value.trim();
+function agregarParada(paradas) {
+    const addStopInput = document.getElementById("addStop");
+    const id = addStopInput.value.trim();
 
-        if (id !== "" && stopsArray.hasOwnProperty(id)) {
-            const stopsList = document.getElementById("stopsList");
-            const newStop = document.createElement("li");
-            newStop.textContent = id;
-            stopsList.appendChild(newStop);
-            addStopInput.value = "";
-            const latLng = stopsArray[id];
+    if (id !== "" && stopsArray.hasOwnProperty(id)) {
+        const stopsList = document.getElementById("stopsList");
+        const newStop = document.createElement("li");
+        newStop.innerHTML = `<p></p><span>${id}</span>`;
+        stopsList.appendChild(newStop);
+        addStopInput.value = "";
+        const latLng = stopsArray[id];
 
-            return {id, latLng};
-        } else {
-            showError("Ingrese una parada correcta");
-        }        
+
+
+        return { id, latLng };
+    } else {
+        showError("Ingrese una parada correcta");
+    }
 }
 
 function showError(message) {
@@ -124,17 +126,72 @@ function showError(message) {
     }, .1);
 }
 
-function lineFormSubmit(paradas){
+function lineFormSubmit(paradas) {
     const busLookUpForm = document.getElementById("lineForm");
-    busLookUpForm.addEventListener("submit", (e) => {
+    busLookUpForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        console.log(paradas)
+        console.log(paradas);
+        let tiempoFinal = 0;
+
+        for (let i = 0; i < paradas.length - 1; i++) {
+            try {
+
+                const { distance, duration } = await routeCalc(
+                    paradas[i]["latLng"]["lat"],
+                    paradas[i]["latLng"]["lng"],
+                    paradas[i + 1]["latLng"]["lat"],
+                    paradas[i + 1]["latLng"]["lng"]
+                );
+                tiempoFinal += duration;
+                console.log(`Inicio ${paradas[i]["id"]} \n Fin ${paradas[i + 1]["id"]} \n Distancia total: ${distance} \n Tiempo: ${duration}`);
+                console.log("tiempoFinal : ", tiempoFinal);
+
+            } catch (error) {
+
+                console.error("Error:", error);
+            }
+        }
     });
 }
 
+async function routeCalc(latStart, lngStart, latEnd, lngEnd) {
+    return new Promise((resolve, reject) => {
+        var control = L.Routing.control({
+            waypoints: [L.latLng(latStart, lngStart), L.latLng(latEnd, lngEnd)],
+            routeWhileDragging: true,
+            show: false,
+            createMarker: function (_i, _waypoint, _n) {
+                // Crea marcadores ocultos en los puntos de inicio y final
+                return null;
+            },
+        }).addTo(map);
 
-export {agregarParada, lineFormSubmit}
+        // Calcula la ruta
+        control.route();
+
+        // Maneja el evento "routesfound" para calcular la distancia y eliminar la ruta
+        control.on("routesfound", function (e) {
+            var routes = e.routes;
+            var totalDistance = 0;
+            var totalDuration = 0;
+
+            for (var i = 0; i < routes.length; i++) {
+                totalDistance += routes[i].summary.totalDistance;
+                totalDuration += routes[i].summary.totalTime;
+            }
+
+            setTimeout(() => {
+                control.setWaypoints([]); // Elimina la ruta
+                console.log("Ruta eliminada automáticamente.");
+            }, 0.1);
+
+            resolve({ distance: parseFloat((totalDistance / 1000).toFixed(2)), duration: parseFloat(((totalDuration / 3600) * 1.3).toFixed(2)) });
+        });
+    });
+}
+
+export { agregarParada, lineFormSubmit }
 
 
 

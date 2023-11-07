@@ -115,29 +115,39 @@
 <script type="module">
     import { agregarParada, lineFormSubmit } from '../../../js/linesMap.js';
 
-
-    let paradas = [];
+    var paradas = [];
     window.addEventListener('load', () => {
         document.getElementById("addStop").onkeydown = function (event) {
             if (event.key === "Enter") {
                 event.preventDefault();
-                const stop = agregarParada();
-                if (stop) {
-                    paradas.push(stop);
-                }
-
-
+                stops(paradas);
             }
         };
         document.getElementById("addStopButton").onclick = () => {
-            const stop = agregarParada();
-            if (stop) {
-                paradas.push(stop);
-            }
+            stops(paradas);
         }
 
         lineFormSubmit(paradas);
     });
+
+    function stops(paradas) {
+        const stop = agregarParada(paradas);
+        if (stop) {
+            paradas.push(stop);
+
+            stopSpanOnClick();
+
+            function stopSpanOnClick() {
+                document.querySelectorAll("#stopsList li span").forEach((span, i) => {
+                    span.onclick = () => {
+                        paradas.splice(i, 1);
+                        span.parentElement.parentElement.removeChild(span.parentElement);
+                        stopSpanOnClick();
+                    }
+                });
+            }
+        }
+    }
 </script>
 
 </html>

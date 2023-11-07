@@ -51,4 +51,30 @@ class RecorreLink
 
         return $recorridos;
     }
+
+    public function getAllRecorridosVigentes()
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT R.idInicial_Tramo, R.idFinal_Tramo, R.codigo_Linea, R.orden
+        FROM Recorre AS R
+        INNER JOIN Linea AS L ON R.codigo_Linea = L.codigo
+        WHERE L.vigencia = 1
+        ORDER BY R.codigo_Linea, R.orden;"
+        );
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $recorridos = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $recorridos[] = new Recorre(
+                $row['idInicial_Tramo'],
+                $row['idFinal_Tramo'],
+                $row['codigo_Linea'],
+                $row['orden']
+            );
+        }
+
+        return $recorridos;
+    }
 }

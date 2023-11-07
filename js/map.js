@@ -13,8 +13,8 @@ function newMap(div) {
 
     // Agrega una capa de mosaico de OpenStreetMap al mapa
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxNativeZoom:19,
-        maxZoom:25,
+        maxNativeZoom: 19,
+        maxZoom: 25,
         minZoom: 3,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(map);
@@ -96,6 +96,7 @@ function paradasLoopThrough(map, customIcon, customIconFalse, buttons) {
     if (buttons === "busLookUp") {
         var startDataList = document.getElementById("startStopsList");
         var endDataList = document.getElementById("endStopsList");
+        var stopsArray = [];
     } else if (buttons === "lines") {
         var stopsArray = [];
     }
@@ -133,6 +134,11 @@ function paradasLoopThrough(map, customIcon, customIconFalse, buttons) {
                 const optionEnd = document.createElement("option");
                 optionEnd.value = id;
                 endDataList.appendChild(optionEnd);
+
+                const latLngArray = [];
+                latLngArray["lat"] = latitud;
+                latLngArray["lng"] = longitud;
+                stopsArray[id] = latLngArray;
             } else if (buttons === "lines") {
                 const latLngArray = [];
                 latLngArray["lat"] = latitud;
@@ -149,7 +155,7 @@ function paradasLoopThrough(map, customIcon, customIconFalse, buttons) {
             }
         }
     }
-    if (buttons === "lines") {
+    if (buttons === "lines" || buttons === "busLookUp") {
         return { stopsArray };
     }
 }
@@ -367,6 +373,7 @@ function recorridosLoopThrough(map, stopsArray) {
     var codigoLinea = null;
 
     for (const recorrido of recorridosArray) {
+
         const idInicialTramo = recorrido.idInicialTramo;
         const idFinalTramo = recorrido.idFinalTramo;
         codigoLinea = recorrido.codigoLinea;
@@ -376,23 +383,23 @@ function recorridosLoopThrough(map, stopsArray) {
             waypoints.push(L.latLng(stop.lat, stop.lng));
             fstTime = false;
             lastCodigoLinea = codigoLinea;
-            
+
         }
 
         let stop = stopsArray[idFinalTramo];
-        if(codigoLinea == lastCodigoLinea){
+        if (codigoLinea == lastCodigoLinea) {
             waypoints.push(L.latLng(stop.lat, stop.lng));
         }
-      
+
 
         if (codigoLinea !== lastCodigoLinea) {
-            showLine(map, waypoints, (codigoLinea-1), routeControls, rutasVisibles);
-            waypointsForLines[(codigoLinea-1)] = waypoints;
+            showLine(map, waypoints, lastCodigoLinea, routeControls, rutasVisibles);
+            waypointsForLines[lastCodigoLinea] = waypoints;
             waypoints = [];
             let stop = stopsArray[idInicialTramo];
             waypoints.push(L.latLng(stop.lat, stop.lng));
             lastCodigoLinea = codigoLinea;
-            
+
         }
     }
 
@@ -402,7 +409,7 @@ function recorridosLoopThrough(map, stopsArray) {
         showLine(map, waypoints, codigoLinea, routeControls, rutasVisibles);
     }
 
-    return {rutasVisibles, waypointsForLines, routeControls };
+    return { rutasVisibles, waypointsForLines, routeControls };
 }
 
 function showLine(map, waypoints, codigoLinea, routeControls, rutasVisibles) {
@@ -432,4 +439,4 @@ function removeLine(codigoLinea, routeControls, map, rutasVisibles) {
 }
 
 
-export {showLine, removeLine, recorridosLoopThrough, createBusLookUpButtons, stopsMapOnClick, paradasLoopThrough, paradasCustomIcons, newMap };
+export { showLine, removeLine, recorridosLoopThrough, createBusLookUpButtons, stopsMapOnClick, paradasLoopThrough, paradasCustomIcons, newMap };

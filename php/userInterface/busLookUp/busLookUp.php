@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://unpkg.com/leaflet.awesome-markers@2.0.4/dist/leaflet.awesome-markers.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
     <title>ViaUY - Reservar</title>
 </head>
 
@@ -91,9 +93,13 @@
         include_once("../../dataAccess/paradaLink.php");
         $paradaLink = new ParadaLink($conn);
         $jsonParadas = json_encode($paradaLink->getAllParadas());
+        include_once("../../dataAccess/recorreLink.php");
+        $recorreLink = new RecorreLink($conn);
+        $jsonRecorridos = json_encode($recorreLink->getAllRecorridosVigentes());
         ?>
         <script>
             var paradasArray = <?php echo $jsonParadas; ?>;
+            var recorridosArray = <?php echo $jsonRecorridos; ?>;
         </script>
     </main>
 
