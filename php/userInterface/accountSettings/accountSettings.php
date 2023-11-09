@@ -62,15 +62,15 @@
                         <form id=passwordForm action="./changePassword.php" method="post">
                             <label for="oldPassword" class="editable">
                                 <span> Contraseña </span>
-                                <input type="text" id="oldPassword" name="oldPassword" autocomplete="off" />
+                                <input type="text" id="oldPassword" name="oldPassword" autocomplete="off" required />
                             </label>
                             <label for="newPassword" class="editable">
                                 <span> Nueva contraseña </span>
-                                <input type="text" id="newPassword" name="newPassword" autocomplete="off" />
+                                <input type="text" id="newPassword" name="newPassword" autocomplete="off" required />
                             </label>
                             <label for="confirmPassword" class="editable">
                                 <span> Confirmar contraseña </span>
-                                <input type="text" id="confirmPassword" name="confirmPassword" autocomplete="off" />
+                                <input type="text" id="confirmPassword" name="confirmPassword" autocomplete="off" required />
                             </label>
                             <input type="submit" value="Confirmar" class="button">
                         </form>
@@ -79,7 +79,8 @@
                     <form id=accSettingsForm action="./modifyAccount.php" method="post">
                         <label for="nameAccSettings">
                             <span> Nombre </span>
-                            <input type="text" id="nameAccSettings" name="nameAccSettings" autocomplete="off" value=<?php echo "\"" . ($_SESSION["userData"]->getNombre()) . "\"" ?> readonly />
+                            <input type="text" id="nameAccSettings" name="nameAccSettings" autocomplete="off" required
+                                value=<?php echo "\"" . ($_SESSION["userData"]->getNombre()) . "\"" ?> readonly />
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="feather feather-tool">
@@ -90,7 +91,7 @@
                         </label>
                         <label for="lastnameAccSettings">
                             <span> Apellido </span>
-                            <input type="text" id="lastnameAccSettings" name="lastnameAccSettings" autocomplete="off"
+                            <input type="text" id="lastnameAccSettings" name="lastnameAccSettings" autocomplete="off" required
                                 value=<?php echo "\"" . ($_SESSION["userData"]->getApellido()) . "\"" ?> readonly />
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -102,7 +103,8 @@
                         </label>
                         <label for="emailAccSettings">
                             <span> Correo electrónico </span>
-                            <input type="email" id="emailAccSettings" name="emailAccSettings" autocomplete="off" value=<?php echo "\"" . ($_SESSION["userData"]->getCorreo()) . "\"" ?> readonly />
+                            <input type="email" id="emailAccSettings" name="emailAccSettings" autocomplete="off" required
+                                value=<?php echo "\"" . ($_SESSION["userData"]->getCorreo()) . "\"" ?> readonly />
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="feather feather-tool">
@@ -114,7 +116,7 @@
                         <label for="phoneNumberAccSettings">
                             <span> Teléfono </span>
                             <input type="number" id="phoneNumberAccSettings" name="phoneNumberAccSettings" autocomplete="off"
-                                value=<?php echo "\"" . ($_SESSION["userData"]->getTelefono()) . "\"" ?> readonly />
+                                required value=<?php echo "\"" . ($_SESSION["userData"]->getTelefono()) . "\"" ?> readonly />
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                 class="feather feather-tool">
@@ -125,7 +127,7 @@
                         </label>
                         <label for="birthdateAccSettings">
                             <span> Fecha de nacimiento </span>
-                            <input type="date" id="birthdateAccSettings" name="birthdateAccSettings" autocomplete="off"
+                            <input type="date" id="birthdateAccSettings" name="birthdateAccSettings" autocomplete="off" required
                                 value="<?php echo $_SESSION["userData"]->getFechaNac()->format('Y-m-d'); ?>" readonly />
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

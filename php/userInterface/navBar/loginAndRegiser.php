@@ -9,7 +9,7 @@ if (isset($_SESSION['message'])) { ?>
     unset($_SESSION['message']); // Eliminar el mensaje de confirmación para que no se muestre nuevamente
 }
 ?>
-<div class=pageCover id = loginPageCover>
+<div class=pageCover id=loginPageCover>
 
     <div id=loginPanel>
         <div id=loginToggle></div>
@@ -19,11 +19,11 @@ if (isset($_SESSION['message'])) { ?>
                 <form id=loginForm action="/Proyecto Final/php/userInterface/navBar/auth.php" method="post">
                     <label for="usernameL">
                         <span> Nombre de usuario </span>
-                        <input type="text" id="usernameL" name="usernameL" autocomplete="off" />
+                        <input type="text" id="usernameL" name="usernameL" maxlength="32" required />
                     </label> <br>
                     <label for="passwordL">
                         <span> Contraseña </span>
-                        <input type="password" id="passwordL" name="passwordL" autocomplete="off" />
+                        <input type="password" id="passwordL" name="passwordL" required />
                         <svg class="eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
                             stroke-linejoin="round">
@@ -45,31 +45,32 @@ if (isset($_SESSION['message'])) { ?>
                 <form id=registerForm action="/Proyecto Final/php/userInterface/navBar/register.php" method="post">
                     <label for=usernameR>
                         <span> Nombre de usuario </span>
-                        <input type="text" id="usernameR" name="usernameR" autocomplete="off" />
+                        <input type="text" id="usernameR" name="usernameR" maxlength="32" required />
                     </label>
                     <label for=name>
                         <span> Nombre </span>
-                        <input type="text" id="name" name="name" autocomplete="off" />
+                        <input type="text" id="name" name="name" maxlength="30" required />
                     </label>
                     <label for=lastname>
                         <span> Apellido </span>
-                        <input type="text" id="lastname" name="lastname" autocomplete="off" />
+                        <input type="text" id="lastname" name="lastname" maxlength="30" required />
                     </label>
                     <label for=birthdate>
                         <span> Fecha de nacimiento </span>
-                        <input type="date" id="birthdate" name="birthdate" autocomplete="off" />
+                        <input type="date" id="birthdate" name="birthdate" required />
                     </label>
                     <label for=email>
                         <span> Correo electrónico </span>
-                        <input type="email" id="email" name="email" autocomplete="off" />
+                        <input type="email" id="email" name="email" maxlength="64" required />
                     </label>
                     <label for=phoneNumber>
                         <span> Teléfono </span>
-                        <input type="number" id="phoneNumber" name="phoneNumber" autocomplete="off" />
+                        <input type="tel" id="phoneNumber" name="phoneNumber" minlength="8" maxlength="8"
+                            pattern="[0-9]+" required />
                     </label>
                     <label for=passwordR>
                         <span> Contraseña </span>
-                        <input type="password" id="passwordR" name="passwordR" autocomplete="off" />
+                        <input type="password" id="passwordR" name="passwordR" required />
                         <svg class="eye" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
                             stroke-linejoin="round">
@@ -80,7 +81,7 @@ if (isset($_SESSION['message'])) { ?>
                     </label>
                     <label for=passwordConfirm>
                         <span> Confirmar contraseña </span>
-                        <input type="password" id="passwordConfirm" name="passwordConfirm" autocomplete="off" />
+                        <input type="password" id="passwordConfirm" name="passwordConfirm" required />
                     </label><br>
                     <input type="submit" value="Confirmar" class="button">
                 </form>

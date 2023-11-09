@@ -15,15 +15,14 @@ document.addEventListener("DOMContentLoaded", function () {
     busLookUpForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
-        const startStop = document.getElementById("startStop").value;
-        const endStop = document.getElementById("endStop").value;
+
+        const startStop = document.getElementById("startStop").value.split(' ')[0];
+        const endStop = document.getElementById("endStop").value.split(' ')[0];
         const date = document.getElementById("date").value;
         const time = document.getElementById("time").value;
 
-        const subida = busLookUpForm.firstElementChild.firstElementChild.children[1].value;
-        const bajada = busLookUpForm.firstElementChild.children[1].children[1].value;
         const dia = busLookUpForm.children[1].firstElementChild.children[1].value;
-        params = { "subida": subida, "bajada": bajada, "dia": dia };
+        params = { "subida": startStop, "bajada": endStop, "dia": dia };
 
         // Realiza la validación (puedes agregar tus propias condiciones)
         if (startStop.trim() === "" || endStop.trim() === "" || date.trim() === "" || time.trim() === "") {

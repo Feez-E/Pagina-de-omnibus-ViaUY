@@ -48,14 +48,14 @@
                     <section class="tripleLabel">
                         <label for="startStop" class="top-left">
                             <span> Subida </span>
-                            <input type="number" id="startStop" name="startStop" list="startStopsList"
+                            <input type="text" id="startStop" name="startStop" list="startStopsList"
                                 autocomplete="off" />
                             <datalist id=startStopsList>
                             </datalist>
                         </label>
                         <label for="endStop" class="top-right">
                             <span> Bajada </span>
-                            <input type="number" id="endStop" name="endStop" list="endStopsList" autocomplete="off" />
+                            <input type="text" id="endStop" name="endStop" list="endStopsList" autocomplete="off" />
                             <datalist id=endStopsList>
                             </datalist>
                         </label>
