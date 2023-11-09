@@ -46,7 +46,8 @@ class AsientoLink
                 codigo_L_R_Transita, 
                 orden_R_Transita, 
                 numero_U_Transita,
-                 horaSalida_S_Transita, horaLlegada_L_Transita) 
+                horaSalida_S_Transita, 
+                horaLlegada_L_Transita) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
         );
 
@@ -61,18 +62,21 @@ class AsientoLink
 
         $stmt->bind_param("iiiiiiss", $numero, $idInicial, $idFinal, $codigo, $orden, $numeroU, $horaSalida, $horaLlegada);
 
+
         try {
             if ($stmt->execute()) {
                 return true;
             } else {
                 if ($stmt->errno == 1062) {
-
+                    // Tratar error 1062
                     return true;
                 } else {
-                    return false;
+                    echo $horaLlegada;
+                    throw new Exception("Error en la ejecución de la consulta: " . $stmt->error);
                 }
             }
         } catch (Exception $e) {
+            echo "Excepción capturada: " . $e->getMessage();
             return false;
         }
     }

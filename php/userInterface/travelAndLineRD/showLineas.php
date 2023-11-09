@@ -25,28 +25,27 @@ foreach ($lineasArr as $linea) {
     $codigoLinea = $linea->getCodigo();
 
     if (array_key_exists($indice, $transitasArr)) {
-
-
         $horaSalida = $transitasArr[$indice]->getHoraSalida_Salida();
-        $linea_diasHabilesArr = $linea_diaHabilLink->getLinea_diaHabilByCodigo_Linea($linea->getCodigo());
+    }
+    $linea_diasHabilesArr = $linea_diaHabilLink->getLinea_diaHabilByCodigo_Linea($linea->getCodigo());
 
-        // Generar HTML para las líneas de autobuses
-        echo "<div class='lineAndTravels travelAndLinePage shadow'>
+    // Generar HTML para las líneas de autobuses
+    echo "<div class='lineAndTravels travelAndLinePage shadow'>
             <div class='line'>
                 <div class='lineLeft'>
                     <h3 class='subtitle'>" . $linea->getNombre() . " - " . $linea->getOrigen() . " " . $linea->getDestino() . "</h3>
                     <div class='days'>";
-        $checked = $linea->getVigencia() ? "checked" : "";
-        echo "<label class='switch'>
+    $checked = $linea->getVigencia() ? "checked" : "";
+    echo "<label class='switch'>
                         <input type='checkbox' $checked class='lineValidation'>
                         <span class='slider round'></span>
                     </label>
                     <section class='lineDays'>
                         <p>";
-        foreach ($linea_diasHabilesArr as $linea_diasHabil) {
-            echo "" . $linea_diasHabil->getDia() . " ";
-        }
-        echo "          </p>
+    foreach ($linea_diasHabilesArr as $linea_diasHabil) {
+        echo "" . $linea_diasHabil->getDia() . " ";
+    }
+    echo "          </p>
                         <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'
                             stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'
                             class='feather feather-tool'>
@@ -62,42 +61,43 @@ foreach ($lineasArr as $linea) {
         <div class='travels travelAndLine'>
             <div class='lineData'></div>
             <div class='desplegableSection travelAndLinePage travelSection'>";
-        $fstLine = true;
-        $fstTravel = true;
-        while ($indice < count($transitasArr)) {
-            if ($codigoLinea == $transitasArr[$indice]->getCodigo_L_Recorre()) {
-                if ($horaSalida == $transitasArr[$indice]->getHoraSalida_Salida()) {
-                    if ($fstLine) {
-                        $fstLine = false;
-                        transitasContent($transitasArr, $indice);
-                    }
-                    if ($fstTravel) {
-                        $array[$codigoLinea]["Salidas"][] = $transitasArr[$indice]->getIdInicial_T_Recorre();
-                        $array[$codigoLinea]["Llegadas"][] = $transitasArr[$indice]->getIdFinal_T_Recorre();
-                    }
-                    // Trabajar con cada viaje específicamente aquí
-                } else {
-                    echo "
+    $fstLine = true;
+    //! arreglar para usar recorre y no tranista
+    $fstTravel = true;
+    while ($indice < count($transitasArr)) {
+        if ($codigoLinea == $transitasArr[$indice]->getCodigo_L_Recorre()) {
+            if ($horaSalida == $transitasArr[$indice]->getHoraSalida_Salida()) {
+                if ($fstLine) {
+                    $fstLine = false;
+                    transitasContent($transitasArr, $indice);
+                }
+                if ($fstTravel) {
+                    $array[$codigoLinea]["Salidas"][] = $transitasArr[$indice]->getIdInicial_T_Recorre();
+                    $array[$codigoLinea]["Llegadas"][] = $transitasArr[$indice]->getIdFinal_T_Recorre();
+                }
+                //? Trabajar con cada viaje específicamente aquí
+            } else {
+                echo "
                         </div>
                     </div>
                     <div class='desplegableSection travelAndLinePage travelSection'>";
-                    transitasContent($transitasArr, $indice);
-                    $horaSalida = $transitasArr[$indice]->getHoraSalida_Salida();
-                    $indice -= 1;
-                    $fstTravel = false;
-                }
-            } else {
-                $horaSalida = new DateTime($transitasArr[$indice]->getHoraSalida_Salida());
-                break;
+                transitasContent($transitasArr, $indice);
+                $horaSalida = $transitasArr[$indice]->getHoraSalida_Salida();
+                $indice -= 1;
+                $fstTravel = false;
             }
-            $indice += 1;
+        } else {
+            $horaSalida = new DateTime($transitasArr[$indice]->getHoraSalida_Salida());
+            break;
         }
-        echo "
+        $indice += 1;
+    }
+    echo "
                 </div>
             </div>
         </div>
     </div>";
-    }
+
 }
 
 function transitasContent($transitasArr, $indice)
@@ -127,44 +127,52 @@ function transitasContent($transitasArr, $indice)
 
     let allLineData = document.querySelectorAll('.lineData');
 
+
+    console.log(stopsIds);
     allLineData.forEach((lineData, i) => {
         let formattedData = '';
 
-        for (let j = 0; j < stopsIds[i].Salidas.length; j++) {
-            formattedData += `(${stopsIds[i].Salidas[j]}, ${stopsIds[i].Llegadas[j]})`;
-            if (j < stopsIds[i].Salidas.length - 1) {
-                formattedData += ' ';
+        if (stopsIds[i] && stopsIds[i].Salidas !== undefined) {
+            for (let j = 0; j < stopsIds[i].Salidas.length; j++) {
+                if (stopsIds[i].Salidas[j] && stopsIds[i].Llegadas[j]) {
+                    formattedData += `(${stopsIds[i].Salidas[j]}, ${stopsIds[i].Llegadas[j]})`;
+                    if (j < stopsIds[i].Salidas.length - 1) {
+                        formattedData += ' ';
+                    }
+                }
             }
+        } else {
+            formattedData = "no";
         }
-
         lineData.innerHTML = `<p class ="subtitle">Tramos </p><p> ${formattedData} </p>`;
     });
 
     const travelSection = document.querySelectorAll('.travelSection');
     travelSection.forEach(travel => {
-        const horaSalida = travel.querySelector(".salida span").innerHTML;
-        const nombreLineaOrigenDestino = travel.parentElement.previousElementSibling.firstElementChild.firstElementChild.innerHTML.split(" - ");
-        const nombreLinea = nombreLineaOrigenDestino[0];
-        let unitInfo = travel.querySelector(".unitInfo");
+        if (travel.querySelector(".salida span") !== null) {
+            const horaSalida = travel.querySelector(".salida span").innerHTML;
+            const nombreLineaOrigenDestino = travel.parentElement.previousElementSibling.firstElementChild.firstElementChild.innerHTML.split(" - ");
+            const nombreLinea = nombreLineaOrigenDestino[0];
+            let unitInfo = travel.querySelector(".unitInfo");
 
-        let dataToSend = {
-            nombreLinea: nombreLinea,
-            horaSalida: horaSalida
-        };
+            let dataToSend = {
+                nombreLinea: nombreLinea,
+                horaSalida: horaSalida
+            };
 
-        $.ajax({
-            url: "../busLookUp/getUnit.php",
-            type: "POST",
-            data: dataToSend,
-            success: (response) => {
+            $.ajax({
+                url: "../busLookUp/getUnit.php",
+                type: "POST",
+                data: dataToSend,
+                success: (response) => {
 
-                if (response.status === "success") {
+                    if (response.status === "success") {
 
-                    if (response.unidad) {
-                        unidad = response.unidad;
-                        caracts = response.caracteristicas;
-                        const caractsHTML = caracts.map(time => `<p class = caract><span>${time.propiedad}</span><span> ×${time.multiplicador}</span></p>`).join('');
-                        unitInfo.innerHTML = `
+                        if (response.unidad) {
+                            unidad = response.unidad;
+                            caracts = response.caracteristicas;
+                            const caractsHTML = caracts.map(time => `<p class = caract><span>${time.propiedad}</span><span> ×${time.multiplicador}</span></p>`).join('');
+                            unitInfo.innerHTML = `
                                 <p class = subtitle> Unidad </p>
                                 <p> Número: ${response.unidad.numero} </p>
                                 <p> Matrícula: ${response.unidad.matricula} </p>
@@ -176,22 +184,22 @@ function transitasContent($transitasArr, $indice)
                                     ${caractsHTML}
                                 </div>
                              `;
-                    } else if (response.error) {
-                        showError(response.error);
+                        } else if (response.error) {
+                            showError(response.error);
+                        } else {
+                            showError("Lo sentimos, hubo un error");
+                        }
                     } else {
-                        showError("Lo sentimos, hubo un error");
+                        console.log("Error al procesar la solicitud.");
+                        console.error(response);
                     }
-                } else {
-                    console.log("Error al procesar la solicitud.");
-                    console.error(response);
-                }
-            },
-            error: (_xhr, _status, error) => {
-                console.log("Error en la solicitud AJAX.");
-                console.error(error);
-            },
-        });
-
+                },
+                error: (_xhr, _status, error) => {
+                    console.log("Error en la solicitud AJAX.");
+                    console.error(error);
+                },
+            });
+        }
     });
 
     const lineValidations = document.querySelectorAll(".lineValidation")
@@ -238,7 +246,7 @@ function transitasContent($transitasArr, $indice)
             lineDays.classList.add("active");
 
 
-    
+
             let days = dayMod.previousElementSibling.innerText.split(" ");
             const nombreLineaOrigenDestino = dayMod.parentElement.parentElement.previousElementSibling.innerHTML.split(" - ");
             const nombreLinea = nombreLineaOrigenDestino[0];
