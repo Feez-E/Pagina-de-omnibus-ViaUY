@@ -128,11 +128,11 @@ function paradasLoopThrough(map, customIcon, customIconFalse, buttons) {
                 buttonsDiv = createBusLookUpButtons();
                 popupContent.appendChild(buttonsDiv);
                 const optionStart = document.createElement("option");
-                optionStart.value = id;
+                optionStart.value = `${id}  - ${direccion}`;
                 startDataList.appendChild(optionStart);
 
                 const optionEnd = document.createElement("option");
-                optionEnd.value = id;
+                optionEnd.value = `${id} - ${direccion}`;
                 endDataList.appendChild(optionEnd);
 
                 const latLngArray = [];

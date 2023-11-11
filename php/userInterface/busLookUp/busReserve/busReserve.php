@@ -140,6 +140,7 @@ function oneFloor()
     var unidad = <?php echo $unidadJSON; ?>;
     var caracts = <?php echo $caractsJSON; ?>;
     var params = <?php echo $paramsJSON; ?>;
+
 </script>
 
 <script type="module" src="../../../../js/busReserve.js"></script>

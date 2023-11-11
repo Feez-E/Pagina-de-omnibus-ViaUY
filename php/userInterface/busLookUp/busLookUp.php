@@ -30,7 +30,7 @@
         <div id="errorContainer" class="confirmationMessage container shadow">
             <p></p>
         </div>
-        <!--  <?php
+        <?php
         try {
             if (!isset($_SESSION["userData"])) {
                 echo "<p>Inicie sesión para continuar</p>";
@@ -40,7 +40,7 @@
             echo "<p>Usuario incorrecto</p>";
             exit;
         }
-        ?> -->
+        ?>
         <div id="reservationSpecification">
             <h2 class="title">Reservar</h2>
             <div class="container shadow" id="form">
@@ -48,14 +48,14 @@
                     <section class="tripleLabel">
                         <label for="startStop" class="top-left">
                             <span> Subida </span>
-                            <input type="number" id="startStop" name="startStop" list="startStopsList"
+                            <input type="text" id="startStop" name="startStop" list="startStopsList"
                                 autocomplete="off" />
                             <datalist id=startStopsList>
                             </datalist>
                         </label>
                         <label for="endStop" class="top-right">
                             <span> Bajada </span>
-                            <input type="number" id="endStop" name="endStop" list="endStopsList" autocomplete="off" />
+                            <input type="text" id="endStop" name="endStop" list="endStopsList" autocomplete="off" />
                             <datalist id=endStopsList>
                             </datalist>
                         </label>

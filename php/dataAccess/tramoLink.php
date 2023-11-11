@@ -56,14 +56,14 @@ class TramoLink
 
     public function calcularPrecioTramo($idInicial, $idFinal, $numeroUnidad)
     {
-        $stmt = $this->conn->prepare("
-            SELECT ROUND(
+        $stmt = $this->conn->prepare(
+            "SELECT ROUND(
                 (SELECT distancia FROM Tramo WHERE idInicial = ? AND idFinal = ?) *
                 (SELECT multiplicador FROM Tramo INNER JOIN Estado ON Tramo.estado_Estado = Estado.estado WHERE idInicial = ? AND idFinal = ?) *
                 (SELECT valorDouble FROM ParametroDouble WHERE nombre_Parametro = 'precioKm') *
                 (SELECT ROUND(SUM(multiplicador) - (COUNT(*) - 1), 2) FROM Caracteristica WHERE numero_Unidad = ?), 2
-            ) AS precio;
-        ");
+            ) AS precio;"
+        );
 
         $stmt->bind_param("iiiii", $idInicial, $idFinal, $idInicial, $idFinal, $numeroUnidad);
         $stmt->execute();
@@ -74,6 +74,27 @@ class TramoLink
         }
 
         return null; // Return null if no result is found
+    }
+
+
+    public function getIfTramoExistsByCoords($coordInicial, $coordFinal)
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT COUNT(*) FROM Tramo AS T
+        INNER JOIN Parada AS P1 ON T.idInicial = P1.id
+        INNER JOIN Parada AS P2 ON T.idFinal = P2.id
+        WHERE P1.coordenadas = ? AND P2.coordenadas = ?;"
+        );
+
+        $stmt->bind_param("ss", $coordInicial, $coordFinal);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->fetch_assoc()['COUNT(*)'] > 0) {
+            return true;
+        }
+
+        return false;
     }
 }
 

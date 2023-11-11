@@ -10,7 +10,6 @@ var { stopsArray } = paradasLoopThrough(map, customIcon, customIconFalse, "lines
 
 var { rutasVisibles, waypointsForLines, routeControls } = recorridosLoopThrough(map, stopsArray);
 
-console.log(stopsArray)
 
 let control = document.querySelector("#stopsMap .leaflet-control-container .leaflet-bottom.leaflet-left")
 control.innerHTML = "<div class = 'control-content show'><div class =control-container></div></div>";
@@ -22,7 +21,6 @@ rutasVisibles.forEach((ruta, i) => {
     buttonsDiv.className = "leaflet-control";
 
     ajaxForName(i, (name) => {
-        console.log(name);
 
         const buttonsDivContent = `
             <a class="showButton">${name}</a>
@@ -130,28 +128,65 @@ function lineFormSubmit(paradas) {
     const busLookUpForm = document.getElementById("lineForm");
     busLookUpForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+        let lineForm = document.getElementById("addLineForm")
 
-        console.log(paradas);
-        let tiempoFinal = 0;
+        let loadingPanel = document.createElement("div");
+        loadingPanel.classList = "pageCover active";
+        loadingPanel.style.borderRadius = "15px"
+        loadingPanel.style.flexDirection = "column"
+        loadingPanel.innerHTML = "<div class = loadingDiv></div><p style = 'margin-top: 10px; color: var(--button-text-color )'>Cargando tramos...</p>"
+
+        lineForm.appendChild(loadingPanel);
+
+        let tramos = [];
 
         for (let i = 0; i < paradas.length - 1; i++) {
             try {
 
-                const { distance, duration } = await routeCalc(
-                    paradas[i]["latLng"]["lat"],
-                    paradas[i]["latLng"]["lng"],
-                    paradas[i + 1]["latLng"]["lat"],
-                    paradas[i + 1]["latLng"]["lng"]
-                );
-                tiempoFinal += duration;
-                console.log(`Inicio ${paradas[i]["id"]} \n Fin ${paradas[i + 1]["id"]} \n Distancia total: ${distance} \n Tiempo: ${duration}`);
-                console.log("tiempoFinal : ", tiempoFinal);
+                const dataToSend = {
+                    coordsInicio: `${paradas[i]["latLng"]["lat"]}, ${paradas[i]["latLng"]["lng"]}`,
+                    coordsFinal: `${paradas[i + 1]["latLng"]["lat"]}, ${paradas[i + 1]["latLng"]["lng"]}`
+                }
+
+                try {
+                    const tramo = await getTramoAJAX(dataToSend);
+
+
+                    if (!tramo) {
+
+                        const { distance, duration } = await routeCalc(
+                            paradas[i]["latLng"]["lat"],
+                            paradas[i]["latLng"]["lng"],
+                            paradas[i + 1]["latLng"]["lat"],
+                            paradas[i + 1]["latLng"]["lng"]
+                        );
+                        tramos.push({
+                            idInicial: paradas[i]["id"],
+                            idFinal: paradas[i + 1]["id"],
+                            distancia: distance,
+                            tiempo: duration,
+                        });
+                    } else {
+                        tramos.push({
+                            idInicial: paradas[i]["id"],
+                            idFinal: paradas[i + 1]["id"],
+                        });
+                    }
+
+                } catch (error) {
+                    console.log("Error: ", error);
+
+                }
 
             } catch (error) {
 
                 console.error("Error:", error);
             }
         }
+
+        lineForm.removeChild(loadingPanel);
+
+        console.log("tramos:", tramos);
     });
 }
 
@@ -183,13 +218,52 @@ async function routeCalc(latStart, lngStart, latEnd, lngEnd) {
 
             setTimeout(() => {
                 control.setWaypoints([]); // Elimina la ruta
-                console.log("Ruta eliminada automáticamente.");
             }, 0.1);
 
-            resolve({ distance: parseFloat((totalDistance / 1000).toFixed(2)), duration: parseFloat(((totalDuration / 3600) * 1.3).toFixed(2)) });
+            resolve({ distance: parseFloat((totalDistance / 1000).toFixed(2)), duration: formatDuration(totalDuration / 3600) });
+        });
+    });
+
+    function formatDuration(duration) {
+        const hours = Math.floor(duration);
+        const minutes = Math.floor((duration - hours) * 60);
+        const seconds = Math.round(((duration - hours) * 60 - minutes) * 60);
+
+        const formattedHours = hours < 10 ? `0${hours}` : hours.toString();
+        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
+        const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
+
+        return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    }
+
+}
+
+
+function getTramoAJAX(dataToSend) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: "getIfTramoExists.php",
+            type: "POST",
+            data: dataToSend,
+            success: (response) => {
+                if (response.status === "success") {
+                    resolve(response.tramo || false);
+                } else {
+                    console.log("Error al procesar la solicitud.");
+                    console.error(response);
+                    reject(response);
+                }
+            },
+            error: (xhr, _status, error) => {
+                console.log("Error en la solicitud AJAX.");
+                console.error(error);
+                console.error(xhr);
+                reject(error);
+            },
         });
     });
 }
+
 
 export { agregarParada, lineFormSubmit }
 

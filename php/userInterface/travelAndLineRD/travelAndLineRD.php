@@ -56,7 +56,7 @@
             <h3>Líneas</h3>
             <a class=button>Ver unidades</a>
         </div>
-        <div class="desplegableSection shadow">
+        <div class="desplegableSection shadow" id="addLineForm">
             <div class=desplegableTitle>
                 <div class=lineLeft>
                     <h3 class=subtitle> Agregar linea</h3>
