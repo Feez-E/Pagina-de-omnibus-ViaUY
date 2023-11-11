@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8,7 +8,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../../../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
     <link rel="icon" href="../../../ico/icon.ico">
     <title>ViaUY - Mis reservas</title>
 </head>
@@ -19,12 +18,26 @@
     ?>
     <main class="container">
         <h2 class="title">Mis reservas</h2>
+        <?php
+        try {
+            if (!isset($_SESSION["userData"])) {
+                echo "<p>Inicie sesión para continuar</p>";
+                exit;
+            }
+        } catch (Exception) {
+            echo "<p>Usuario incorrecto</p>";
+            exit;
+        }
+        ?> 
+        <?php
+        include 'showReservas.php';
+        ?>
     </main>
 
     <?php
     include '../footer.php';
     ?>
 </body>
-<script src="../../../js/lineToggleSelector.js"></script>
+<script src="../../../js/toggleSelector.js"></script>
 
 </html>

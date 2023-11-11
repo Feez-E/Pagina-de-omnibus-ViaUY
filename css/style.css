@@ -45,6 +45,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     /* Dark mode */
+    color: white;
     --primary-color: rgb(185, 185, 185);
     --secondary-color: rgb(15, 73, 112);
     --tertiary-color: rgb(185, 185, 185);
