@@ -338,7 +338,7 @@
                         M 727.81 1072.14
                         L 760.95 1088.07" />
                 </g>
-                <path class="mountain rightTop" fill="#7cb0d9" d="
+                <path class="mountain rightTop" fill="currentColor" d="
                     M 1473.68 14.97
                     C 1485.67 25.79 1481.35 43.42 1472.05 54.01
                     Q 1464.42 62.69 1452.99 78.19
@@ -388,7 +388,7 @@
                     C 1452.44 15.15 1456.58 13.79 1459.33 13.45
                     Q 1466.90 12.52 1473.68 14.97
                     Z" />
-                <path class="mountainShadow right" fill="#68a0cd" d="
+                <path class="mountainShadow right" fill="currentColor" d="
                     M 1473.68 14.97
                     C 1491.15 20.46 1505.87 34.99 1515.11 50.38
                     C 1520.35 59.11 1523.53 67.78 1532.00 74.79
@@ -434,7 +434,7 @@
                     Q 1464.42 62.69 1472.05 54.01
                     C 1481.35 43.42 1485.67 25.79 1473.68 14.97
                     Z" />
-                <path class="mountain leftTop" fill="#7cb0d9" d="
+                <path class="mountain leftTop" fill="currentColor" d="
                     M 156.84 329.44
                     Q 156.55 330.38 156.15 330.66
                     C 129.43 349.50 101.48 366.74 73.99 384.44
@@ -457,7 +457,7 @@
                     Q 93.45 228.35 93.47 228.37
                     C 118.01 260.34 136.33 292.62 156.84 329.44
                     Z" />
-                <path class="mountainShadow left" fill="#68a0cd" d="
+                <path class="mountainShadow left" fill="currentColor" d="
                     M 235.54 221.38
                     Q 228.00 227.27 224.30 235.65
                     C 215.61 255.36 212.64 278.64 213.96 299.98
@@ -496,7 +496,7 @@
                     C 193.36 263.67 201.03 248.27 212.65 234.42
                     Q 222.14 223.13 235.54 221.38
                     Z" />
-                <path class="mountain leftBottom" fill="#7cb0d9" d="
+                <path class="mountain leftBottom" fill="currentColor" d="
                     M 235.54 221.38
                     C 247.21 221.72 252.37 228.16 260.97 234.46
                     C 273.72 243.79 287.22 252.17 300.45 260.81
@@ -531,7 +531,8 @@
                     C 212.64 278.64 215.61 255.36 224.30 235.65
                     Q 228.00 227.27 235.54 221.38
                     Z" />
-                <path id="eagle" fill="#dde6f1" d="
+                <a href="https://www.avesdeuruguay.com" target="_blank">
+                    <path id="eagle" fill="currentColor" d="
                     M 1176.84 453.17
                     L 1176.92 453.85
                     Q 1176.97 454.25 1176.90 454.65
@@ -553,7 +554,8 @@
                     C 1155.72 435.53 1160.09 436.95 1164.21 440.99
                     Q 1170.50 447.15 1176.84 453.17
                     Z" />
-                <path class="mountain rightBottom" fill="#7cb0d9" d="
+                </a>
+                <path class="mountain rightBottom" fill="currentColor" d="
                     M 1102.76 490.45
                     Q 1112.01 499.98 1118.35 508.92
                     Q 1124.03 516.93 1129.54 527.16
@@ -576,7 +578,7 @@
                     C 1087.30 492.43 1090.12 484.97 1096.75 487.03
                     Q 1100.38 488.16 1102.76 490.45
                     Z" />
-                <path class="plains right" fill="#3e8bc8" d="
+                <path class="plains right" fill="currentColor" d="
                     M 1532.00 813.56
                     L 1532.00 1004.63
                     L 1508.25 1012.86
@@ -739,7 +741,7 @@
                     Q 29.69 825.82 59.99 822.61
                     C 157.99 812.24 256.28 814.95 353.91 828.11
                     Z" />
-                <path id="road" fill="#68a0cd" d="
+                <path id="road" fill="currentColor" d="
                     M 712.03 886.07
                     L 769.84 888.75
                     Q 799.23 896.47 826.99 905.98
@@ -810,7 +812,7 @@
                     L 804.50 920.29
                     Q 803.61 920.33 804.09 921.08
                     Z" />
-                <path class="roadLine" fill="#3e8bc8" d="
+                <path class="roadLine" fill="currentColor" d="
                     M 779.32 902.38
                     C 768.75 897.80 760.88 895.35 748.90 892.17
                     Q 748.10 891.95 748.90 891.72
@@ -819,7 +821,7 @@
                     Q 789.00 903.31 787.55 903.37
                     C 784.71 903.49 782.09 903.59 779.32 902.38
                     Z" />
-                <path class="roadLine" fill="#3e8bc8" d="
+                <path class="roadLine" fill="currentColor" d="
                     M 800.47 950.21
                     C 806.26 941.80 810.27 930.80 804.09 921.08
                     Q 803.61 920.33 804.50 920.29
@@ -996,7 +998,7 @@
                     A 0.52 0.52 0.0 0 0 1508.25 1012.86
                     L 1532.00 1004.63
                     Z" />
-                <path class="roadLine" fill="#3e8bc8" d="
+                <path class="roadLine" fill="currentColor" d="
                     M 760.95 1088.07
                     L 727.81 1072.14
                     Q 743.58 1031.87 768.85 996.83
@@ -1005,7 +1007,7 @@
                     A 0.38 0.37 -77.4 0 1 792.79 996.10
                     Q 769.88 1039.57 760.95 1088.07
                     Z" />
-                <path class="roadLine" fill="#3e8bc8" d="
+                <path class="roadLine" fill="currentColor" d="
                     M 724.22 1081.11
                     L 730.28 1098.23
                     Q 730.43 1098.63 730.00 1098.65
@@ -1026,10 +1028,69 @@
             </div>
 
         </div>
-        <div class="aboutUs">
-            <div class="mission"></div>
-            <div class="vission"></div>
-            <div class="values"></div>
+        <div id="aboutUs">
+            <h2 class="title">Sobre nosotros</h2>
+            <div class="mission container">
+                <h3 class=subtitle>MISIÓN</h3>
+                <p class="aboutUsText">
+
+                    Revolucionar la movilidad urbana a través de soluciones de
+                    transporte de autobuses eléctricos de primera que priorizan
+                    la sostenibilidad, la comodidad y la innovación, a la par que
+                    fomentan un futuro más limpio y ecológico para todos.
+
+                </p>
+            </div>
+            <div class="vission container">
+                <h3 class="subtitle">VISIÓN</h3>
+                <p class="aboutUsText">
+
+                    Para liderar la carga en el transporte de autobuses eléctricos,
+                    establecer el estándar de la industria para viajes urbanos sin
+                    emisiones, experiencias excepcionales de pasajeros y
+                    avances tecnológicos.
+
+                </p>
+            </div>
+            <div class="values container">
+                <h3 class="subtitle">VALORES</h3>
+                <section class="aboutUsText">
+                    <p>
+                        Nuestra máxima prioridad es la seguridad y el bienestar de
+                        todos a quienes servimos. Queremos construir una reputación
+                        de confianza, asegurando que nuestros pasajeros siempre
+                        puedan contar con nosotros para un transporte ameno y
+                        seguro.
+
+                    </p>
+                    <p>
+                        Centrar la atención en el cliente es nuestra filosofía principal,
+                        ya que nos esforzamos por satisfacer y superar las
+                        necesidades de nuestros valiosos pasajeros.
+                    </p>
+                    <p>
+                        La sustentabilidad está profundamente arraigada en nuestras
+                        operaciones, ya que trabajamos incansablemente para
+                        reducir nuestro impacto ambiental y promover prácticas
+                        sostenibles.
+                    </p>
+                    <p>
+                        Buscamos ceñirnos a la innovación, continuamente
+                        aprovecharemos el poder de la tecnología para mejorar
+                        nuestros servicios y operaciones. Nuestro compromiso con la
+                        integridad garantiza que operamos de manera transparente
+                        y ética, construyendo confianza con todos nuestros
+                        interesados.
+                    </p>
+                    <p>
+                        Más allá del transporte, siempre apreciaremos a las
+                        comunidades y buscaremos integrarnos con ellas,
+                        conectando a las personas y contribuyendo al desarrollo de
+                        empleos de manera positiva, favoreciendo la salud física y
+                        mental de las personas.
+                    </p>
+                </section>
+            </div>
         </div>
 
 

@@ -6,10 +6,6 @@ window.addEventListener("scroll", () => {
     sun.style.marginTop = value + "px";
     buttons.style.marginTop = value + "px";
 
-
-    console.log("buttonTop: ", value);
-    console.log("window.innerHeight: ", window.innerHeight);
-
     if (value > 300) {
 
 

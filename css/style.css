@@ -12,6 +12,10 @@
   --notValid-color: rgb(227, 129, 129);
   --seat-text-color: whitesmoke;
   --grass-color: #0071bc;
+  --mountain-color: #7cb0d9;
+  --mountainShadow-color: #68a0cd;
+  --plains-color: #3e8bc8;
+  --eagle-color: #dde6f1;
   --footer-gradient-up: linear-gradient(
     180deg,
     rgb(40, 80, 134) 0%,
@@ -63,6 +67,11 @@
     --valid-color: rgb(92, 143, 92);
     --semiValid-color: rgb(146, 140, 74);
     --notValid-color: rgb(143, 76, 76);
+    --grass-color: #0d3956;
+    --mountain-color: #2c4e68;
+    --mountainShadow-color: #28465e;
+    --plains-color: #1f4563;
+    --eagle-color: #212425;
     --footer-gradient-up: linear-gradient(
       180deg,
       rgb(31, 58, 93) 0%,
@@ -689,13 +698,15 @@ footer {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: last baseline;
   overflow: hidden;
+  min-height: calc(100vh - 30px);
 }
 
 .indexContent .top > svg {
   min-width: 700px;
   width: 100%;
-  padding-top: 100px;
+  padding-top: 50px;
   pointer-events: none;
   z-index: 2;
   transition: 0.25s;
@@ -721,7 +732,7 @@ footer {
 
 .indexButtons {
   position: absolute;
-  top: 470px;
+  top: max(450px, 60vh);
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -759,12 +770,81 @@ footer {
   fill: var(--grass-color);
 }
 
-.aboutUs {
+.mountain,
+#road {
+  fill: var(--mountain-color);
+}
+
+.plains,
+.roadLine {
+  fill: var(--plains-color);
+}
+
+#eagle {
+  fill: var(--eagle-color);
+  pointer-events: all;
+  cursor: default;
+}
+
+.mountainShadow {
+  fill: var(--mountainShadow-color);
+}
+
+#aboutUs {
   background-color: var(--grass-color);
-  margin-top: -1px;
+  margin-top: -10px;
+  padding-top: 10px;
   width: 100%;
-  height: 100px;
+  height: fit-content;
+  padding: 50px 10px 50px 10px;
   z-index: 2;
+  cursor: default;
+  gap: 50px;
+  text-wrap: balance;
+  color: var(--tertiary-color);
+  filter: drop-shadow(0px 0px 20px var(--grass-color));
+  border-radius: 15px;
+  margin-bottom: 50px;
+}
+
+#aboutUs,
+.values .aboutUsText {
+  display: flex;
+  flex-direction: column;
+}
+
+#aboutUs > div {
+  background-color: var(--mountain-color);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 15px;
+  box-shadow: inset 0px 0px 10px var(--grass-color);
+}
+
+#aboutUs h2.title {
+  color: var(--button-text-color);
+  align-self: center;
+  font-weight: 100;
+}
+
+#aboutUs h3.subtitle {
+  letter-spacing: 5px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border-bottom: 3px solid var(--secondary-color);
+}
+
+.aboutUsText {
+  gap: 10px;
+  border-left: 3px solid var(--mountainShadow-color);
+  padding-left: 30px;
+}
+
+.values .aboutUsText {
+  gap: 10px;
 }
 
 /*----*/
@@ -2356,8 +2436,12 @@ select:focus-visible {
 
   /* -- index -- */
 
-  .indexButtons {
-    top: 500px;
+  #aboutUs > div {
+    flex-direction: row;
+  }
+
+  #aboutUs h3.subtitle {
+    margin-right: 30px;
   }
   /*---*/
 
@@ -2405,10 +2489,6 @@ select:focus-visible {
   /*----*/
 
   /* -- index -- */
-
-  .indexButtons {
-    top: 600px;
-  }
 
   @media (prefers-color-scheme: dark) {
     :root {
