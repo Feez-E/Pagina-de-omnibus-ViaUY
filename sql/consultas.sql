@@ -40,7 +40,7 @@ INNER JOIN Asiento ON Reserva.numero_Asiento = Asiento.numero AND Reserva.numero
 	AND Reserva.idInicial_T_R_T_Asiento = Asiento.idInicial_T_R_Transita AND Reserva.idFinal_T_R_T_Asiento = Asiento.idFinal_T_R_Transita
     AND Reserva.codigo_L_R_T_Asiento = Asiento.codigo_L_R_Transita AND Reserva.horaSalida_S_T_Asiento = Asiento.horaSalida_S_Transita 
 	AND Reserva.horaLlegada_L_T_Asiento = Asiento.horaLlegada_L_Transita
-WHERE id_Usuario = 1
+WHERE id_Usuario = 2
 GROUP BY id_Usuario, codigo_Tiquet, numero_Asiento, codigo_L_R_T_Asiento, horaSalida_S_T_Asiento, horaLlegada_L_T_Asiento,
 	numero_U_T_Asiento, estado, precio, metodo_MetodoPago, fecha, fechaLimite; -- Muestra las reservas de forma estilizadas segun el id del usuario, junto con el precio total.
 
