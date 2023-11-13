@@ -96,6 +96,22 @@ class TramoLink
 
         return false;
     }
+
+    public function insertTramo($idInicial, $idFinal, $distancia, $tiempo)
+    {
+        $stmt = $this->conn->prepare(
+            "INSERT INTO Tramo (idInicial, idFinal, tiempo, distancia, estado_Estado) VALUES 
+            (?, ?, ?, ?, 'N');"
+        );
+
+        $stmt->bind_param("iisd", $idInicial, $idFinal, $tiempo, $distancia);
+
+        if ($stmt->execute() || $stmt->errno == 1062) {
+            return true;
+        }
+
+        throw new Exception("Error executing the query: " . $stmt->error);
+    }
 }
 
 ?>

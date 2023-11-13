@@ -829,6 +829,12 @@ footer {
   color: var(--button-text-color);
   align-self: center;
   font-weight: 100;
+  font-size: var(--font-double);
+  letter-spacing: 5px;
+  padding: 0 10px 5px 10px;
+  border: solid 4px var(--mountain-color);
+  border-width: 4px 0 4px 0;
+  text-align: center;
 }
 
 #aboutUs h3.subtitle {
@@ -1969,6 +1975,11 @@ fieldset {
   background: var(--white-color);
 }
 
+.lineWOTravels {
+  width: fit-content;
+  color: var(--tertiary-color);
+}
+
 /*----*/
 
 /*!-- busReserve --*/
@@ -2629,7 +2640,7 @@ select:focus-visible {
 }
 /*----*/
 
-@media (min-height: 745px) {
+@media (min-height: 745px) and (min-width: 640px) {
   #loginContent {
     align-items: center;
   }

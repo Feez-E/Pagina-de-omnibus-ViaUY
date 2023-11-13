@@ -86,7 +86,7 @@ class ParadaLink
     public function validationToggleParada(int $id)
     {
         // Obtener el valor actual de "vigencia"
-        $stmt = $this->conn->prepare("SELECT vigencia FROM parada WHERE id = ?");
+        $stmt = $this->conn->prepare("SELECT vigencia FROM Parada WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -99,7 +99,7 @@ class ParadaLink
             $nuevaVigencia = !$vigenciaActual;
 
             // Actualizar "vigencia" en la base de datos
-            $stmt = $this->conn->prepare("UPDATE parada SET vigencia=? WHERE id=?");
+            $stmt = $this->conn->prepare("UPDATE Parada SET vigencia=? WHERE id=?");
             $stmt->bind_param("ii", $nuevaVigencia, $id);
 
             if ($stmt->execute()) {
@@ -111,7 +111,7 @@ class ParadaLink
     }
     public function getParadaIdByLatest()
     {
-        $stmt = $this->conn->prepare("SELECT MAX(id) AS max_id FROM parada");
+        $stmt = $this->conn->prepare("SELECT MAX(id) AS max_id FROM Parada");
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -119,6 +119,21 @@ class ParadaLink
             $row = $result->fetch_assoc();
             $maxId = $row['max_id'];
             return $maxId;
+        }
+        return null;
+    }
+
+    public function getParadaDirectionById($id)
+    {
+        $stmt = $this->conn->prepare("SELECT direccion FROM Parada WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            $direccion = $row['direccion'];
+            return $direccion;
         }
         return null;
     }

@@ -12,7 +12,7 @@ $lineaLink = new LineaLink($conn);
 $lineasArr = $lineaLink->getLineas();
 
 $transitaLink = new TransitaLink($conn);
-$transitasArr = $transitaLink->getTransitas();
+$transitasArr = $transitaLink->getTransitasAndRecorre();
 $indice = 0;
 
 $paradaLink = new ParadaLink($conn);
@@ -62,14 +62,17 @@ foreach ($lineasArr as $linea) {
             <div class='lineData'></div>
             <div class='desplegableSection travelAndLinePage travelSection'>";
     $fstLine = true;
-    //! arreglar para usar recorre y no tranista
     $fstTravel = true;
     while ($indice < count($transitasArr)) {
         if ($codigoLinea == $transitasArr[$indice]->getCodigo_L_Recorre()) {
             if ($horaSalida == $transitasArr[$indice]->getHoraSalida_Salida()) {
                 if ($fstLine) {
                     $fstLine = false;
-                    transitasContent($transitasArr, $indice);
+                    if ($transitasArr[$indice]->getHoraSalida_Salida()) {
+                        transitasContent($transitasArr, $indice);
+                    } else {
+                        echo "<p class='lineWOTravels'> Esta linea no tiene horarios</p>";
+                    }
                 }
                 if ($fstTravel) {
                     $array[$codigoLinea]["Salidas"][] = $transitasArr[$indice]->getIdInicial_T_Recorre();
@@ -81,7 +84,9 @@ foreach ($lineasArr as $linea) {
                         </div>
                     </div>
                     <div class='desplegableSection travelAndLinePage travelSection'>";
-                transitasContent($transitasArr, $indice);
+                if ($transitasArr[$indice]->getHoraSalida_Salida()) {
+                    transitasContent($transitasArr, $indice);
+                }
                 $horaSalida = $transitasArr[$indice]->getHoraSalida_Salida();
                 $indice -= 1;
                 $fstTravel = false;
