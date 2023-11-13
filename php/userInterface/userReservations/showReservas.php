@@ -16,11 +16,23 @@ $reservasArr = $reservaLink->getReservasByUserId($_SESSION['userData']->getId())
 $previousTiquetFlag = 0;
 $previousReserva;
 $firstTime = true;
+$seatsArray = [];
 
 $lineaLink = new LineaLink($conn);
+$paradaLink = new ParadaLink($conn);
+
 /* echo "<pre>";
 print_r($reservasArr);
 echo "</pre>"; */
+
+?>
+<script>
+    let codigoTiquet;
+    let seatsArray = [];
+    let ciudadInicial;
+    let ciudadFinal;
+</script>
+<?php
 
 foreach ($reservasArr as $key => $reserva) {
 
@@ -30,40 +42,103 @@ foreach ($reservasArr as $key => $reserva) {
 
         if (!$firstTime) {
 
-            echo " 
+            $paradaFinal = $paradaLink->getParadaDirectionById($previousReserva->getAsiento()->getIdFinal_T_R_Transita());
+            $direccionFinalSeparada = explode(",", $paradaFinal);
+            $ciudadFinal = trim($direccionFinalSeparada[1]);
+            citiesScript($reserva->getCodigo_Tiquet(), $ciudadInicial, $ciudadFinal);
+            seatsScript($seatsArray, $reserva->getCodigo_Tiquet());
+            $seatsArray = [];
 
+            echo " 
+                        <p>
+                            <b>⇩</b>" . $previousReserva->getAsiento()->getIdFinal_T_R_Transita() . "<span>" . $paradaFinal . "
+                            </span>
+                        </p>
+                    </div>
                 </div>
             </div>";
         } else {
             $firstTime = false;
         }
 
+        $paradaInicial = $paradaLink->getParadaDirectionById($reserva->getAsiento()->getIdInicial_T_R_Transita());
+
         echo "
             <div class = 'desplegableSection shadow' id = 'id_" . $reserva->getCodigo_Tiquet() . "'>
                 <div class= 'desplegableTitle'>
                     <div>
-                        <h3>" . $reserva->getCodigo_Tiquet() . "</h3>
+                        <h3></h3>
                         <p>" . $reserva->getCodigo_Tiquet() . "</p>
                     </div>
                     <div id = toggleArrow></div>
                 </div>
                 <div class = 'desplegableContent ticketContent'>
                     <p class='subtitle'>Información</p>
-                    <p>Línea: " . $lineaLink->getNombreLineaByCodigo($reserva->getAsiento()->getCodigo_L_R_Transita()) . "</p>
-                    <p>Unidad: " . $reserva->getAsiento()->getNumero_U_Transita() . "</p>
-                    <p>Fecha: " . $reserva->getFecha() . "</p>
-                    <p class = 'seatNumber'>Asientos: </p>
-                    <p class='subtitle'>Viaje</p>
-                    <p>↑ " . $reserva->getAsiento()->getIdInicial_T_R_Transita() . "</p>";
+                    <section>
+                        <p>Línea: " . $lineaLink->getNombreLineaByCodigo($reserva->getAsiento()->getCodigo_L_R_Transita()) . "</p>
+                        <p>Unidad: " . $reserva->getAsiento()->getNumero_U_Transita() . "</p>
+                        <p>" . $reserva->getFecha()->format("d-m-Y") . "</p>
+                        <p>" . $reserva->getHora()->format("H:i") . "</p>
+                    </section>
+                    <p class = 'seatNumber'></p>
+                    <div class= 'travelReservationSection'>
+                        <p class='subtitle'>Viaje</p>
+                        <p>
+                            <b>⇧</b>" . $reserva->getAsiento()->getIdInicial_T_R_Transita() . "<span>" . $paradaInicial . "
+                            </span>
+                        </p>";
 
         $previousTiquetFlag = $tiquetFlagReserva;
+
+        $direccionInicialSeparada = explode(",", $paradaInicial);
+        $ciudadInicial = trim($direccionInicialSeparada[1]);
 
     }
 
     $previousReserva = $reserva;
 
-    echo '/';
+    if (!in_array($reserva->getAsiento()->getNumero(), $seatsArray)) {
+        $seatsArray[] = $reserva->getAsiento()->getNumero();
+    }
 
+}
+$paradaFinal = $paradaLink->getParadaDirectionById($previousReserva->getAsiento()->getIdFinal_T_R_Transita());
+echo " 
+                        <p>
+                            <b>⇩</b>" . $previousReserva->getAsiento()->getIdFinal_T_R_Transita() . "<span>" . $paradaFinal . "
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>";
 
+$direccionFinalSeparada = explode(",", $paradaFinal);
+$ciudadFinal = trim($direccionFinalSeparada[1]);
+citiesScript($reserva->getCodigo_Tiquet(), $ciudadInicial, $ciudadFinal);
+seatsScript($seatsArray, $reserva->getCodigo_Tiquet());
+
+function seatsScript($seatsArray, $codigoTiquet)
+{
+    ?>
+    <script>
+        codigoTiquet = <?php echo $codigoTiquet; ?>;
+        seatsArray = <?php echo json_encode($seatsArray); ?>;
+
+        document.querySelector(`#id_${codigoTiquet} .seatNumber`).innerHTML = `Asientos: ${seatsArray.map(time => time).join(' ')}`;
+    </script>
+    <?php
+}
+
+function citiesScript($codigoTiquet, $ciudadInicial, $ciudadFinal)
+{
+    ?>
+    <script>
+        codigoTiquet = <?php echo $codigoTiquet; ?>;
+        ciudadInicial = '<?php echo $ciudadInicial; ?>';
+        ciudadFinal = '<?php echo $ciudadFinal; ?>';
+
+        document.querySelector(`#id_${codigoTiquet} h3`).innerHTML = `${ciudadInicial} - ${ciudadFinal}`;
+    </script>
+    <?php
 }
 ?>
