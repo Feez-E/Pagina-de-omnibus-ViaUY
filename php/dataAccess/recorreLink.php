@@ -77,4 +77,22 @@ class RecorreLink
 
         return $recorridos;
     }
+
+
+    public function insertRecorre($codigo_Linea, $idInicial_Tramo, $idFinal_Tramo, $orden)
+    {
+        $vigencia = 1;
+
+        $stmt = $this->conn->prepare(
+            "INSERT INTO Recorre (codigo_Linea, idInicial_Tramo, idFinal_Tramo, orden) VALUES 
+            (?, ?, ?, ?)"
+        );
+
+        $stmt->bind_param("iiii", $codigo_Linea, $idInicial_Tramo, $idFinal_Tramo, $orden);
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+
+    }
 }
