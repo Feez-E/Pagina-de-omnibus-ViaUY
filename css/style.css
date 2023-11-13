@@ -1563,6 +1563,7 @@ legend {
   text-align: center;
   font-weight: 600;
   margin-bottom: 5px;
+  width: 100%;
 }
 /*--  --*/
 
@@ -2284,6 +2285,16 @@ select:focus-visible {
 #reserveMessage .bottom {
   display: flex;
   gap: 20px;
+}
+
+/*----*/
+
+/*!-- userReservations --*/
+
+.ticketContent{
+  flex-direction: column;
+  padding-left: 5vw;
+  padding-right: 5vw;
 }
 
 /*----*/

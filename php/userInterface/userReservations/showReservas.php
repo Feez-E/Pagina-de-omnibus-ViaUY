@@ -1,9 +1,11 @@
 <?php
 include_once('../../dataAccess/connection.php');
 include_once('../../dataAccess/reservaLink.php');
+include_once('../../dataAccess/paradaLink.php');
 include_once('../../dataAccess/tiquetLink.php');
 include_once('../../dataAccess/unidadLink.php');
 include_once('../../dataAccess/userLink.php');
+include_once('../../dataAccess/lineaLink.php');
 include_once('../../businessLogic/reserva.php');
 
 
@@ -12,11 +14,13 @@ $reservaLink = new ReservaLink($conn);
 $reservasArr = $reservaLink->getReservasByUserId($_SESSION['userData']->getId());
 
 $previousTiquetFlag = 0;
+$previousReserva;
 $firstTime = true;
 
-echo "<pre>";
+$lineaLink = new LineaLink($conn);
+/* echo "<pre>";
 print_r($reservasArr);
-echo "</pre>";
+echo "</pre>"; */
 
 foreach ($reservasArr as $key => $reserva) {
 
@@ -25,6 +29,7 @@ foreach ($reservasArr as $key => $reserva) {
     if ($tiquetFlagReserva != $previousTiquetFlag) {
 
         if (!$firstTime) {
+
             echo " 
 
                 </div>
@@ -34,21 +39,31 @@ foreach ($reservasArr as $key => $reserva) {
         }
 
         echo "
-            <div class = 'desplegableSection shadow'>
+            <div class = 'desplegableSection shadow' id = 'id_" . $reserva->getCodigo_Tiquet() . "'>
                 <div class= 'desplegableTitle'>
-                    <div class = left>
-                        <h3  class = subtitle>" . $reserva->getCodigo_Tiquet() . " </h3>
-                        <p></p>
+                    <div>
+                        <h3>" . $reserva->getCodigo_Tiquet() . "</h3>
+                        <p>" . $reserva->getCodigo_Tiquet() . "</p>
                     </div>
                     <div id = toggleArrow></div>
                 </div>
-                <div class = 'desplegableContent'>";
+                <div class = 'desplegableContent ticketContent'>
+                    <p class='subtitle'>Información</p>
+                    <p>Línea: " . $lineaLink->getNombreLineaByCodigo($reserva->getAsiento()->getCodigo_L_R_Transita()) . "</p>
+                    <p>Unidad: " . $reserva->getAsiento()->getNumero_U_Transita() . "</p>
+                    <p>Fecha: " . $reserva->getFecha() . "</p>
+                    <p class = 'seatNumber'>Asientos: </p>
+                    <p class='subtitle'>Viaje</p>
+                    <p>↑ " . $reserva->getAsiento()->getIdInicial_T_R_Transita() . "</p>";
 
         $previousTiquetFlag = $tiquetFlagReserva;
 
     }
 
-    echo $key . ' ';
+    $previousReserva = $reserva;
+
+    echo '/';
+
 
 }
 ?>
