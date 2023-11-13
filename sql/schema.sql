@@ -171,7 +171,7 @@ metodo VARCHAR(25) PRIMARY KEY
 CREATE TABLE Tiquet (
 codigo VARCHAR(16),
 precio DOUBLE NOT NULL,
-PRIMARY KEY(codigo, precio)
+PRIMARY KEY(codigo)
 );
 
 CREATE TABLE Reserva(
