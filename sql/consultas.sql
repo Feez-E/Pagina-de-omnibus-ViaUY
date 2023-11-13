@@ -67,3 +67,18 @@ INNER JOIN Tramo ON Reserva.idInicial_T_R_T_Asiento = Tramo.idInicial AND Reserv
 INNER JOIN Parada ON Tramo.idInicial = Parada.id OR Tramo.idFinal = Parada.id
 WHERE id_Usuario = 1
 ORDER BY codigo_Tiquet, orden_R_T_Asiento ASC, 'idParada' DESC; -- Muestra los recorrido detallados de las reservas de un cliente.
+
+SELECT
+    Recorre.idInicial_Tramo AS idInicial_T_Recorre,
+    Recorre.idFinal_Tramo AS idFinal_T_Recorre,
+    Recorre.codigo_Linea AS codigo_L_Recorre,
+    Recorre.orden AS orden_Recorre,
+    Transita.numero_Unidad,
+    Transita.horaSalida_Salida,
+    Transita.horaLlegada_Llegada
+FROM Recorre
+LEFT JOIN Transita ON Recorre.idInicial_Tramo = Transita.idInicial_T_Recorre
+                   AND Recorre.idFinal_Tramo = Transita.idFinal_T_Recorre
+                   AND Recorre.codigo_Linea = Transita.codigo_L_Recorre
+                   AND Recorre.orden = Transita.orden_Recorre
+ORDER BY Recorre.codigo_Linea, Transita.numero_Unidad, Transita.horaSalida_Salida, Recorre.orden;

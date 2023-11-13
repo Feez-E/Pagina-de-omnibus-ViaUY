@@ -68,7 +68,7 @@
                 <form id="lineForm" action="#" method="post">
                     <label for="lineName">
                         <span>Nombre de la línea:</span>
-                        <input type="text" id="lineName" name="lineName" autocomplete="off" />
+                        <input type="text" id="lineName" name="lineName" autocomplete="off" required />
                     </label>
                     <fieldset>
                         <legend>Paradas:</legend>

@@ -95,5 +95,20 @@ class LineaLink
         return false;
     }
 
+    public function insertLinea($nombre, $origen, $destino)
+    {
+
+        $stmt = $this->conn->prepare(
+            "INSERT INTO Linea (nombre, origen, destino, vigencia) VALUES 
+            (?, ?, ?, false)"
+        );
+
+        $stmt->bind_param("sss", $nombre, $origen, $destino);
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
+
+    }
 }
 ?>

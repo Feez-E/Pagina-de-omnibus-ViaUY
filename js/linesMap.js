@@ -186,7 +186,11 @@ function lineFormSubmit(paradas) {
 
         lineForm.removeChild(loadingPanel);
 
-        console.log("tramos:", tramos);
+        const nombreLinea = document.getElementById("lineName").value;
+        if (nombreLinea && tramos.length > 0) {
+            insertarTramosYLinea(tramos, nombreLinea);
+        }
+
     });
 }
 
@@ -264,7 +268,90 @@ function getTramoAJAX(dataToSend) {
     });
 }
 
+function insertarTramosYLinea(tramos, nombreLinea) {
 
+    tramos.forEach((tramo, i) => {
+        const orden = i + 1;
+
+
+
+        try {
+            if (tramo.hasOwnProperty("distancia") && tramo.hasOwnProperty("tiempo")) {
+                ajaxForTramoInsert(
+                    tramo["idInicial"],
+                    tramo["idFinal"],
+                    tramo["distancia"],
+                    tramo["tiempo"]
+                );
+            }
+            ajaxForLineaInsert(
+                tramo["idInicial"],
+                tramo["idFinal"],
+                nombreLinea,
+                orden);
+        } catch (error) {
+            console.error("error: ", error);
+        }
+    });
+}
+
+function ajaxForTramoInsert(idIncial, idFinal, distancia, tiempo) {
+
+    const dataToSend = {
+        idInicial: idIncial,
+        idFinal: idFinal,
+        distancia: distancia,
+        tiempo: tiempo
+    }
+
+    $.ajax({
+        url: "insertTramo.php",
+        type: "POST",
+        data: dataToSend,
+        success: (response) => {
+            if (response.status === "success" && response.insert === true) {
+                console.log("tramo insertado")
+            } else {
+                console.log("Error al procesar la solicitud.");
+                console.error(response);
+            }
+        },
+        error: (xhr, _status, error) => {
+            console.log("Error en la solicitud AJAX.");
+            console.error(error);
+            console.error(xhr);
+        },
+    });
+}
+
+function ajaxForLineaInsert(idIncial, idFinal, nombreLinea, orden) {
+
+    const dataToSend = {
+        idInicial: idIncial,
+        idFinal: idFinal,
+        nombreLinea: nombreLinea,
+        orden: orden
+    }
+
+    $.ajax({
+        url: "insertLinea.php",
+        type: "POST",
+        data: dataToSend,
+        success: (response) => {
+            if (response.status === "success" && response.insert === true) {
+                console.log("tramo insertado")
+            } else {
+                console.log("Error al procesar la solicitud.");
+                console.error(response);
+            }
+        },
+        error: (xhr, _status, error) => {
+            console.log("Error en la solicitud AJAX.");
+            console.error(error);
+            console.error(xhr);
+        },
+    });
+}
 export { agregarParada, lineFormSubmit }
 
 
