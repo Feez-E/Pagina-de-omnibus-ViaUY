@@ -1876,13 +1876,18 @@ input:checked + .slider:before {
   width: fit-content;
   height: fit-content;
   padding: 30px;
+  min-width: 250px;
+  width: 75vw;
 }
 
 .pageCoverSection.container#form label {
   border: none;
 }
 
-/*--  --*/
+.pageCoverSection.container#form form {
+  border: none;
+  width: 90%;
+}
 
 .desplegableContent.container#form {
   margin: 0px;
@@ -2014,10 +2019,49 @@ fieldset {
 .lineLeft {
   max-width: calc(100% - 50px);
 }
+
 #addTravelButton {
   position: absolute;
   right: 70px;
   cursor: pointer;
+}
+
+#closeButtonN2 {
+  height: 30px;
+  width: 30px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 3px;
+  position: relative;
+}
+
+#closeButtonN2::before {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 2px;
+  background-color: var(--primary-color);
+  transform: translateX(2px) translateY(14px) rotate(45deg);
+  border-radius: 3px;
+}
+
+#closeButtonN2::after {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 2px;
+  background-color: var(--primary-color);
+  transform: translateX(2px) translateY(14px) rotate(-45deg);
+  border-radius: 3px;
+}
+
+.pageCoverSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  width: 100%;
 }
 
 /*----*/

@@ -52,7 +52,10 @@ $linea = $lineaLink->getCodigoLineaByNombre($params["nombreLinea"]);
 $result = "1";
 $cantTiquets = $tiquetLink->selectTiquetsFromDate($fechaTiquet);
 
-$tiquet = (intval($fechaTiquet . $cantTiquets) + 1);
+$zerosToAdd = 4 - strlen($cantTiquets);
+$cantTiquetsPadded = str_pad($cantTiquets, $zerosToAdd + strlen($cantTiquets), '0', STR_PAD_LEFT);
+
+$tiquet = intval($fechaTiquet . ($cantTiquetsPadded) + 1);
 
 $result = insertarReservaYAsientos($tiquet, $precioTotal, $asientos, $tramos, $linea, $unidad, $params, $metodoDePago, $tiquetLink, $asientoLink, $reservaLink);
 

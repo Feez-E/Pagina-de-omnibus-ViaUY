@@ -13,7 +13,7 @@ class UnidadLink
     public function getUnidades()
     {
         $stmt = $this->conn->prepare(
-            "SELECT * FROM Unidades"
+            "SELECT * FROM Unidad"
         );
         $stmt->execute();
         $result = $stmt->get_result();
@@ -33,6 +33,31 @@ class UnidadLink
 
         return $unidades;
     }
+
+    public function getUnidadesVigentes()
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT * FROM Unidad WHERE vigencia = true"
+        );
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $unidades = array();
+
+        while ($row = $result->fetch_assoc()) {
+            $unidad = new Unidad(
+                $row['numero'],
+                $row['matricula'],
+                $row['numeroChasis'],
+                $row['capacidadPrimerPiso'],
+                $row['capacidadSegundoPiso'],
+                $row['vigencia']
+            );
+            $unidades[] = $unidad;
+        }
+
+        return $unidades;
+    }
+
 
     public function getUnidadesByLineaYHora($nombreLinea, $horaSalida)
     {

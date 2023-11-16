@@ -87,3 +87,6 @@ SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(tiempo))) AS tiempo_total
 FROM Tramo
 WHERE (idInicial IN (1, 3) AND idFinal IN (3, 5));
 
+SELECT * FROM Transita T INNER JOIN Linea L
+	ON L.codigo = T.codigo_L_Recorre WHERE T.vigencia = true AND L.vigencia = true
+	ORDER BY  T.codigo_L_Recorre, T.horaSalida_Salida ASC, T.orden_Recorre ASC ;

@@ -112,6 +112,46 @@ class TramoLink
 
         throw new Exception("Error executing the query: " . $stmt->error);
     }
+
+
+    public function getTiempoTotalByIds($tramos)
+    {
+        // Construir la parte de la consulta WHERE dinámicamente
+        $conditions = [];
+        $params = [];
+
+        if (is_array($tramos)) {
+            foreach ($tramos as $tramo) {
+                if (isset($tramo['idInicial'], $tramo['idFinal'])) {
+                    $conditions[] = "(idInicial = ? AND idFinal = ?)";
+                    $params[] = intval($tramo['idInicial']);
+                    $params[] = intval($tramo['idFinal']);
+                }
+            }
+        }
+        // Unir las condiciones con OR
+        $whereClause = implode(' OR ', $conditions);
+
+        // Construir la consulta completa
+        $query = "SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(tiempo))) AS tiempo_total FROM Tramo WHERE $whereClause";
+
+        $stmt = $this->conn->prepare($query);
+
+        // Bind parameters
+        $types = str_repeat('ii', (count($tramos) - 1));
+        $stmt->bind_param($types, ...$params);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        if ($row = $result->fetch_assoc()) {
+            return $row['tiempo_total'];
+        }
+
+        return null; // Devolver null si no se encuentra ningún resultado
+    }
 }
 
 ?>

@@ -9,6 +9,7 @@ class Transita implements JsonSerializable
     private $numero_Unidad;
     private $horaSalida_Salida;
     private $horaLlegada_Llegada;
+    private $vigencia;
 
     public function __construct(
         $idInicial_T_Recorre,
@@ -17,7 +18,8 @@ class Transita implements JsonSerializable
         $orden_Recorre,
         $numero_Unidad,
         $horaSalida_Salida,
-        $horaLlegada_Llegada
+        $horaLlegada_Llegada,
+        $vigencia
     ) {
         $this->idInicial_T_Recorre = $idInicial_T_Recorre;
         $this->idFinal_T_Recorre = $idFinal_T_Recorre;
@@ -26,6 +28,7 @@ class Transita implements JsonSerializable
         $this->numero_Unidad = $numero_Unidad;
         $this->horaSalida_Salida = $horaSalida_Salida;
         $this->horaLlegada_Llegada = $horaLlegada_Llegada;
+        $this->vigencia = $vigencia;
     }
 
     public function getIdInicial_T_Recorre()
@@ -74,6 +77,17 @@ class Transita implements JsonSerializable
     {
         $this->horaLlegada_Llegada = $horaLlegada_Llegada;
     }
+
+    public function getVigencia()
+    {
+        return $this->vigencia;
+    }
+
+    public function setVigencia($vigencia)
+    {
+        $this->vigencia = $vigencia;
+    }
+
 
     public function jsonSerialize()
     {
