@@ -88,6 +88,7 @@ horaSalida_Salida TIME,
 FOREIGN KEY(horaSalida_Salida) REFERENCES Salida (horaSalida),
 horaLlegada_Llegada TIME,
 FOREIGN KEY(horaLlegada_Llegada) REFERENCES Llegada (horaLlegada),
+vigencia BOOLEAN DEFAULT TRUE,
 PRIMARY KEY(idInicial_T_Recorre, idFinal_T_Recorre, codigo_L_Recorre, orden_Recorre, numero_Unidad, horaSalida_Salida, horaLlegada_Llegada)
 );
 

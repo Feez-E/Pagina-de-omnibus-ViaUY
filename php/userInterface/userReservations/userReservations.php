@@ -39,5 +39,5 @@
     ?>
 </body>
 <script src="../../../js/toggleSelector.js"></script>
-
+<script src="../../../js/userReservations.js"></script>
 </html>

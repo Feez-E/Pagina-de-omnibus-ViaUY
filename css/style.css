@@ -2314,7 +2314,7 @@ select:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  
+  justify-content: center;
 }
 
 .ticketContent>section>p{
@@ -2357,6 +2357,8 @@ select:focus-visible {
   border-left: solid 1px var(--primary-color);
   color: var(--tertiary-color);
 }
+
+
 
 /*----*/
 
