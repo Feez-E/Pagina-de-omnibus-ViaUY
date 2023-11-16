@@ -45,8 +45,8 @@ foreach ($reservasArr as $key => $reserva) {
             $paradaFinal = $paradaLink->getParadaDirectionById($previousReserva->getAsiento()->getIdFinal_T_R_Transita());
             $direccionFinalSeparada = explode(",", $paradaFinal);
             $ciudadFinal = trim($direccionFinalSeparada[1]);
-            citiesScript($reserva->getCodigo_Tiquet(), $ciudadInicial, $ciudadFinal);
-            seatsScript($seatsArray, $reserva->getCodigo_Tiquet());
+            citiesScript($previousReserva->getCodigo_Tiquet(), $ciudadInicial, $ciudadFinal);
+            seatsScript($seatsArray, $previousReserva->getCodigo_Tiquet());
             $seatsArray = [];
 
             echo " 

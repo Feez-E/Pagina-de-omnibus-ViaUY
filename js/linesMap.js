@@ -65,6 +65,42 @@ linesCollapse.onclick = () => {
     }
 };
 
+addTravelButtons();
+
+function addTravelButtons() {
+    document.querySelectorAll("#addTravelButton").forEach((button, i) => {
+
+        button.onclick = () => {
+
+            const addTravelPageCover = document.createElement("div");
+            addTravelPageCover.className = "pageCover active";
+            addTravelPageCover.innerHTML = `
+            <div class = "pageCoverSection container" id = "form">
+                <form id=addTimeForm action="#" method="post">
+                    <label for="timeToAdd" class="editable">
+                        <span> Hora de Salida </span>
+                        <input type="text" id="timeToAdd" name="timeToAdd" autocomplete="off" required />
+                    </label>
+                    <label for="unit" class="editable">
+                        <span> Unidad </span>
+                        <input type="text" id="unit" name="unit" autocomplete="off" required />
+                    </label>
+                    <input type="submit" value="Agregar" class="button">
+                </form>
+            </div>
+            `;
+            document.querySelector("main").appendChild(addTravelPageCover);
+            const nombreLinea = button.previousElementSibling.firstElementChild.innerHTML.split(" - ")[0];
+            const tramos = stopsIds[i];
+            console.log(nombreLinea);
+            console.log(tramos);
+
+
+        }
+    });
+
+}
+
 function ajaxForName(lineId, callback) {
     const dataToSend = {
         codigo: lineId,
@@ -187,8 +223,15 @@ function lineFormSubmit(paradas) {
         lineForm.removeChild(loadingPanel);
 
         const nombreLinea = document.getElementById("lineName").value;
-        if (nombreLinea && tramos.length > 0) {
-            insertarTramosYLinea(tramos, nombreLinea);
+        const origenLinea = document.getElementById("lineOrigin").value;
+        const destinoLinea = document.getElementById("lineDestination").value;
+        if (origenLinea && destinoLinea && nombreLinea && tramos.length > 1) {
+            insertarTramosYLinea(tramos, nombreLinea, origenLinea, destinoLinea);
+            document.getElementById("lineName").value = "";
+            document.getElementById("lineOrigin").value = "";
+            document.getElementById("lineDestination").value = "";
+        } else {
+            showError("Ingrese todos los datos, y más de dos paradas");
         }
 
     });
@@ -268,7 +311,7 @@ function getTramoAJAX(dataToSend) {
     });
 }
 
-function insertarTramosYLinea(tramos, nombreLinea) {
+function insertarTramosYLinea(tramos, nombreLinea, origenLinea, destinoLinea) {
 
     tramos.forEach((tramo, i) => {
         const orden = i + 1;
@@ -284,15 +327,22 @@ function insertarTramosYLinea(tramos, nombreLinea) {
                     tramo["tiempo"]
                 );
             }
-            ajaxForLineaInsert(
-                tramo["idInicial"],
-                tramo["idFinal"],
-                nombreLinea,
-                orden);
+
         } catch (error) {
             console.error("error: ", error);
         }
     });
+    try {
+        ajaxForLineaInsert(
+            tramos,
+            nombreLinea,
+            origenLinea,
+            destinoLinea
+        );
+    } catch (error) {
+        console.error("error: ", error);
+    }
+
 }
 
 function ajaxForTramoInsert(idIncial, idFinal, distancia, tiempo) {
@@ -324,13 +374,13 @@ function ajaxForTramoInsert(idIncial, idFinal, distancia, tiempo) {
     });
 }
 
-function ajaxForLineaInsert(idIncial, idFinal, nombreLinea, orden) {
+function ajaxForLineaInsert(tramos, nombreLinea, origenLinea, destinoLinea) {
 
     const dataToSend = {
-        idInicial: idIncial,
-        idFinal: idFinal,
+        tramos: tramos,
         nombreLinea: nombreLinea,
-        orden: orden
+        origenLinea: origenLinea,
+        destinoLinea: destinoLinea
     }
 
     $.ajax({
@@ -338,11 +388,38 @@ function ajaxForLineaInsert(idIncial, idFinal, nombreLinea, orden) {
         type: "POST",
         data: dataToSend,
         success: (response) => {
-            if (response.status === "success" && response.insert === true) {
-                console.log("tramo insertado")
+            if (response.status === "success") {
+                showError(response.message)
+                const newLine = document.createElement("div")
+                newLine.className = "lineAndTravels travelAndLinePage shadow active";
+                newLine.innerHTML = `
+                    <div class="line">
+                        <div class="lineLeft">
+                            <h3 class="subtitle">${nombreLinea} - ${origenLinea} ${destinoLinea}</h3>
+                            <div class="days">
+                                <label class="switch">
+                                    <input type="checkbox" class="lineValidation">
+                                    <span class="slider round"></span>
+                                </label>
+                                <section class="lineDays">
+                                    <p>          </p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tool">
+                                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                                    </svg>
+                                </section>
+                            </div>
+                        </div>
+                        <div> </div>
+                    <div id="lineToggle"></div>
+                </div>
+                <div class="travels travelAndLine">
+                    <div class="lineData"><p class="subtitle">Tramos </p><p> ${tramos.map(time => `(${time["idInicial"]}, ${time["idFinal"]})`).join(' ')} </p></div>
+                    <div class="desplegableSection travelAndLinePage travelSection"><p class="lineWOTravels"> Recargue la pagina para modificar esta línea</p>
+                        </div>
+                </div>`
+                document.querySelector("main.container").appendChild(newLine);
             } else {
-                console.log("Error al procesar la solicitud.");
-                console.error(response);
+                showError(response.message)
             }
         },
         error: (xhr, _status, error) => {

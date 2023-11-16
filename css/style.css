@@ -204,7 +204,8 @@ input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-input[type="number"] {
+input[type="number"],
+input[type="password"] {
   appearance: textfield;
   -moz-appearance: textfield;
 }
@@ -950,6 +951,7 @@ footer {
   flex-direction: column;
   color: var(--primary-color);
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 #loginContent::-webkit-scrollbar-thumb {
@@ -1016,8 +1018,16 @@ label[for="birthdate"] input {
 label[for="birthdate"].top input {
   color: var(--primary-color);
 }
-/*----*/
 
+.loginButton {
+  font-weight: bold;
+  letter-spacing: 2px;
+  transition: 0.25s;
+}
+
+.loginButton:hover {
+  transform: scale(1.1);
+}
 /*----*/
 
 /*!-- lineAndTravelR --*/
@@ -1548,7 +1558,8 @@ legend {
   display: flex;
 }
 
-.unitInfo, .travelReservationSection {
+.unitInfo,
+.travelReservationSection {
   background-color: var(--whitesmoke-color);
   text-align: left;
   padding: 25px;
@@ -1856,6 +1867,19 @@ input:checked + .slider:before {
 
 .lineDays svg {
   height: 20px;
+  cursor: pointer;
+}
+
+.pageCoverSection.container#form {
+  background-color: var(--white-color);
+  border-radius: 15px;
+  width: fit-content;
+  height: fit-content;
+  padding: 30px;
+}
+
+.pageCoverSection.container#form label {
+  border: none;
 }
 
 /*--  --*/
@@ -1978,6 +2002,22 @@ fieldset {
 .lineWOTravels {
   width: fit-content;
   color: var(--tertiary-color);
+}
+
+#addLineForm .container#form .tripleLabel * {
+  border-color: var(--white-color);
+}
+#addLineForm .container#form .tripleLabel {
+  margin-bottom: 30px;
+}
+
+.lineLeft {
+  max-width: calc(100% - 50px);
+}
+#addTravelButton {
+  position: absolute;
+  right: 70px;
+  cursor: pointer;
 }
 
 /*----*/
@@ -2302,27 +2342,26 @@ select:focus-visible {
 
 /*!-- userReservations --*/
 
-.ticketContent{
+.ticketContent {
   flex-direction: column;
   padding-left: 5vw;
   padding-right: 5vw;
   text-wrap: balance;
 }
 
-.ticketContent>section{
+.ticketContent > section {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  
 }
 
-.ticketContent>section>p{
+.ticketContent > section > p {
   width: calc(50% - 5px);
   text-align: center;
 }
 
-.ticketContent .seatNumber{
+.ticketContent .seatNumber {
   margin-bottom: 25px;
   text-wrap: balance;
   background-color: var(--whitesmoke-color);
@@ -2341,17 +2380,17 @@ select:focus-visible {
   gap: 10px;
 }
 
-.travelReservationSection .subtitle{
+.travelReservationSection .subtitle {
   display: block;
 }
 
-.travelReservationSection p{
+.travelReservationSection p {
   align-items: center;
   display: flex;
   gap: 10px;
 }
 
-.travelReservationSection span{
+.travelReservationSection span {
   display: block;
   padding-left: 10px;
   border-left: solid 1px var(--primary-color);
@@ -2386,7 +2425,7 @@ select:focus-visible {
     font-size: var(--font-xs);
     width: auto;
     height: auto;
-    text-transform: uppercase;
+    letter-spacing: 1px;
     padding: 5px 7px;
   }
 
@@ -2690,13 +2729,13 @@ select:focus-visible {
 }
 /*----*/
 
-@media (min-height: 745px) and (min-width: 640px) {
+@media (min-height: 745px) {
   #loginContent {
     align-items: center;
   }
 }
 
-@media (max-height: 870px) {
+@media (max-height: 870px) and (min-width: 640px) {
   #loginPanel {
     height: 95vh;
     padding: 10px;

@@ -18,7 +18,7 @@ class Asiento implements JsonSerializable
         ?int $orden_R_Transita,
         ?int $numero_U_Transita,
         ?DateTime $horaSalida_S_Transita,
-        ?DateTime $horaLlegada_L_Transita,
+        ?DateTime $horaLlegada_L_Transita
     ) {
         $this->numero = $numero ?? 0;
         $this->idInicial_T_R_Transita = $idInicial_T_R_Transita ?? 0;

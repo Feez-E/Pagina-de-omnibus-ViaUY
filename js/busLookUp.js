@@ -46,8 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (response.status === "success") {
                     const betterLines = document.getElementById("betterLines");
-
                     if (response.lineas && Object.keys(response.lineas).length > 0) {
+                        console.log(response.lineas);
                         const linesContainer = loadLines(response.lineas);
                         betterLines.innerHTML = ""
                         betterLines.appendChild(linesContainer);

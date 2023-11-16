@@ -77,6 +77,8 @@ function insertarReservaYAsientos($tiquet, $precioTotal, $asientos, $tramos, $li
                     new DateTime($params["horaLLegada"])
                 );
                 if ($asientoLink->insertAsiento($asientoObj)) {
+                    $fechaReserva = date('Y-m-d', strtotime($params["dia"] . ' -2 days'));
+
                     $result = $reservaLink->insertReserva(
                         $asiento,
                         $tramo["inicio"],
@@ -87,7 +89,7 @@ function insertarReservaYAsientos($tiquet, $precioTotal, $asientos, $tramos, $li
                         $params["horaSalida"],
                         $params["horaLLegada"],
                         $_SESSION["userData"]->getId(),
-                        "00-00-000",
+                        $fechaReserva,
                         $metodoDePago,
                         "Pagado",
                         $params["dia"],

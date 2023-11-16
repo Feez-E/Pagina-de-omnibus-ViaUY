@@ -26,7 +26,7 @@ foreach ($lineasArr as $linea) {
         $indicePrevio = $indice;
         if ($linea->getVigencia()) {
             echo "<div class = 'lineAndTravels shadow'><div class = line>";
-            echo "<div class = lineLeft><h3  class = subtitle>" . $linea->getNombre() . " - " . $linea->getOrigen() . " " . $linea->getDestino() . "</h3> ";
+            echo "<div class = lineLeft><h3  class = subtitle>" . $linea->getNombre() . " - " . $linea->getOrigen() . " / " . $linea->getDestino() . "</h3> ";
             $linea_diasHabilesArr = $linea_diaHabilLink->getLinea_diaHabilByCodigo_Linea($linea->getCodigo());
             echo "<p>";
             foreach ($linea_diasHabilesArr as $linea_diasHabil) {

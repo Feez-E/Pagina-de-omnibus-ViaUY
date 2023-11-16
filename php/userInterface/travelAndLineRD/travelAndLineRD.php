@@ -66,10 +66,21 @@
             </div>
             <div class="desplegableContent container" id=form>
                 <form id="lineForm" action="#" method="post">
-                    <label for="lineName">
-                        <span>Nombre de la línea:</span>
-                        <input type="text" id="lineName" name="lineName" autocomplete="off" required />
-                    </label>
+                    <section class="tripleLabel">
+                        <label for="lineOrigin" class="top-left">
+                            <span> Origen </span>
+                            <input type="text" id="lineOrigin" name="lineOrigin" autocomplete="off" required />
+                        </label>
+                        <label for="lineDestination" class="top-right">
+                            <span> Destino </span>
+                            <input type="text" id="lineDestination" name="lineDestination" autocomplete="off"
+                                required />
+                        </label>
+                        <label for="lineName" class="bottom">
+                            <span>Nombre de la línea:</span>
+                            <input type="text" id="lineName" name="lineName" autocomplete="off" required />
+                        </label>
+                    </section>
                     <fieldset>
                         <legend>Paradas:</legend>
                         <ul id="stopsList">

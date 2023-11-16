@@ -105,10 +105,29 @@ class LineaLink
 
         $stmt->bind_param("sss", $nombre, $origen, $destino);
         if ($stmt->execute()) {
-            return true;
+            $lineaId = $stmt->insert_id;
+            $stmt->close();
+
+            return $lineaId;
         }
+
         return false;
 
+    }
+
+    public function deleteLineaByCodigo($codigo)
+    {
+        $stmt = $this->conn->prepare(
+            "DELETE FROM Linea WHERE codigo = ?"
+        );
+
+        $stmt->bind_param("i", $codigo);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 ?>

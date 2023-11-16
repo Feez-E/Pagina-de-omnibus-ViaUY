@@ -95,4 +95,19 @@ class RecorreLink
         return false;
 
     }
+
+    public function deleteRecorreByCodigoLinea($codigo)
+    {
+        $stmt = $this->conn->prepare(
+            "DELETE FROM Recorre WHERE codigo_Linea = ?"
+        );
+
+        $stmt->bind_param("i", $codigo);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

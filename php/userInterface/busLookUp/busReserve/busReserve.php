@@ -86,7 +86,6 @@
                         <label for="metodosDePago" class="top-left">
                             <select id="metodosDePago" name="metodosDePago">
                                 <option value="Default">Seleccione su método de pago</option>
-                                <option value="Efectivo">Efectivo</option>
                                 <option value="MasterCard">MasterCard</option>
                                 <option value="PayPal">PayPal</option>
                                 <option value="Visa">Visa</option>
