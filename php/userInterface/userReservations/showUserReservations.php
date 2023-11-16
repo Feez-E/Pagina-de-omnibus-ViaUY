@@ -9,7 +9,6 @@ include_once('../../dataAccess/lineaLink.php');
 include_once('../../businessLogic/reserva.php');
 
 
-
 $reservaLink = new ReservaLink($conn);
 $tiquetLink = new TiquetLink($conn);
 $lineaLink = new LineaLink($conn);
@@ -62,11 +61,14 @@ foreach ($reservasArr as $key => $reserva) {
                     </div>
                     <section class = 'finalContent'>
                             <p>$" . $tiquetLink->getPrecioByCodigo($previousReserva->getCodigo_Tiquet()) . "</p>
-                            <p>" . $previousReserva->getEstado() . "</p>";
+                            <p class = 'ticketStatus'>" . $previousReserva->getEstado() . "</p>";
 
             if ($previousReserva->getFechaLimite() > $fechaActual && $previousReserva->getEstado() == "Pagado") {
                 echo "
                         <a class = 'button shadow declineReserve'>Cancelar reserva</a>";
+            } else {
+                echo "
+                                    <a class = 'button shadow declineReserve' style = 'display:none;'>Cancelar reserva</a>";
             }
 
             echo "          
@@ -128,11 +130,14 @@ echo "
                     </div>
                     <section class = 'finalContent'>
                             <p>$" . $tiquetLink->getPrecioByCodigo($previousReserva->getCodigo_Tiquet()) . "</p>
-                            <p>" . $previousReserva->getEstado() . "</p>";
+                            <p class = 'ticketStatus'>" . $previousReserva->getEstado() . "</p>";
 
 if ($previousReserva->getFechaLimite() > $fechaActual && $previousReserva->getEstado() == "Pagado") {
     echo "
                         <a class = 'button shadow declineReserve'>Cancelar reserva</a>";
+} else {
+    echo "
+                        <a class = 'button shadow declineReserve' style = 'display:none;'>Cancelar reserva</a>";
 }
 
 echo "          

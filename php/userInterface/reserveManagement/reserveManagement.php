@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../../../css/style.css">
     <link rel="icon" href="../../../ico/icon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>ViaUY - Administrar reservas</title>
 </head>
 
@@ -18,6 +19,27 @@
     ?>
     <main class="container">
         <h2 class="title">Administrar reservas</h2>
+        <?php
+        
+        try {
+            if (!isset($_SESSION["userData"])) {
+                echo "<p>Inicie sesión para continuar</p>";
+                exit;
+            } else {
+                if($_SESSION['userData']->getNombreRol() == 'Administrador Maestro'){
+                    echo "<p>Hola capo, aca tenes...</p><br>";
+                } else {
+                    echo "<p>No tienes permiso para estar en esta página</p>";
+                }
+            }
+        } catch (Exception) {
+            echo "<p>Usuario incorrecto</p>";
+            exit;
+        }
+        ?> 
+        <?php
+        include 'showReservations.php';
+        ?>
     </main>
 
     <?php

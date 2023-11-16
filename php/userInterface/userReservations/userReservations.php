@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../../../css/style.css">
     <link rel="icon" href="../../../ico/icon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>ViaUY - Mis reservas</title>
 </head>
 
@@ -23,14 +24,14 @@
             if (!isset($_SESSION["userData"])) {
                 echo "<p>Inicie sesión para continuar</p>";
                 exit;
-            }
+            } 
         } catch (Exception) {
             echo "<p>Usuario incorrecto</p>";
             exit;
         }
         ?> 
         <?php
-        include 'showReservas.php';
+        include 'showUserReservations.php';
         ?>
     </main>
 
@@ -39,5 +40,5 @@
     ?>
 </body>
 <script src="../../../js/toggleSelector.js"></script>
-<script src="../../../js/userReservations.js"></script>
+<script src="../../../js/userReservations.js" type = "module"></script>
 </html>

@@ -13,7 +13,7 @@ class ReservaLink
     public function getReservas()
     {
         $stmt = $this->conn->prepare(
-            "SELECT * FROM Reserva ORDER BY codigo DESC"
+            "SELECT * FROM Reserva ORDER BY codigo_Tiquet, numero_Asiento, orden_R_T_Asiento"
         );
         $stmt->execute();
         $result = $stmt->get_result();
@@ -51,7 +51,7 @@ class ReservaLink
     public function getReservasByUserId($id_Usuario)
     {
         $stmt = $this->conn->prepare(
-            "SELECT * FROM Reserva WHERE id_Usuario = ?"
+            "SELECT * FROM Reserva WHERE id_Usuario = ? ORDER BY codigo_Tiquet, numero_Asiento, orden_R_T_Asiento"
         );
         $stmt->bind_param("i", $id_Usuario);
         $stmt->execute();
@@ -125,6 +125,19 @@ class ReservaLink
 
         return $asientos;
 
+    }
+
+    public function changeStatusReservaByTiquet($estado, $tiquetReserva)
+    {
+        $stmt = $this->conn->prepare("UPDATE Reserva SET estado=? WHERE codigo_Tiquet=?");
+
+        $stmt->bind_param("ss", $estado, $tiquetReserva);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function insertReserva(
