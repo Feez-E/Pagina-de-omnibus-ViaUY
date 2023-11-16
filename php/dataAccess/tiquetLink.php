@@ -31,6 +31,23 @@ class TiquetLink
         return null;
     }
 
+    public function getPrecioByCodigo($codigo)
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT * FROM Tiquet WHERE codigo = ?"
+        );
+        $stmt->bind_param("i", $codigo);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $tiquetData = $result->fetch_assoc();
+            return $tiquetData['precio'];
+        }
+
+        return null;
+    }
+
     public function insertTiquet(Tiquet $tiquet)
     {
         $stmt = $this->conn->prepare(

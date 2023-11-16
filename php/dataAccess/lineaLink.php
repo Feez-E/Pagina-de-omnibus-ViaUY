@@ -13,7 +13,6 @@ class LineaLink
     public function getLineas()
     {
 
-
         $stmt = $this->conn->prepare(
             "SELECT * FROM Linea;"
         );

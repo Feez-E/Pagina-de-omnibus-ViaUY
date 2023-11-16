@@ -13,7 +13,7 @@ class ReservaLink
     public function getReservas()
     {
         $stmt = $this->conn->prepare(
-            "SELECT * FROM Reserva"
+            "SELECT * FROM Reserva ORDER BY codigo DESC"
         );
         $stmt->execute();
         $result = $stmt->get_result();

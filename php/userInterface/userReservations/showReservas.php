@@ -11,15 +11,17 @@ include_once('../../businessLogic/reserva.php');
 
 
 $reservaLink = new ReservaLink($conn);
-$reservasArr = $reservaLink->getReservasByUserId($_SESSION['userData']->getId());
+$tiquetLink = new TiquetLink($conn);
+$lineaLink = new LineaLink($conn);
+$paradaLink = new ParadaLink($conn);
 
+$reservasArr = $reservaLink->getReservasByUserId($_SESSION['userData']->getId());
 $previousTiquetFlag = 0;
 $previousReserva;
 $firstTime = true;
 $seatsArray = [];
+$fechaActual = new DateTime();
 
-$lineaLink = new LineaLink($conn);
-$paradaLink = new ParadaLink($conn);
 
 /* echo "<pre>";
 print_r($reservasArr);
@@ -28,9 +30,12 @@ echo "</pre>"; */
 ?>
 <script>
     let codigoTiquet;
+    let fechaLimite;
     let seatsArray = [];
     let ciudadInicial;
     let ciudadFinal;
+
+    let tiquetsReserva = [];
 </script>
 <?php
 
@@ -55,6 +60,17 @@ foreach ($reservasArr as $key => $reserva) {
                             </span>
                         </p>
                     </div>
+                    <section class = 'finalContent'>
+                            <p>$" . $tiquetLink->getPrecioByCodigo($previousReserva->getCodigo_Tiquet()) . "</p>
+                            <p>" . $previousReserva->getEstado() . "</p>";
+
+            if ($previousReserva->getFechaLimite() > $fechaActual && $previousReserva->getEstado() == "Pagado") {
+                echo "
+                        <a class = 'button shadow declineReserve'>Cancelar reserva</a>";
+            }
+
+            echo "          
+                    </section>
                 </div>
             </div>";
         } else {
@@ -103,12 +119,24 @@ foreach ($reservasArr as $key => $reserva) {
 
 }
 $paradaFinal = $paradaLink->getParadaDirectionById($previousReserva->getAsiento()->getIdFinal_T_R_Transita());
+
 echo " 
                         <p>
                             <b>⇩</b>" . $previousReserva->getAsiento()->getIdFinal_T_R_Transita() . "<span>" . $paradaFinal . "
                             </span>
                         </p>
                     </div>
+                    <section class = 'finalContent'>
+                            <p>$" . $tiquetLink->getPrecioByCodigo($previousReserva->getCodigo_Tiquet()) . "</p>
+                            <p>" . $previousReserva->getEstado() . "</p>";
+
+if ($previousReserva->getFechaLimite() > $fechaActual && $previousReserva->getEstado() == "Pagado") {
+    echo "
+                        <a class = 'button shadow declineReserve'>Cancelar reserva</a>";
+}
+
+echo "          
+                    </section>
                 </div>
             </div>";
 
@@ -116,19 +144,6 @@ $direccionFinalSeparada = explode(",", $paradaFinal);
 $ciudadFinal = trim($direccionFinalSeparada[1]);
 citiesScript($reserva->getCodigo_Tiquet(), $ciudadInicial, $ciudadFinal);
 seatsScript($seatsArray, $reserva->getCodigo_Tiquet());
-
-function seatsScript($seatsArray, $codigoTiquet)
-{
-    ?>
-    <script>
-        codigoTiquet = <?php echo $codigoTiquet; ?>;
-        seatsArray = <?php echo json_encode($seatsArray); ?>;
-
-        document.querySelector(`#id_${codigoTiquet} .seatNumber`).innerHTML = `Asientos: ${seatsArray.map(time => time).join(' ')}`;
-    </script>
-    <?php
-}
-
 function citiesScript($codigoTiquet, $ciudadInicial, $ciudadFinal)
 {
     ?>
@@ -141,4 +156,19 @@ function citiesScript($codigoTiquet, $ciudadInicial, $ciudadFinal)
     </script>
     <?php
 }
+
+function seatsScript($seatsArray, $codigoTiquet)
+{
+    ?>
+    <script>
+        codigoTiquet = <?php echo $codigoTiquet; ?>;
+        seatsArray = <?php echo json_encode($seatsArray); ?>;
+
+        document.querySelector(`#id_${codigoTiquet} .seatNumber`).innerHTML = `Asientos: ${seatsArray.map(time => time).join(', ')}`;
+
+        tiquetsReserva.push(<?php echo $codigoTiquet; ?>);
+    </script>
+    <?php
+}
+
 ?>
