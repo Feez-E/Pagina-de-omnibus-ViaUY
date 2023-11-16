@@ -115,11 +115,22 @@ foreach ($lineasArr as $linea) {
 
 function transitasContent($transitasArr, $indice)
 {
+
+    if ($transitasArr[$indice]->getVigencia() == 1) {
+        $checked = "checked";
+    } else {
+        $checked = "";
+    }
     echo "
-    <div class='desplegableTitle'>
+    <div class='desplegableTitle'>   
+        <label class='switch'>
+            <input type='checkbox' $checked class='travelValidation'>
+            <span class='slider round'></span>
+        </label>        
         <div class='desplegableSubtitle'> 
             <p> Unidad: " . $transitasArr[$indice]->getNumero_Unidad() . "</p>
             <p> Salida: " . $transitasArr[$indice]->getHoraSalida_Salida() . "</p>
+         
         </div>
         <div id='toggleArrow'></div>
     </div>
@@ -140,8 +151,6 @@ function transitasContent($transitasArr, $indice)
 
     let allLineData = document.querySelectorAll('.lineData');
 
-
-    console.log(stopsIds);
     allLineData.forEach((lineData, i) => {
         let formattedData = '';
 
@@ -231,6 +240,48 @@ function transitasContent($transitasArr, $indice)
 
             $.ajax({
                 url: "lineValidationToggle.php",
+                type: "POST",
+                data: dataToSend,
+                success: (response) => {
+
+                    if (response === "success") {
+
+
+                    } else {
+                        console.log("Error al procesar la solicitud.");
+                        console.error(response);
+                    }
+                },
+                error: (_xhr, _status, error) => {
+                    console.log("Error en la solicitud AJAX.");
+                    console.error(error);
+                },
+            });
+        }
+    });
+
+    const travelValidations = document.querySelectorAll(".travelValidation")
+
+    travelValidations.forEach(travelValidation => {
+        travelValidation.onclick = () => {
+
+
+            const nombreLinea = travelValidation.parentElement.parentElement.parentElement.
+                parentElement.previousElementSibling.firstElementChild.firstElementChild.innerHTML.split(" - ")[0];
+            const unidad = travelValidation.parentElement.nextElementSibling.firstElementChild.innerHTML.split(": ")[1];
+
+            const hora = travelValidation.parentElement.nextElementSibling.lastElementChild.innerHTML.split(": ")[1];
+
+
+            const dataToSend = {
+                nombreLinea: nombreLinea,
+                unidad: unidad,
+                hora: hora
+            };
+            console.log(dataToSend);
+
+            $.ajax({
+                url: "travelValidationToggle.php",
                 type: "POST",
                 data: dataToSend,
                 success: (response) => {

@@ -7,7 +7,7 @@ SELECT * FROM Transita ORDER BY codigo_L_Recorre, horaSalida_Salida ASC, orden_R
 SELECT * FROM Tiquet;
 SELECT * FROM Asiento;
 SELECT * FROM Asiento ORDER BY horaSalida_S_Transita, horaLlegada_L_Transita, numero, idInicial_T_R_Transita, idFinal_T_R_Transita, codigo_L_R_Transita, orden_R_Transita, numero_U_Transita;
-SELECT * FROM Reserva;
+SELECT * FROM Reserva ORDER BY codigo_Tiquet, numero_Asiento, orden_R_T_Asiento;
 
 SELECT t.nombre_rol, p.nombre, p.descripcion, p.url FROM Permiso p JOIN Tiene t ON p.nombre = t.nombre_permiso WHERE nombre_rol = "Cliente" ; -- Muestra todos los permisos de un rol.
 
@@ -87,3 +87,6 @@ SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(tiempo))) AS tiempo_total
 FROM Tramo
 WHERE (idInicial IN (1, 3) AND idFinal IN (3, 5));
 
+SELECT * FROM Transita T INNER JOIN Linea L
+	ON L.codigo = T.codigo_L_Recorre WHERE T.vigencia = true AND L.vigencia = true
+	ORDER BY  T.codigo_L_Recorre, T.horaSalida_Salida ASC, T.orden_Recorre ASC ;

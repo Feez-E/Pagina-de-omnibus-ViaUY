@@ -76,29 +76,115 @@ function addTravelButtons() {
             addTravelPageCover.className = "pageCover active";
             addTravelPageCover.innerHTML = `
             <div class = "pageCoverSection container" id = "form">
+            <div class = "pageCoverSectionHeader">
+                <h4 class = "subtitle"> Agregar horario </h4> 
+                <div id = closeButtonN2></div>
+            </div>
                 <form id=addTimeForm action="#" method="post">
                     <label for="timeToAdd" class="editable">
                         <span> Hora de Salida </span>
-                        <input type="text" id="timeToAdd" name="timeToAdd" autocomplete="off" required />
+                        <input type="time" id="timeToAdd" name="timeToAdd" autocomplete="off" required />
                     </label>
                     <label for="unit" class="editable">
                         <span> Unidad </span>
-                        <input type="text" id="unit" name="unit" autocomplete="off" required />
+                        <input type="number" id="unit" name="unit" autocomplete="off" list="unitsList" required />
+                        <datalist id = "unitsList">
+                        </datalist>
                     </label>
                     <input type="submit" value="Agregar" class="button">
                 </form>
             </div>
             `;
+            ajaxForUnits((response) => {
+                // Callback function to handle the response
+                if (response && response.status === "success") {
+                    // Update the datalist or perform other actions
+                    const unitsList = addTravelPageCover.querySelector("#unitsList");
+                    response.unidades.forEach((unit) => {
+                        const option = document.createElement("option");
+                        option.value = `${unit.numero}`;
+                        option.innerHTML = `1° Piso: ${unit.capacidadPrimerPiso} 2° Piso: ${unit.capacidadSegundoPiso}`;
+                        unitsList.appendChild(option);
+                    });
+                } else {
+                    console.log(response);
+                }
+            });
+
             document.querySelector("main").appendChild(addTravelPageCover);
-            const nombreLinea = button.previousElementSibling.firstElementChild.innerHTML.split(" - ")[0];
-            const tramos = stopsIds[i];
-            console.log(nombreLinea);
-            console.log(tramos);
+
+            addTravelPageCover.querySelector("#closeButtonN2").onclick = () => {
+                document.querySelector("main").removeChild(addTravelPageCover);
+            };
+
+            const addTravelForm = addTravelPageCover.querySelector("form");
+
+            addTravelForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                const horaSalida = addTravelForm.querySelector("#timeToAdd").value;
+                const unidad = addTravelForm.querySelector("#unit").value;
+                const nombreLinea = button.previousElementSibling.firstElementChild.innerHTML.split(" - ")[0];
+                const tramos = stopsIds[i];
+
+
+                let tramosForAJAX = [];
+
+                tramos["Salidas"].forEach((salida, i) => {
+                    const tramo = {
+                        idInicial: salida,
+                        idFinal: tramos["Llegadas"][i],
+                    }
+                    tramosForAJAX[i + 1] = tramo;
+                });
+
+                let dataToSend = {
+                    unidad: unidad,
+                    nombreLinea: nombreLinea,
+                    tramos: tramosForAJAX,
+                    horaSalida: horaSalida
+                };
+                $.ajax({
+                    url: "insertTransita.php",
+                    type: "POST",
+                    data: dataToSend,
+                    success: (response) => {
+                        if (response.status === "success") {
+                            showError("Horario insertado con exito, recrague la página para verlo")
+                            console.log(response.tiempo)
+                        } else {
+                            showError(response.message)
+                        }
+                        document.querySelector("main").removeChild(addTravelPageCover);
+                    },
+                    error: (xhr) => {
+                        console.log("Error en la solicitud AJAX.");
+                        console.log(xhr.responseText);
+                    },
+                });
+
+                console.log(dataToSend);
+            });
 
 
         }
     });
 
+}
+
+function ajaxForUnits(callback) {
+    $.ajax({
+        url: "getUnits.php",
+        type: "POST",
+        success: (response) => {
+            if (callback && typeof callback === "function") {
+                callback(response);
+            }
+        },
+        error: () => {
+            console.log("Error en la solicitud AJAX.");
+        },
+    });
 }
 
 function ajaxForName(lineId, callback) {
