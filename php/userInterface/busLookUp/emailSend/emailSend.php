@@ -67,7 +67,7 @@ function reserveAccepted($fecha, $dia, $hora, $asientos)
     <?php
     echo "
     <span class = 'thanksMessage'>¡Gracias por usar nuestros servicios!</span>
-    <span id='message'></span>
+    <span id='message'>Espere mientras se le envía un email con la información de su reserva...</span>
     <script src='../../../../js/emailSend.js'></script>
     ";
 }

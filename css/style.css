@@ -1672,8 +1672,7 @@ legend {
 .leaflet-bottom.leaflet-left .leaflet-control > a.active {
   color: var(--secondary-color);
   background-color: var(--whitesmoke-color);
-  border-radius: 50%;
-  width: 21px;
+  border-radius: 20px;
   height: 21px;
   transition: 0.1s;
 }
