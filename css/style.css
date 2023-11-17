@@ -2384,7 +2384,7 @@ select:focus-visible {
 
 /*----*/
 
-/*!-- userReservations --*/
+/*!-- userReservations and reserveManagement --*/
 
 .ticketContent {
   flex-direction: column;
@@ -2407,7 +2407,6 @@ select:focus-visible {
 }
 
 .ticketContent .seatNumber {
-  margin-bottom: 25px;
   text-wrap: balance;
   background-color: var(--whitesmoke-color);
   border-radius: 15px;
@@ -2415,6 +2414,17 @@ select:focus-visible {
   text-align: center;
   margin-left: 20%;
   margin-right: 20%;
+  margin-bottom: 25px;
+}
+
+.ticketContent .usernameReservation {
+  text-wrap: balance;
+  background-color: var(--whitesmoke-color);
+  border-radius: 15px;
+  padding: 10px;
+  text-align: center;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 .travelReservationSection {

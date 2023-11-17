@@ -26,10 +26,9 @@
                 echo "<p>Inicie sesión para continuar</p>";
                 exit;
             } else {
-                if($_SESSION['userData']->getNombreRol() == 'Administrador Maestro'){
-                    echo "<p>Hola capo, aca tenes...</p><br>";
-                } else {
+                if(!($_SESSION['userData']->getNombreRol() == 'Administrador Maestro')){
                     echo "<p>No tienes permiso para estar en esta página</p>";
+                    exit;
                 }
             }
         } catch (Exception) {
@@ -41,11 +40,10 @@
         include 'showReservations.php';
         ?>
     </main>
-
     <?php
     include '../footer.php';
     ?>
 </body>
-<script src="../../../js/lineToggleSelector.js"></script>
-
+<script src="../../../js/toggleSelector.js"></script>
+<script src="../../../js/reserveManagement.js" type = "module"></script>
 </html>

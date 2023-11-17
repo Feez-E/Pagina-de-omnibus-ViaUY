@@ -34,7 +34,6 @@
         include 'showUserReservations.php';
         ?>
     </main>
-
     <?php
     include '../footer.php';
     ?>

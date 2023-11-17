@@ -13,7 +13,7 @@ class ReservaLink
     public function getReservas()
     {
         $stmt = $this->conn->prepare(
-            "SELECT * FROM Reserva ORDER BY codigo_Tiquet, numero_Asiento, orden_R_T_Asiento"
+            "SELECT * FROM Reserva ORDER BY codigo_Tiquet DESC, numero_Asiento, orden_R_T_Asiento"
         );
         $stmt->execute();
         $result = $stmt->get_result();
@@ -27,8 +27,8 @@ class ReservaLink
                 $row['codigo_L_R_T_Asiento'],
                 $row['orden_R_T_Asiento'],
                 $row['numero_U_T_Asiento'],
-                $row['horaSalida_S_T_Asiento'],
-                $row['horaLlegada_L_T_Asiento']
+                new DateTime($row['horaSalida_S_T_Asiento']),
+                new DateTime($row['horaLlegada_L_T_Asiento'])
             );
 
             $reserva = new Reserva(
@@ -51,7 +51,7 @@ class ReservaLink
     public function getReservasByUserId($id_Usuario)
     {
         $stmt = $this->conn->prepare(
-            "SELECT * FROM Reserva WHERE id_Usuario = ? ORDER BY codigo_Tiquet, numero_Asiento, orden_R_T_Asiento"
+            "SELECT * FROM Reserva WHERE id_Usuario = ? ORDER BY codigo_Tiquet DESC, numero_Asiento, orden_R_T_Asiento"
         );
         $stmt->bind_param("i", $id_Usuario);
         $stmt->execute();
