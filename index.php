@@ -18,7 +18,9 @@
     <?php
     include 'php/userInterface/navBar/navBar.php';
     ?>
+
     <main class=indexContent>
+
         <div class="top">
             <div class="sun"></div>
             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0.00 0.00 1532.00 1368.00">

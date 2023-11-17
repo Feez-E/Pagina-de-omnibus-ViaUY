@@ -13,7 +13,7 @@ class CaracteristicaLink
     public function getCaracteristicas()
     {
         $stmt = $this->conn->prepare(
-            "SELECT * FROM Caracteristicas"
+            "SELECT * FROM Caracteristica"
         );
         $stmt->execute();
         $result = $stmt->get_result();
@@ -21,7 +21,7 @@ class CaracteristicaLink
 
         while ($row = $result->fetch_assoc()) {
             $caracteristica = new Caracteristica(
-                $row['numeroUnidad'],
+                $row['numero_Unidad'],
                 $row['propiedad'],
                 $row['multiplicador']
             );
@@ -30,7 +30,7 @@ class CaracteristicaLink
 
         return $caracteristicas;
     }
-    
+
     public function getCaracteristicasByNumeroUnidad($numeroUnidad)
     {
         $stmt = $this->conn->prepare(
@@ -40,7 +40,7 @@ class CaracteristicaLink
         $stmt->execute();
         $result = $stmt->get_result();
         $caracteristicas = array();
-    
+
         while ($row = $result->fetch_assoc()) {
             $caracteristica = new Caracteristica(
                 $row['numero_Unidad'],
@@ -49,7 +49,7 @@ class CaracteristicaLink
             );
             $caracteristicas[] = $caracteristica;
         }
-    
+
         return $caracteristicas;
     }
 }

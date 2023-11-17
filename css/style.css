@@ -198,6 +198,11 @@ body *::-webkit-scrollbar-track {
 
 /*!-- GeneralSettings --*/
 
+iframe {
+  /*   display: none !important; */
+  visibility: visible;
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -241,6 +246,7 @@ body {
   background-repeat: repeat-y;
   overflow-x: hidden;
   background-color: var(--whitesmoke-color);
+  top: 0px !important;
 }
 
 p {
@@ -2441,6 +2447,35 @@ select:focus-visible {
   color: var(--tertiary-color);
 }
 
+/*----*/
+
+/*!-- busRD --*/
+.unitSection .desplegableContent {
+  flex-direction: column;
+}
+
+.unitSection section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: var(--tertiary-color);
+}
+
+.unitSection .caracts {
+  justify-content: center;
+  background-color: var(--whitesmoke-color);
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.unitSection .caracts .subtitle {
+  justify-content: center;
+}
+
+.unitSection .caracts p {
+  display: flex;
+  justify-content: space-between;
+}
 /*----*/
 
 /*!-- MovileFirst Design --*/

@@ -54,7 +54,7 @@
 
         <div class="container linesSubtitle">
             <h3>Líneas</h3>
-            <a class=button>Ver unidades</a>
+            <a class=button href="../busRD/busRD.php">Ver unidades</a>
         </div>
         <div class="desplegableSection shadow" id="addLineForm">
             <div class=desplegableTitle>

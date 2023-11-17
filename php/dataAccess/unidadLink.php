@@ -88,5 +88,32 @@ class UnidadLink
         return null;
 
     }
+
+    public function validationToggleUnidad(int $numero)
+    {
+        // Obtener el valor actual de "vigencia"
+        $stmt = $this->conn->prepare("SELECT vigencia FROM Unidad WHERE numero = ?");
+        $stmt->bind_param("i", $numero);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            $vigenciaActual = $row['vigencia'];
+
+            // Invertir el valor de "vigencia"
+            $nuevaVigencia = !$vigenciaActual;
+
+            // Actualizar "vigencia" en la base de datos
+            $stmt = $this->conn->prepare("UPDATE Unidad SET vigencia=? WHERE numero=?");
+            $stmt->bind_param("ii", $nuevaVigencia, $numero);
+
+            if ($stmt->execute()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 ?>
