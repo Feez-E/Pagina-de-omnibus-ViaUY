@@ -33,122 +33,133 @@ echo "</pre>"; */
     let seatsArray = [];
     let ciudadInicial;
     let ciudadFinal;
-
     let tiquetsReserva = [];
 </script>
 <?php
 
-foreach ($reservasArr as $key => $reserva) {
+if (empty($reservasArr)){
 
-    $tiquetFlagReserva = $reserva->getCodigo_Tiquet();
+    echo   "<p>No hay reservas que mostrar.</p>
+            <p>Puedes hacer una reserva en cualquier momento:</p><br>
+            <a href='/Proyecto Final/php/userInterface/busLookUp/busLookUp.php' class='indexButton button'>
+                Reservar
+            </a>";
 
-    if ($tiquetFlagReserva != $previousTiquetFlag) {
+} else {
 
-        if (!$firstTime) {
+    foreach ($reservasArr as $key => $reserva) {
 
-            $paradaFinal = $paradaLink->getParadaDirectionById($previousReserva->getAsiento()->getIdFinal_T_R_Transita());
-            $direccionFinalSeparada = explode(",", $paradaFinal);
-            $ciudadFinal = trim($direccionFinalSeparada[1]);
-            citiesScript($previousReserva->getCodigo_Tiquet(), $ciudadInicial, $ciudadFinal);
-            seatsScript($seatsArray, $previousReserva->getCodigo_Tiquet());
-            $seatsArray = [];
+        $tiquetFlagReserva = $reserva->getCodigo_Tiquet();
 
-            echo " 
-                        <p>
-                            <b>⇩</b>" . $previousReserva->getAsiento()->getIdFinal_T_R_Transita() . "<span>" . $paradaFinal . "
-                            </span>
-                        </p>
+        if ($tiquetFlagReserva != $previousTiquetFlag) {
+
+            if (!$firstTime) {
+
+                $paradaFinal = $paradaLink->getParadaDirectionById($previousReserva->getAsiento()->getIdFinal_T_R_Transita());
+                $direccionFinalSeparada = explode(",", $paradaFinal);
+                $ciudadFinal = trim($direccionFinalSeparada[1]);
+                citiesScript($previousReserva->getCodigo_Tiquet(), $ciudadInicial, $ciudadFinal);
+                seatsScript($seatsArray, $previousReserva->getCodigo_Tiquet());
+                $seatsArray = [];
+
+                echo " 
+                            <p>
+                                <b>⇩</b>" . $previousReserva->getAsiento()->getIdFinal_T_R_Transita() . "<span>" . $paradaFinal . "
+                                </span>
+                            </p>
+                        </div>
+                        <section class = 'finalContent'>
+                                <p>$" . $tiquetLink->getPrecioByCodigo($previousReserva->getCodigo_Tiquet()) . "</p>
+                                <p class = 'ticketStatus'>" . $previousReserva->getEstado() . "</p>";
+
+                if ($previousReserva->getFechaLimite() > $fechaActual && $previousReserva->getEstado() == "Pagado") {
+                    echo "
+                            <a class = 'button shadow declineReserve'>Cancelar reserva</a>";
+                } else {
+                    echo "
+                                        <a class = 'button shadow declineReserve' style = 'display:none;'>Cancelar reserva</a>";
+                }
+
+                echo "          
+                        </section>
                     </div>
-                    <section class = 'finalContent'>
-                            <p>$" . $tiquetLink->getPrecioByCodigo($previousReserva->getCodigo_Tiquet()) . "</p>
-                            <p class = 'ticketStatus'>" . $previousReserva->getEstado() . "</p>";
-
-            if ($previousReserva->getFechaLimite() > $fechaActual && $previousReserva->getEstado() == "Pagado") {
-                echo "
-                        <a class = 'button shadow declineReserve'>Cancelar reserva</a>";
+                </div>";
             } else {
-                echo "
-                                    <a class = 'button shadow declineReserve' style = 'display:none;'>Cancelar reserva</a>";
+                $firstTime = false;
             }
 
-            echo "          
-                    </section>
-                </div>
-            </div>";
-        } else {
-            $firstTime = false;
+            $paradaInicial = $paradaLink->getParadaDirectionById($reserva->getAsiento()->getIdInicial_T_R_Transita());
+
+            echo "
+                <div class = 'desplegableSection shadow' id = 'id_" . $reserva->getCodigo_Tiquet() . "'>
+                    <div class= 'desplegableTitle'>
+                        <div>
+                            <h3></h3>
+                            <p>" . $reserva->getCodigo_Tiquet() . "</p>
+                        </div>
+                        <div id = toggleArrow></div>
+                    </div>
+                    <div class = 'desplegableContent ticketContent'>
+                        <p class='subtitle'>Información</p>
+                        <section>
+                            <p>Línea: " . $lineaLink->getNombreLineaByCodigo($reserva->getAsiento()->getCodigo_L_R_Transita()) . "</p>
+                            <p>Unidad: " . $reserva->getAsiento()->getNumero_U_Transita() . "</p>
+                            <p>" . $reserva->getFecha()->format("d-m-Y") . "</p>
+                            <p>" . $reserva->getHora()->format("H:i") . "</p>
+                        </section>
+                        <p class = 'seatNumber'></p>
+                        <div class= 'travelReservationSection'>
+                            <p class='subtitle'>Viaje</p>
+                            <p>
+                                <b>⇧</b>" . $reserva->getAsiento()->getIdInicial_T_R_Transita() . "<span>" . $paradaInicial . "
+                                </span>
+                            </p>";
+
+            $previousTiquetFlag = $tiquetFlagReserva;
+
+            $direccionInicialSeparada = explode(",", $paradaInicial);
+            $ciudadInicial = trim($direccionInicialSeparada[1]);
+
         }
 
-        $paradaInicial = $paradaLink->getParadaDirectionById($reserva->getAsiento()->getIdInicial_T_R_Transita());
+        $previousReserva = $reserva;
 
+        if (!in_array($reserva->getAsiento()->getNumero(), $seatsArray)) {
+            $seatsArray[] = $reserva->getAsiento()->getNumero();
+        }
+        $paradaFinal = $paradaLink->getParadaDirectionById($previousReserva->getAsiento()->getIdFinal_T_R_Transita());
+    }
+
+
+    echo " 
+                            <p>
+                                <b>⇩</b>" . $previousReserva->getAsiento()->getIdFinal_T_R_Transita() . "<span>" . $paradaFinal . "
+                                </span>
+                            </p>
+                        </div>
+                        <section class = 'finalContent'>
+                                <p>$" . $tiquetLink->getPrecioByCodigo($previousReserva->getCodigo_Tiquet()) . "</p>
+                                <p class = 'ticketStatus'>" . $previousReserva->getEstado() . "</p>";
+
+    if ($previousReserva->getFechaLimite() > $fechaActual && $previousReserva->getEstado() == "Pagado") {
         echo "
-            <div class = 'desplegableSection shadow' id = 'id_" . $reserva->getCodigo_Tiquet() . "'>
-                <div class= 'desplegableTitle'>
-                    <div>
-                        <h3></h3>
-                        <p>" . $reserva->getCodigo_Tiquet() . "</p>
-                    </div>
-                    <div id = toggleArrow></div>
-                </div>
-                <div class = 'desplegableContent ticketContent'>
-                    <p class='subtitle'>Información</p>
-                    <section>
-                        <p>Línea: " . $lineaLink->getNombreLineaByCodigo($reserva->getAsiento()->getCodigo_L_R_Transita()) . "</p>
-                        <p>Unidad: " . $reserva->getAsiento()->getNumero_U_Transita() . "</p>
-                        <p>" . $reserva->getFecha()->format("d-m-Y") . "</p>
-                        <p>" . $reserva->getHora()->format("H:i") . "</p>
-                    </section>
-                    <p class = 'seatNumber'></p>
-                    <div class= 'travelReservationSection'>
-                        <p class='subtitle'>Viaje</p>
-                        <p>
-                            <b>⇧</b>" . $reserva->getAsiento()->getIdInicial_T_R_Transita() . "<span>" . $paradaInicial . "
-                            </span>
-                        </p>";
-
-        $previousTiquetFlag = $tiquetFlagReserva;
-
-        $direccionInicialSeparada = explode(",", $paradaInicial);
-        $ciudadInicial = trim($direccionInicialSeparada[1]);
-
+                            <a class = 'button shadow declineReserve'>Cancelar reserva</a>";
+    } else {
+        echo "
+                            <a class = 'button shadow declineReserve' style = 'display:none;'>Cancelar reserva</a>";
     }
 
-    $previousReserva = $reserva;
-
-    if (!in_array($reserva->getAsiento()->getNumero(), $seatsArray)) {
-        $seatsArray[] = $reserva->getAsiento()->getNumero();
-    }
-
-}
-$paradaFinal = $paradaLink->getParadaDirectionById($previousReserva->getAsiento()->getIdFinal_T_R_Transita());
-
-echo " 
-                        <p>
-                            <b>⇩</b>" . $previousReserva->getAsiento()->getIdFinal_T_R_Transita() . "<span>" . $paradaFinal . "
-                            </span>
-                        </p>
+    echo "          
+                        </section>
                     </div>
-                    <section class = 'finalContent'>
-                            <p>$" . $tiquetLink->getPrecioByCodigo($previousReserva->getCodigo_Tiquet()) . "</p>
-                            <p class = 'ticketStatus'>" . $previousReserva->getEstado() . "</p>";
+                </div>";
 
-if ($previousReserva->getFechaLimite() > $fechaActual && $previousReserva->getEstado() == "Pagado") {
-    echo "
-                        <a class = 'button shadow declineReserve'>Cancelar reserva</a>";
-} else {
-    echo "
-                        <a class = 'button shadow declineReserve' style = 'display:none;'>Cancelar reserva</a>";
+    $direccionFinalSeparada = explode(",", $paradaFinal);
+    $ciudadFinal = trim($direccionFinalSeparada[1]);
+    citiesScript($reserva->getCodigo_Tiquet(), $ciudadInicial, $ciudadFinal);
+    seatsScript($seatsArray, $reserva->getCodigo_Tiquet());
+
 }
-
-echo "          
-                    </section>
-                </div>
-            </div>";
-
-$direccionFinalSeparada = explode(",", $paradaFinal);
-$ciudadFinal = trim($direccionFinalSeparada[1]);
-citiesScript($reserva->getCodigo_Tiquet(), $ciudadInicial, $ciudadFinal);
-seatsScript($seatsArray, $reserva->getCodigo_Tiquet());
 function citiesScript($codigoTiquet, $ciudadInicial, $ciudadFinal)
 {
     ?>
