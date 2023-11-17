@@ -1,5 +1,4 @@
 <?php
-
 include_once(BUSINESS_PATH . 'tiquet.php');
 
 class TiquetLink

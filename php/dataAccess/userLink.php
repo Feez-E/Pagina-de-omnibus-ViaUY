@@ -1,5 +1,5 @@
 <?php
-include_once('connection.php');
+include_once(DATA_PATH . 'connection.php');
 include_once(BUSINESS_PATH . 'Usuario.php');
 
 class UserLink
@@ -38,6 +38,23 @@ class UserLink
                 return null; // La autenticación falló
             }
         }
+    }
+
+    public function getUsernameByUserId($id)
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT * FROM Usuario WHERE id = ?"
+        );
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $userData = $result->fetch_assoc();
+            return $userData['apodo'];
+        }
+
+        return null;
     }
 
     public function registerUser(Usuario $user, $passwordConfirm)
