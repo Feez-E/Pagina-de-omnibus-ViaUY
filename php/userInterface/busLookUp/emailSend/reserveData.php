@@ -2,6 +2,7 @@
 include_once($_SERVER['DOCUMENT_ROOT'] . '/Proyecto Final/dirs.php');
 include_once(BUSINESS_PATH . 'reserva.php');
 include_once(DATA_PATH . 'reservaLink.php');
+include_once(DATA_PATH . 'paradaLink.php');
 include_once(DATA_PATH . 'lineaLink.php');
 include_once(BUSINESS_PATH . 'asiento.php');
 include_once(DATA_PATH . 'asientoLink.php');
@@ -9,6 +10,7 @@ include_once(BUSINESS_PATH . 'tiquet.php');
 include_once(DATA_PATH . 'tiquetLink.php');
 include_once(DATA_PATH . 'connection.php');
 
+$paradaLink = new ParadaLink($conn);
 $lineaLink = new LineaLink($conn);
 $reservaLink = new ReservaLink($conn);
 $asientoLink = new AsientoLink($conn);
@@ -48,7 +50,10 @@ foreach ($params["paradas"] as $i => $parada) {
 }
 
 $fechaTiquet = (new DateTime())->format("YmdHi");
+$direccionParadaSubida = $paradaLink->getParadaDirectionById($params["subida"]);
+$direccionParadaBajada = $paradaLink->getParadaDirectionById($params["bajada"]);
 $linea = $lineaLink->getCodigoLineaByNombre($params["nombreLinea"]);
+
 $result = "1";
 $cantTiquets = $tiquetLink->selectTiquetsFromDate($fechaTiquet);
 
