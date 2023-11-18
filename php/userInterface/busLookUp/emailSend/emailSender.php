@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $email = $_POST['email'];
     $asunto = "Reserva en ViaUY ";
-    $asunto .= $_POST["fecha"];
+    $asunto .= $_POST["tiquet"];
     $msg = $_POST["msg"];
 
     $mail = new PHPMailer(true);

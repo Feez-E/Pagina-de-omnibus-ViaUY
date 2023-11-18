@@ -1,6 +1,6 @@
 
 let dataToSend = {
-    fecha: fecha,
+    tiquet: tiquet,
     msg: msg,
     email: email
 };
