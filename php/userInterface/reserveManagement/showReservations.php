@@ -38,9 +38,9 @@ echo "</pre>"; */
 </script>
 <?php
 
-if (empty($reservasArr)){
+if (empty($reservasArr)) {
 
-    echo   "<p>No hay reservas que mostrar.</p>";
+    echo "<p>No hay reservas que mostrar.</p>";
 
 } else {
 
@@ -94,8 +94,8 @@ if (empty($reservasArr)){
                         <div id = toggleArrow></div>
                     </div>
                     <div class = 'desplegableContent ticketContent'>
-                        <p class = 'usernameReservation'>" . $reserva->getId_Usuario() . "- " . $usuarioLink->getUsernameByUserId($reserva->getId_Usuario()). "</p>
-                        <p class='subtitle'>Información</p>
+                        <p class = 'usernameReservation'>" . $reserva->getId_Usuario() . "- " . $usuarioLink->getUsernameByUserId($reserva->getId_Usuario()) . "</p>
+                        <p class='subtitle' >Información</p>
                         <section>
                             <p>Línea: " . $lineaLink->getNombreLineaByCodigo($reserva->getAsiento()->getCodigo_L_R_Transita()) . "</p>
                             <p>Unidad: " . $reserva->getAsiento()->getNumero_U_Transita() . "</p>
@@ -172,7 +172,7 @@ function seatsScript($seatsArray, $codigoTiquet)
         codigoTiquet = <?php echo $codigoTiquet; ?>;
         seatsArray = <?php echo json_encode($seatsArray); ?>;
 
-        document.querySelector(`#id_${codigoTiquet} .seatNumber`).innerHTML = `Asientos: ${seatsArray.map(time => time).join(', ')}`;
+        document.querySelector(`#id_${codigoTiquet} .seatNumber`).innerHTML = `<span data-section='userReservations' data-value='seats'>Asientos: </span>${seatsArray.map(time => time).join(',iuoyhasDFHUYFGDSHBJKHFDSBJH ')}`;
 
         tiquetsReserva.push(<?php echo $codigoTiquet; ?>);
     </script>

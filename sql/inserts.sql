@@ -1,15 +1,15 @@
 USE ViaUY;
 
-INSERT INTO Permiso(nombre, descripcion, url) VALUES 
-("Reservar", "Capaz de hacer reservas de asientos en los distintos viajes disponibles", "busLookUp"),
-("Ver horarios", "Capaz de ver las lineas y las unidades que las recorren en su horario correspondiente", "lineAndTravelR"),
-("Mis reservas", "Capaz de ver todas las reservas que ha hecho, junto con la capacidad de pagarlas o cancelarlas", "userReservations"),
-("Administrar viajes y líneas", "Capaz de administrar las lineas, junto con sus viajes asignados", "travelAndLineRD"),
-("Administrar paradas", "Capaz de administrar las paradas", "stopCRUD"),
-("Administrar reservas", "Capaz de administrar todas las reservas", "reserveManagement"),
-("Administrar usuarios", "Capaz de administrar usuarios", "userManagement"),
-("Administrar unidades", "Capaz de administrar unidades y sus características", "busRD"),
-("Estadísticas", "Capaz de entrar en el apartado de estadísticas de la página", "statistics");
+INSERT INTO Permiso(nombre, url) VALUES 
+("Reservar", "busLookUp"),
+("Ver horarios", "lineAndTravelR"),
+("Mis reservas", "userReservations"),
+("Administrar viajes y líneas", "travelAndLineRD"),
+("Administrar paradas", "stopCRUD"),
+("Administrar reservas", "reserveManagement"),
+("Administrar usuarios", "userManagement"),
+("Administrar unidades", "busRD"),
+("Estadísticas", "statistics");
 
 INSERT INTO Rol(nombre, descripcion) VALUES 
 ("Cliente", "Rol predeterminado, sólo gestiona sus reservas y opciones de usuario"),

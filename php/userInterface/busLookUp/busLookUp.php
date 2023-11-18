@@ -42,19 +42,19 @@
         }
         ?>
         <div id="reservationSpecification">
-            <h2 class="title">Reservar</h2>
+            <h2 class="title" data-section='busLookUp' data-value='title'>Reservar</h2>
             <div class="container shadow" id="form">
                 <form id="busLookUpForm" action="#" method="post">
                     <section class="tripleLabel">
                         <label for="startStop" class="top-left">
-                            <span> Subida </span>
+                            <span data-section='busLookUp' data-value='boarding'> Subida </span>
                             <input type="text" id="startStop" name="startStop" list="startStopsList"
                                 autocomplete="off" />
                             <datalist id=startStopsList>
                             </datalist>
                         </label>
                         <label for="endStop" class="top-right">
-                            <span> Bajada </span>
+                            <span data-section='busLookUp' data-value='disembarking'> Bajada </span>
                             <input type="text" id="endStop" name="endStop" list="endStopsList" autocomplete="off" />
                             <datalist id=endStopsList>
                             </datalist>
@@ -62,8 +62,9 @@
                         <div class="desplegableSection mapSection bottom">
                             <div class="desplegableTitle">
                                 <div class="desplegableSectionLeft">
-                                    <h3 class="subtitle">Mapa de paradas</h3>
-                                    <p>Seleccione sus paradas</p>
+                                    <h3 class="subtitle" data-section='busLookUp' data-value='mapTitle'>Mapa de paradas
+                                    </h3>
+                                    <p data-section='busLookUp' data-value='mapSubtitle'>Seleccione sus paradas</p>
                                 </div>
                                 <div id="toggleArrow"></div>
                             </div>
@@ -74,15 +75,16 @@
                     </section>
                     <section class="doubleLabel">
                         <label for="date" class="left">
-                            <span> Día </span>
+                            <span data-section='busLookUp' data-value='day'> Día </span>
                             <input type="date" id="date" name="date" autocomplete="off" />
                         </label>
                         <label for="time" class="right">
-                            <span> Hora </span>
+                            <span data-section='busLookUp' data-value='time'> Hora </span>
                             <input type="time" id="time" name="time" autocomplete="off" />
                         </label>
                     </section>
-                    <input type="submit" value="Buscar viajes" class="button">
+                    <input type="submit" value="Buscar viajes" class="button" data-section='busLookUp'
+                        data-value='searchTravels'>
                 </form>
             </div>
         </div>

@@ -36,9 +36,11 @@
                 </p>
             </div>
             <div class=bottom>
-                <a href="../../../../index.php" class="button inlineFlex">Inicio</a>
+                <a href="../../../../index.php" class="button inlineFlex" data-section='emailSend'
+                    data-value='indexButton'>Inicio</a>
                 <?php if ($result == 1) { ?>
-                    <a href="../../userReservations/userReservations.php" class="button inlineFlex">Ver reserva</a>
+                    <a href="../../userReservations/userReservations.php" class="button inlineFlex" data-section='emailSend'
+                        data-value='seeReserve'>Ver reserva</a>
                 <?php } ?>
             </div>
         </div>
@@ -66,8 +68,8 @@ function reserveAccepted($fecha, $dia, $hora, $asientos)
     </script>
     <?php
     echo "
-    <span class = 'thanksMessage'>¡Gracias por usar nuestros servicios!</span>
-    <span id='message'>Espere mientras se le envía un email con la información de su reserva...</span>
+    <span class = 'thanksMessage' data-section='emailSend' data-value='thanksMessage'>¡Gracias por usar nuestros servicios!</span>
+    <span id='message' data-section='emailSend' data-value='waitMessage'>Espere mientras se le envía un email con la información de su reserva...</span>
     <script src='../../../../js/emailSend.js'></script>
     ";
 }
@@ -76,12 +78,12 @@ function reserveNotAccepted($result)
 {
     if ($result == 1062) {
         echo " 
-        <span class = 'thanksMessage'>Lo sentimos, hubo un error con su reserva</span>
-        <span  id='message'>Alguno de los tramos de su viaje ya fue reservado, intente nuevamente</span>";
+        <span class = 'thanksMessage' data-section='emailSend' data-value='sorryMessage'>Lo sentimos, hubo un error con su reserva</span>
+        <span  id='message' data-section='emailSend' data-value='duplicatedKeyMessage'>Alguno de los tramos de su viaje ya fue reservado, intente nuevamente</span>";
     } else {
         echo " 
-        <span class = 'thanksMessage'>Lo sentimos, hubo un error inesperado con su reserva</span>
-        <span  id='message'>Intente nuevamente más tarde</span>";
+        <span class = 'thanksMessage' data-section='emailSend' data-value='unexpectedMessage'>Lo sentimos, hubo un error inesperado con su reserva</span>
+        <span  id='message' data-section='emailSend' data-value='tryLater'>Intente nuevamente más tarde</span>";
     }
 
 }
