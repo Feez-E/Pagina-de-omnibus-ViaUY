@@ -35,21 +35,21 @@
                     echo "
             <div class = 'container shadow' id='travelInfo' >
                 <div class ='top'>
-                    <p><span>Linea: </span>" . $params["nombreLinea"] . "</p>
-                    <p><span>Unidad: </span>" . $unidad["numero"] . "</p>
+                    <p><span data-section='userReservations' data-value='line'>Linea: </span>" . $params["nombreLinea"] . "</p>
+                    <p><span data-section='userReservations' data-value='unit'>Unidad: </span>" . $unidad["numero"] . "</p>
                    
                 </div>
                 <div class = 'mid'>
-                <p><span>Día: </span>" . $params["dia"] . "</p>
+                <p><span data-section='busLookUp' data-value='day'>Día: </span>" . $params["dia"] . "</p>
                 </div>
                 <div class ='bottom'>
                     <section>
-                        <p>Subida:</p>
+                        <p data-section='busLookUp' data-value='boarding'>Subida:</p>
                         <p>" . $params["subida"] . "</p>
                         <p><span></span>" . $params["allhoras"][array_search($params["subida"], $params["paradas"])] . "</p>
                     </section>
                     <section>
-                        <p>Bajada:</p>
+                        <p data-section='busLookUp' data-value='disembarking'>Bajada:</p>
                         <p>" . $params["bajada"] . "</p>
                         <p>" . $params["allhoras"][array_search($params["bajada"], $params["paradas"])] . "</p>
                     </section>
@@ -74,24 +74,27 @@
                 ?>
             </div>
             <div class='selectedSeats container shadow'>
-                <h3 class='pageSubtitle'>Asientos seleccionados:</h3>
+                <h3 class='pageSubtitle' data-section='busReserve' data-value='selectedSeats'>Asientos seleccionados:
+                </h3>
                 <div id='seatsAndPrices'>
                     <p>Seleccione uno o más asientos</p>
                 </div>
                 <div class="buttonDesplegableSection">
-                    <a class='button payButton'>Pagar</a>
+                    <a class='button payButton' data-section='busReserve' data-value='pay'>Pagar</a>
                     <div id="closeButton"></div>
                     <form class="buttonDesplegableSectionContent container" id="form"
                         action="../emailSend/emailSend.php" method="post">
                         <label for="metodosDePago" class="top-left">
                             <select id="metodosDePago" name="metodosDePago">
-                                <option value="Default">Seleccione su método de pago</option>
+                                <option value="Default" data-section='busReserve' data-value='paymentMethod'>Seleccione
+                                    su método de pago</option>
                                 <option value="MasterCard">MasterCard</option>
                                 <option value="PayPal">PayPal</option>
                                 <option value="Visa">Visa</option>
                             </select>
                         </label>
-                        <input type="submit" class="button" value="Reservar" />
+                        <input type="submit" class="button" value="Reservar" data-section='busReserve'
+                            data-value='reserve' />
                     </form>
                 </div>
             </div>

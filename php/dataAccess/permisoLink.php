@@ -11,23 +11,27 @@ class PermisoLink
     public function getRolByUsernameRol($rol)
     {
         $stmt = $this->conn->prepare(
-            "SELECT p.nombre, p.descripcion, p.url, t.nombre_rol
-            FROM permiso p
-            JOIN tiene t ON p.nombre = t.nombre_permiso WHERE nombre_rol = ? ;"
+            "SELECT p.nombre, p.numero, p.url, t.nombre_rol
+            FROM Permiso p
+            JOIN Tiene t ON p.nombre = t.nombre_permiso WHERE nombre_rol = ? ;"
         );
         $stmt->bind_param("s", $rol);
         $stmt->execute();
         $result = $stmt->get_result();
         $permisos = array();
 
-        while ($row = $result-> fetch_assoc()){
+        while ($row = $result->fetch_assoc()) {
             $nombre = $row['nombre'];
             $url = $row['url'];
-            $permisos[$nombre] = $url;
+            $numero = $row['numero'];
+            $permisos[$nombre] = array(
+                "url" => $url,
+                "numero" => $numero
+            );
         }
 
         return $permisos;
     }
-    
+
 }
 ?>

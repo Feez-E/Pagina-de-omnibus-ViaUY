@@ -1,0 +1,122 @@
+{
+    "general":{
+        "confirm": "Confirmar"  
+    },
+    "navBar":{
+        "loginText": "Iniciar Sesión",
+        "registerText": "¡Regístrate!",
+        "newAccount": "¿No tienes una cuenta?",
+        "existingAccount": "¿Ya tienes una cuenta?",
+        "usernamePH": "Nombre de usuario",
+        "namePH": "Nombre",
+        "lastnamePH": "Apellido",
+        "birthdatePH": "Fecha de nacimiento",
+        "emailPH": "Correo electrónico",
+        "phoneNumberPH": "Teléfono",
+        "passwordPH": "Contraseña",
+        "confirmPasswordPH": "Confirmar contraseña"
+        
+    },
+    "index":{
+        "schedules": "Ver Horarios",
+        "reserve": "Reservar",
+        "aboutUs": "Sobre nosotros",
+        "missionTitle": "MISIÓN",
+        "missionText": "Revolucionar la movilidad urbana a través de soluciones de transporte de autobuses eléctricos de primera que priorizan la sostenibilidad, la comodidad y la innovación, a la par que fomentan un futuro más limpio y ecológico para todos.",
+        "visionTitle": "VISIÓN",
+        "visionText": "Para liderar la carga en el transporte de autobuses eléctricos, establecer el estándar de la industria para viajes urbanos sin emisiones, experiencias excepcionales de pasajeros y avances tecnológicos.",
+        "valuesTitle": "VALORES",
+        "valuesText": "<p> Nuestra máxima prioridad es la seguridad y el bienestar de todos a quienes servimos. Queremos construir una reputación de confianza, asegurando que nuestros pasajeros siempre puedan contar con nosotros para un transporte ameno y seguro. </p> <p> Centrar la atención en el cliente es nuestra filosofía principal, ya que nos esforzamos por satisfacer y superar las necesidades de nuestros valiosos pasajeros. </p> <p>La sustentabilidad está profundamente arraigada en nuestras operaciones, ya que trabajamos incansablemente para reducir nuestro impacto ambiental y promover prácticas sostenibles. </p><p> Buscamos ceñirnos a la innovación, continuamente aprovecharemos el poder de la tecnología para mejorar nuestros servicios y operaciones. Nuestro compromiso con la integridad garantiza que operamos de manera transparente y ética, construyendo confianza con todos nuestros interesados. </p> <p> Más allá del transporte, siempre apreciaremos a las comunidades y buscaremos integrarnos con ellas, conectando a las personas y contribuyendo al desarrollo de empleos de manera positiva, favoreciendo la salud física y mental de las personas. </p>"
+       
+    },
+    "footer":{
+        "phone": "Teléfono: ",
+        "copyright": "All rights reserved"
+    },
+    "options":{
+        "accountSettings": "Ajustes de cuenta",
+        "logOut": "Cerrar sesión",
+        "1": "Reservar",
+        "2": "Ver horarios",
+        "3": "Mis reservas",
+        "4": "Administrar viajes y líneas",
+        "5": "Administrar paradas",
+        "6": "Administrar reservas",
+        "7": "Administrar usuarios",
+        "8": "Administrar unidades",
+        "9": "Estadísticas"
+    },
+    "lineAndTravelR":{
+        "title":"Lineas y horarios",
+        "L":"L ",
+        "M":"M ",
+        "X":"X ",
+        "J":"J ",
+        "V":"V ",
+        "S":"S ",
+        "D":"D "
+    },
+    "accountSettings":{
+        "title":"Ajustes de cuenta",
+        "Administrador Maestro": "Administrador Maestro",
+        "Cliente": "Cliente",
+        "Vetado": "Vetado",
+        "ChangePassword": "Cambiar contraseña",
+        "NuevaContraseña": "Nueva contraseña"
+    },
+    "busLookUp":{
+        "title":"Reservar",
+        "boarding": "Subida",
+        "disembarking": "Bajada",
+        "mapTitle": "Mapa de paradas",
+        "mapSubtitle": "Seleccione sus paradas",
+        "day": "Fecha",
+        "time": "Hora",
+        "searchTravels": "Buscar viajes",
+        "busTitle": "Información de la unidad",
+        "unitNumber": "Numero: ",
+        "plate": "Matrícula: ",
+        "fstFloor": "Asientos del 1° piso: ",
+        "sndFloor": "Asientos del 2° piso:",
+        "Accesibilidad": "Accesibilidad",
+        "Aire Acondicionado": "Asientos del 1° piso:",
+        "Cinturones de Seguridad": "Cinturones de Seguridad",
+        "Espacio para Equipaje": "Espacio para Equipaje",
+        "Puertos de Carga": "Puertos de Carga",
+        "Sanitario": "Sanitario",
+        "Sistema de Entretenimiento": "Sistema de Entretenimiento"
+    },
+    "userReservations":{
+        "title": "Mis reservas",
+        "information": "Información",
+        "line": "Linea: ",
+        "unit": "Unidad: ",
+        "seats": "Asientos: ",
+        "travel": "Viaje",
+        "cancelReserve": "Cancelar reservas",
+        "Pagado": "Pagado",
+        "Cancelado":"Cancelado",
+        "Anulado":"Anulado"
+       
+    },
+    "busReserve":{
+        "selectedSeats":"Asientos seleccionados:",
+        "selectSeatsMessage":"Seleccione uno o más asientos",
+        "seat":"Asiento",
+        "pay":"Pagar",
+        "paymentMethod": "Seleccione su método de pago",
+        "reserve": "Reservar"
+        
+    },
+    "emailSend":{
+        "seeReserve":"Ver reserva",
+        "indexButton":"Inicio",
+        "thanksMessage":"¡Gracias por usar nuestros servicios!",
+        "waitMessage":"Espere mientras se le envía un email con la información de su reserva...",
+        "sorryMessage":"Lo sentimos, hubo un error con su reserva",
+        "duplicatedKeyMessage":"Alguno de los tramos de su viaje ya fue reservado, intente nuevamente",
+        "unexpectedMessage":"Lo sentimos, hubo un error inesperado con su reserva",
+        "tryLater":"Intente nuevamente más tarde"
+        
+    }
+}

@@ -90,7 +90,7 @@ function loadLines(lineas) {
                 <div class="line">
                     <div class="lineLeft">
                         <h3 class="subtitle">${key} - ${currentLinea.description}</h3>
-                        <p>${days.join(' ')}</p>
+                        ${days.map(day => `<span data-section="lineAndTravelR" data-value="${day}">${day} </span>`).join('')}
                     </div>
                     <div id="lineToggle"></div>
                 </div>

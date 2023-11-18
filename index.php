@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap" rel="stylesheet">
     <link rel="icon" href="ico/icon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>ViaUY - Inicio</title>
 </head>
 
@@ -1020,21 +1021,23 @@
 
             <div class="container indexButtons">
                 <?php if (isset($_SESSION["userData"])) { ?>
-                    <a href='/Proyecto Final/php/userInterface/busLookUp/busLookUp.php' class='indexButton button'>
+                    <a href='/Proyecto Final/php/userInterface/busLookUp/busLookUp.php' class='indexButton button'
+                        data-section='index' data-value='reserve'>
                         Reservar
                     </a>
                 <?php } ?>
-                <a href='php/userInterface/lineAndTravelR/lineAndTravelR.php' class='indexButton button'> Ver
+                <a href='php/userInterface/lineAndTravelR/lineAndTravelR.php' class='indexButton button'
+                    data-section='index' data-value='schedules'> Ver
                     Horarios
                 </a>
             </div>
 
         </div>
         <div id="aboutUs">
-            <h2 class="title">Sobre nosotros</h2>
+            <h2 class="title" data-section='index' data-value='aboutUs'>Sobre nosotros</h2>
             <div class="mission container">
-                <h3 class=subtitle>MISIÓN</h3>
-                <p class="aboutUsText">
+                <h3 class=subtitle data-section='index' data-value='missionTitle'>MISIÓN</h3>
+                <p class="aboutUsText" data-section='index' data-value='missionText'>
 
                     Revolucionar la movilidad urbana a través de soluciones de
                     transporte de autobuses eléctricos de primera que priorizan
@@ -1044,8 +1047,8 @@
                 </p>
             </div>
             <div class="vission container">
-                <h3 class="subtitle">VISIÓN</h3>
-                <p class="aboutUsText">
+                <h3 class="subtitle" data-section='index' data-value='visionTitle'>VISIÓN</h3>
+                <p class="aboutUsText" data-section='index' data-value='visionText'>
 
                     Para liderar la carga en el transporte de autobuses eléctricos,
                     establecer el estándar de la industria para viajes urbanos sin
@@ -1055,8 +1058,8 @@
                 </p>
             </div>
             <div class="values container">
-                <h3 class="subtitle">VALORES</h3>
-                <section class="aboutUsText">
+                <h3 class="subtitle" data-section='index' data-value='valuesTitle'>VALORES</h3>
+                <section class="aboutUsText" data-section='index' data-value='valuesText'>
                     <p>
                         Nuestra máxima prioridad es la seguridad y el bienestar de
                         todos a quienes servimos. Queremos construir una reputación
@@ -1105,5 +1108,7 @@
     ?>
 </body>
 <script src="./js/indexEffect.js"> </script>
+
+
 
 </html>

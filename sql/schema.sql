@@ -134,8 +134,8 @@ PRIMARY KEY(numero, idInicial_T_R_Transita, idFinal_T_R_Transita, codigo_L_R_Tra
 );
 
 CREATE TABLE Permiso (
-nombre VARCHAR(40) PRIMARY KEY NOT NULL,
-descripcion VARCHAR(100) NOT NULL,
+nombre VARCHAR(40) PRIMARY KEY,
+numero INT AUTO_INCREMENT UNIQUE KEY,
 url VARCHAR(50)
 );
 

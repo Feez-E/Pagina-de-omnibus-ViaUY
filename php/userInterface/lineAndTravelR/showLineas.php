@@ -30,7 +30,8 @@ foreach ($lineasArr as $linea) {
             $linea_diasHabilesArr = $linea_diaHabilLink->getLinea_diaHabilByCodigo_Linea($linea->getCodigo());
             echo "<p>";
             foreach ($linea_diasHabilesArr as $linea_diasHabil) {
-                echo $linea_diasHabil->getDia() . " ";
+                echo "<span data-section='lineAndTravelR'
+                data-value='" . $linea_diasHabil->getDia() . "'>" . $linea_diasHabil->getDia() . " </span>";
             }
             echo "</p></div><div id = lineToggle></div>";
             echo "</div>";

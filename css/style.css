@@ -461,6 +461,13 @@ nav {
   height: 100%;
 }
 
+nav .right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+}
+
 .logo {
   height: 35px;
   width: auto;
@@ -601,6 +608,25 @@ nav {
   border: 1px solid var(--secondary-color);
   color: var(--secondary-color);
   transform: translateX(5px);
+}
+
+.switch input#changeLanguage + .slider {
+  background-color: transparent;
+  background-image: url("../img/uy.svg");
+  background-position: cover;
+  background-repeat: no-repeat;
+  border-radius: 7px;
+  width: 88%;
+  filter: var(--image-filter-logo) var(--shadow-filter);
+  transition: 0.25s;
+}
+
+.switch input#changeLanguage:checked + .slider {
+  background-image: url("../img/gb.svg");
+}
+
+.switch input#changeLanguage + .slider::before {
+  opacity: 0;
 }
 
 /*----*/

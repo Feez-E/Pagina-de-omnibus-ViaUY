@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="../../../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
     <link rel="icon" href="../../../ico/icon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>ViaUY - Estadisticas</title>
 </head>
 

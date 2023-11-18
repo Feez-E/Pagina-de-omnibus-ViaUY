@@ -18,18 +18,18 @@
     include '../navBar/navBar.php';
     ?>
     <main class="container">
-        <h2 class="title">Mis reservas</h2>
+        <h2 class="title" data-section='userReservations' data-value='title'>Mis reservas</h2>
         <?php
         try {
             if (!isset($_SESSION["userData"])) {
                 echo "<p>Inicie sesión para continuar</p>";
                 exit;
-            } 
+            }
         } catch (Exception) {
             echo "<p>Usuario incorrecto</p>";
             exit;
         }
-        ?> 
+        ?>
         <?php
         include 'showUserReservations.php';
         ?>
@@ -39,5 +39,6 @@
     ?>
 </body>
 <script src="../../../js/toggleSelector.js"></script>
-<script src="../../../js/userReservations.js" type = "module"></script>
+<script src="../../../js/userReservations.js" type="module"></script>
+
 </html>

@@ -1,0 +1,119 @@
+{
+    "general":{
+        "confirm": "Confirm"
+    },
+    "navBar":{
+        "loginText": "Log-in",
+        "registerText": "Sign-in!",
+        "newAccount": "Don't have an account?",
+        "existingAccount": "Already have an account?",
+        "usernamePH": "Username",
+        "namePH": "Name",
+        "lastnamePH": "Last name",
+        "birthdatePH": "Birthdate",
+        "emailPH": "E-mail",
+        "phoneNumberPH": "Phone",
+        "passwordPH": "Password",
+        "confirmPasswordPH": "Confirm password"
+        
+    },
+    "index":{
+        "schedules": "See Schedules",
+        "reserve": "Reserve",
+        "aboutUs": "About us",
+        "missionTitle": "MISSION",
+        "missionText": "To provide safe, reliable, and convenient solutions that connect communities, and contribute to Sustainable future.",
+        "visionTitle": "VISION",
+        "visionText": "Be leader in innovation in the bus transport industry, recognized for our exceptional service, advanced technology and commitment to environmental sustainability.",
+        "valuesTitle": "VALUES",
+        "valuesText": "<p> Our top priority is the safety and well-being of everyone we serve. We want to create a reputation for reliability, ensuring that our passengers can always count on us for reliable transportation. </p> <p> Focusing on the customer is our core philosophy as we strive to meet and exceed the needs of our valued passengers. Sustainability is deeply embedded in our operations, as we work tirelessly to reduce our environmental impact and promote sustainable practices. </p> <p> By embracing innovation, we will continually harness the power of technology to improve our services and operations. Our commitment to integrity guarantees that we operate in a transparent and ethical manner, building trust with all our stakeholders. </p> <p> Beyond transportation, we will always appreciate communities and seek to integrate with them, connecting people and contributing to job development in a positive way, favoring people's physical and mental health. </p>"
+    },
+    "footer":{
+        "phone": "Phone: ",
+        "copyright": "All rights reserved"
+    },
+    "options":{
+        "accountSettings": "Account settings",
+        "logOut": "Log-out",
+        "1": "Reserve",
+        "2": "See schedules",
+        "3": "My reserves",
+        "4": "Manage lines and travels",
+        "5": "Manage stops",
+        "6": "Manage reserves",
+        "7": "Manage users",
+        "8": "Manage units",
+        "9": "Statistics"
+    },
+    "lineAndTravelR":{
+        "title":"Lines and travels",
+        "L":"M ",
+        "M":"Tu ",
+        "X":"W ",
+        "J":"Th ",
+        "V":"F ",
+        "S":"Sa ",
+        "D":"Su "
+    },
+    "accountSettings":{
+        "title":"Account settings",
+        "Administrador Maestro": "Master Administrator",
+        "Cliente": "Client",
+        "Vetado": "Baned",
+        "changePassword": "Change password",
+        "newPassword": "New  password"
+    },
+    "busLookUp":{
+        "title":"Reserve",
+        "boarding": "Boarding",
+        "disembarking": "Disembarking",
+        "mapTitle": "Stops map",
+        "mapSubtitle": "Select your stops",
+        "day": "Date",
+        "time": "Time",
+        "searchTravels": "Search travels",
+        "busTitle": "Unit info",
+        "unitNumber": "Number: ",
+        "plate": "Plate: ",
+        "fstFloor": "1° floor seats: ",
+        "sndFloor": "2° floor seats: ",
+        "Accesibilidad": "Accessibility: ",
+        "Aire Acondicionado": "Air cooler: ",
+        "Cinturones de Seguridad": "Seat belts: ",
+        "Espacio para Equipaje": "luggage space: ",
+        "Puertos de Carga": "Charging ports: ",
+        "Sanitario": "Bathroom: ",
+        "Sistema de Entretenimiento": "Entretainment sistems: "
+    },
+    "userReservations":{
+        "title": "My reserves",
+        "information": "Information",
+        "line": "Line: ",
+        "unit": "Unit: ",
+        "seats": "Seats: ",
+        "travel": "Travel",
+        "cancelReserve": "Cancel reserve",
+        "Pagado": "Payed",
+        "Cancelado":"Canceled",
+        "Anulado":"Annulled"
+       
+    },
+    "busReserve":{
+        "selectedSeats":"Selected seats:",
+        "seat":"Seat",
+        "pay": "Pay",
+        "paymentMethod": "Select your payment method",
+        "reserve": "Reserve"
+    },
+    "emailSend":{
+        "seeReserve":"See reserve",
+        "indexButton":"Index",
+        "thanksMessage":"Thanks for using our services!",
+        "waitMessage":"Wait while we send you an email with your reserve info...",
+        "sorryMessage":"We're sorry, there was an error with your reservation",
+        "duplicatedKeyMessage":"Some of the sections of your trip have already been reserved, try again",
+        "unexpectedMessage":"We're sorry, there was an unexpected error with your reservation",
+        "tryLater":"Try again later"
+        
+    }
+}

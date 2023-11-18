@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="../../../css/style.css">
     <link rel="icon" href="../../../ico/icon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>ViaUY - Lineas y horarios</title>
 </head>
 
@@ -17,7 +18,7 @@
     include '../navBar/navBar.php';
     ?>
     <main class="container">
-        <h2 class="title">Lineas y horarios</h2>
+        <h2 class="title" data-section='lineAndTravelR' data-value='title'>Lineas y horarios</h2>
         <?php
         include 'showLineas.php';
         ?>
