@@ -1,6 +1,7 @@
 {
     "general":{
-        "confirm": "Confirmar"  
+        "confirm": "Confirmar",
+        "confirmChanges": "Confirmar cambios"
     },
     "navBar":{
         "loginText": "Iniciar Sesión",
@@ -61,8 +62,8 @@
         "Administrador Maestro": "Administrador Maestro",
         "Cliente": "Cliente",
         "Vetado": "Vetado",
-        "ChangePassword": "Cambiar contraseña",
-        "NuevaContraseña": "Nueva contraseña"
+        "changePassword": "Cambiar contraseña",
+        "newPassword": "Nueva contraseña"
     },
     "busLookUp":{
         "title":"Reservar",

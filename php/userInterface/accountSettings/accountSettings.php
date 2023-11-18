@@ -140,7 +140,7 @@
                             </svg>
                         </label>
                         <input type="submit" value="Confirmar cambios" class="button" data-section='general'
-                            data-value='submit'>
+                            data-value='confirmChanges'>
                     </form>
                     <?php
                 }

@@ -1,6 +1,7 @@
 {
     "general":{
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "confirmChanges": "Confirm changes"
     },
     "navBar":{
         "loginText": "Log-in",
