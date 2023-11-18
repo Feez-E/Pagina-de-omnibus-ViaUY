@@ -40,7 +40,7 @@ echo "</pre>"; */
 if (empty($reservasArr)) {
 
     echo "<p data-section='userReservations' data-value='noReservesTitle'>No hay reservas que mostrar.</p>
-            <p data-section='userReservations' data-value='noReservesTitle'>Puedes hacer una reserva en cualquier momento:</p><br>
+            <p data-section='userReservations' data-value='noReservesInfo'>Puedes hacer una reserva en cualquier momento:</p><br>
             <a href='/Proyecto Final/php/userInterface/busLookUp/busLookUp.php' class='indexButton button' data-section='index' data-value='reserve'>
                 Reservar
             </a>";

@@ -97,7 +97,9 @@
         "cancelReserve": "Cancelar reservas",
         "Pagado": "Pagado",
         "Cancelado":"Cancelado",
-        "Anulado":"Anulado"
+        "Anulado":"Anulado",
+        "noReservesInfo":"No hay reservas que mostrar.",
+        "noReservesTitle":"Puedes hacer una reserva en cualquier momento:"
        
     },
     "busReserve":{
